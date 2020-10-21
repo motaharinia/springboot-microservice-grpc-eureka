@@ -1,0 +1,14 @@
+
+npm : 
+
+npm install  apollo-boost  apollo-client  apollo-link-ws   apollo-link-http  apollo-link  apollo-utilities 
+apollo-cache-inmemory  react-apollo   graphql
+
+
+
+
+
+yarn : 
+
+yarn add      apollo-boost   apollo-client  apollo-link-ws   apollo-link-http  apollo-link apollo-utilities 
+apollo-cache-inmemory  react-apollo   graphql

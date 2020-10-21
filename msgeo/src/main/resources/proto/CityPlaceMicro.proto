@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "ir.micser.geo.business.service.cityplace.stub";
+
+message CreateRequestModel{
+  string title = 1 ;
+  string latitude =2 ;
+  string longitude =3 ;
+  int32 city_id =4 ;
+  int32 admin_user_id =5;
+}
+
+message CreateResponseModel{
+  string transaction_name=1;
+  int32  id = 2;
+  string title = 3 ;
+  string latitude =4 ;
+  string longitude =5 ;
+  int32 city_id =6 ;
+  int32 admin_user_id =7;
+}
+
+message Empty{
+}
+
+message TransactionModel{
+  string transaction_name=1;
+}
+
+service CityPlace{
+  rpc grpcCreate(CreateRequestModel)  returns (CreateResponseModel);
+  rpc grpcCommit(TransactionModel)  returns (Empty);
+}

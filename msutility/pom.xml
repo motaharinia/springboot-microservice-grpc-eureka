@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from jparepository -->
+    </parent>
+    <groupId>com.motaharinia</groupId>
+    <artifactId>MsUtility</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>MsUtility</name>
+    <description>Motaharinia-Sample MsUtility</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>13</java.version>
+    </properties>
+
+    <dependencies>
+        <!--==========Common==========-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!--==========Web==========-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!--==========Data JPA & Indexing==========-->
+        <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Release-Notes-->
+        <!-- The default database pooling technology in Spring Boot 2.0 has been switched from Tomcat Pool to HikariCP. We’ve found that Hakari offers superior performance, and many of our users prefer it over Tomcat Pool.-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-engine -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-elasticsearch -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+            <version>5.10.5.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>5.10.5.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-elasticsearch</artifactId>
+            <version>5.10.5.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- ==========gRPC Protobuf==========-->
+        <!--  to enable @GrpcServer and @GrpcClient :      https://mvnrepository.com/artifact/net.devh/grpc-server-spring-boot-starter/2.9.0.RELEASE-->
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+            <version>2.9.0.RELEASE</version>
+        </dependency>
+
+        <!--==========Test==========-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+                <!--                برای کم کردن خطهای کنسول غیرضروری وجود دو jar مربوط به json در Spring-boot-starter-test تگ زیر را وارد کردم که برای استفاده از خدمات json از وابستگی jackson استفاده کند و در کنسول پیام ندهد-->
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>19.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ==========Other==========-->
+        <!-- IO-Collection-Lang: Apache commons (https://mvnrepository.com/artifact/commons-io/commons-io) (https://mvnrepository.com/artifact/org.apache.commons/commons-lang3)-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
+        </dependency>
+        <!-- Remove HTML tag from java String in StringTools.java-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!--reflection utility-->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
+        <!--zip utility-->
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        <!--lombok utility for model class @getter @setter @NoArgsConstructor-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.14</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--
+                https://www.baeldung.com/spring-boot-dependency
+                https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+                برای کامپایل و استفاده از msUtility به عنوان یک وابستگی در پروژه های دیگر باید
+                اول: اگر مسیر c:\\users\\{myuser}\\.m2\\jparepository\\com\\motaharinia\\MsUtility وجود دارد آن را حذف نمایید
+                دوم: پنجره maven سمت راست Intellij IDEA را باز کنید و در قسمت Lifecycle گزینه install را انتخاب و دکمه Run maven build را اجرا کنید
+                سوم: وابستگی زیر رو در pom.xml پروژه خودتون اضافه کنید
+                   <dependency>
+                      <groupId>com.motaharinia</groupId>
+                      <artifactId>MsUtility</artifactId>
+                      <version>0.0.1-SNAPSHOT</version>
+                  </dependency>
+
+
+                توضیحات بیشتر در مورد lifecycle مربوط به maven :
+                -clean
+                -validate (validate the project is correct and all necessary information is available)
+                -compile (compile the source code of the project)
+                -test (test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed)
+                -package (take the compiled code and package it in its distributable format, such as a JAR.)
+                -verify (run any checks on results of integration tests to ensure quality criteria are met)
+                -install (install the package into the local jparepository, for use as a dependency in other projects locally)
+                -->
+                <configuration>
+                    <classifier>exec</classifier>
+                </configuration>
+            </plugin>
+            <!--
+            از این پلاگین برای اضافه شدن مستندات javadoc کلاسها ، متدها و فیلدها در هنگام کامپایل توسط maven استفاده میشود
+             https://maven.apache.org/plugin-developers/cookbook/attach-source-javadoc-artifacts.html
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
