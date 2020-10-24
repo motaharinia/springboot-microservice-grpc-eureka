@@ -22,7 +22,7 @@ this project is a demo for all technologies i have in the repository, containing
 - Front-end: ReactJs 16.8
 
 ### Projects Domain:
-1. msutility: this project is a shared utility project for microservice projects as a pom dependency
+1. msutility: this project is a shared utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
 2. msdiscoveryserver: a eureka discovery server project
 3. msgeo: a business microservice which contains geo domain like city
 4. mslogin: a business microservice which contains authentication and user and etc.
