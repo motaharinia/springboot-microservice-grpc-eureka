@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.fail;
  * کلاس تست ماژول فایل سیستم
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("com")
+@ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class LogUploadedFileControllerTest {
