@@ -224,6 +224,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUserModel.setFirstName(adminUser.getFirstName());
         adminUserModel.setLastName(adminUser.getLastName());
         adminUserModel.setPassword(adminUser.getPassword());
+        adminUserModel.setGender_id(adminUser.getGender().getId());
         if (!ObjectUtils.isEmpty(adminUser.getDateOfBirth())) {
             adminUserModel.setDateOfBirth(new CustomDate(adminUser.getDateOfBirth()));
         }
