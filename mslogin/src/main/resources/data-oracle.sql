@@ -8,4 +8,4 @@ VALUES
 
 
 
-INSERT INTO adminuser (username, password, firstname,lastname) VALUES ('eng.motahari@gmail.com', '{bcrypt}$2a$10$eMFS.AIypqHhOcyVsypqj.o3kwRCnwru0N5ddVDUM/7ECXgKGBI5O', 'mostafa','motaharinia');
+INSERT INTO admin_user (username, password, first_name,last_name,gender_id,date_of_birth,hidden,invalid) VALUES ('eng.motahari@gmail.com', '{bcrypt}$2a$10$eMFS.AIypqHhOcyVsypqj.o3kwRCnwru0N5ddVDUM/7ECXgKGBI5O', 'mostafa','motaharinia',1,to_date('2020-06-23', 'yyyy-mm-dd'),0,0);
