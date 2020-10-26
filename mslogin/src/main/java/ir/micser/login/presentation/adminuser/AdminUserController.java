@@ -190,5 +190,4 @@ public class AdminUserController {
         return adminUserService.hchFindBySkill(skillTitle);
     }
 
-
 }
