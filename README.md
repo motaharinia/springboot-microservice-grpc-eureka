@@ -76,6 +76,7 @@ steps:
     - open msgeo project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
     - run msgeo project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
     - open mslogin project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - if table "OAUTH_CLIENT_DETAILS" is empty in mslogin database, one time rename file "resources/data-oracle222.sql" to "resources/data-oracle.sql" before start mslogin and after run one row will be inserted to "OAUTH_CLIENT_DETAILS" and rename file again to "resources/data-oracle222.sql"
     - run mslogin project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
 6. client side changes and apps like "reactjs-graphqlapollo" is inside the "client" folder 
     
