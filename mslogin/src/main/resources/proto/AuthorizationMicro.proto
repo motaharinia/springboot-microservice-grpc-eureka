@@ -1,9 +1,11 @@
 syntax = "proto3";
+//import "google/protobuf/wrappers.proto";
 
 option java_package = "ir.micser.login.business.service.authorization.stub";
 
 message CheckAccessRequestModel{
   string access_token = 1 ;
+  //  .google.protobuf.StringValue  access_token = 1;
   string url = 2 ;
   //enum MethodEnum {
   //  UNDEFINED = 0;
@@ -12,12 +14,13 @@ message CheckAccessRequestModel{
   //  PUT = 3;
   //  DELETE = 4;
   //}
-//  MethodEnum method = 3;
+  //  MethodEnum method = 3;
 }
 
 message CheckAccessResponseModel{
   bool result = 1;
   int32  result_code = 2;
+  //  .google.protobuf.Int32Value  result_code = 2;
   int64 check_date = 3;
 }
 

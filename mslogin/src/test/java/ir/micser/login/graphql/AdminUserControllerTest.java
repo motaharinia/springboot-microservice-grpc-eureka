@@ -26,6 +26,7 @@ public class AdminUserControllerTest {
 
     @BeforeEach
     public void beforeEach(){
+        //AdminUserControllerایجاد اسکیما برای تولید دستورات گراف کیوال در کنترلر
         schema = new TestSchemaGenerator()
                 .withOperationsFromSingleton(new AdminUserController(adminUserService))
                 .generate();
@@ -34,56 +35,45 @@ public class AdminUserControllerTest {
 
     @Test
     public void readById() {
-
-        String query = "{readById(id: 1) {username firstName lastName}}";
+        String query = "{common_adminUser_readById(id: 1) {username firstName lastName}}";
         ExecutionResult result = exe.execute(query);
-
         System.out.println("result :: " + result);
-
-        Assert.assertValidName("username");
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
     public void create() {
 
-        String query = "mutation {create(adminUserModel: { firstName: \"شیرین\" lastName:\"یزرگی\" username:\"mm433@gmail.com\" password:\"123456\" dateOfBirth: {day:20 month: 6 year: 1399} defaultAdminUserContact_address: \"Tehran NaziAbad\" skillList: {title: \"نرم افزار \"} gender_id: 1 }) {id username}}";
+        String query = "mutation {create(adminUserModel: {firstName: \"Maryam\" lastName: \"Azish\" username: \"hello123@gmail.com\" gender_id: 2 defaultAdminUserContact_city_id :1 }) {id username}}";
         ExecutionResult result = exe.execute(query);
-
         System.out.println("result :: " + result);
-
-        //Assert.assertTrue("Query result contains unexpected errors: " + result.getErrors(), result.getErrors().isEmpty());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
     public void update() {
 
-        String query = "mutation {update(adminUserModel: { id:24 firstName: \"محمود\" lastName:\"آزیش\" username:\"mm33@gmail.com\" password:\"123456\" dateOfBirth: {day:20 month: 6 year: 1399} defaultAdminUserContact_address: \"Tehran NaziAbad\" skillList: {} gender_id: 1 }) {id username}}";
+        String query = "mutation {update(adminUserModel: { id:1 firstName: \"محمود\" lastName:\"آزیش\" username:\"sb2@gmail.com\" password:\"123456\" dateOfBirth: {day:20 month: 6 year: 1399} defaultAdminUserContact_address: \"Tehran NaziAbad\" skillList: {} gender_id: 1 }) {id username}}";
         ExecutionResult result = exe.execute(query);
-
         System.out.println("result :: " + result);
-
-        //Assert.assertTrue("Query result contains unexpected errors: " + result.getErrors(), result.getErrors().isEmpty());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
     public void delete() {
 
-        String query = "mutation {delete(id: 21) {id username}}";
+        String query = "mutation {delete(id: 121) {id username}}";
         ExecutionResult result = exe.execute(query);
-
         System.out.println("result :: " + result);
-
-        //Assert.assertTrue("Query result contains unexpected errors: " + result.getErrors(), result.getErrors().isEmpty());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
     public void readGrid() {
-
-        String query = "{readGrid(searchFilterModelJson: \"{\\\"searchRowView\\\":\\\"com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief\\\",\\\"restrictionList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"mostafa\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"Shahrak Gharb\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"}],\\\"sortList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"type\\\":\\\"ASC\\\"},{\\\"fieldName\\\":\\\"lastName\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"gender.value\\\",\\\"type\\\":\\\"DSC\\\"}],\\\"page\\\":0,\\\"rows\\\":20}\"){page records searchDataColModelList {index name} searchDataRowModelList {id rowCellArray} total userData}}";
+        //String query = "{readGrid(searchFilterModelJson: \"{\\\"searchRowView\\\":\\\"com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief\\\",\\\"restrictionList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"mostafa\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"Shahrak Gharb\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"}],\\\"sortList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"type\\\":\\\"ASC\\\"},{\\\"fieldName\\\":\\\"lastName\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"gender.value\\\",\\\"type\\\":\\\"DSC\\\"}],\\\"page\\\":0,\\\"rows\\\":20}\"){page records searchDataColModelList {index name} searchDataRowModelList {id rowCellArray} total userData}}";
+        String query = "{readGrid(searchViewTypeEnum: ADMIN_USER_BRIEF searchFilterModelJson: \"{\\\"restrictionList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"mostafa\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"fieldOperation\\\":\\\"MATCH\\\",\\\"fieldValue\\\":\\\"Shahrak Gharb\\\",\\\"nextConditionOperator\\\":\\\"AND\\\"}],\\\"sortList\\\":[{\\\"fieldName\\\":\\\"firstName\\\",\\\"type\\\":\\\"ASC\\\"},{\\\"fieldName\\\":\\\"lastName\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"defaultAdminUserContact.address\\\",\\\"type\\\":\\\"DSC\\\"},{\\\"fieldName\\\":\\\"gender.value\\\",\\\"type\\\":\\\"DSC\\\"}],\\\"page\\\":0,\\\"rows\\\":20}\"){page records searchDataColModelList {index name} searchDataRowModelList {id rowCellArray} total userData}}";
         ExecutionResult result = exe.execute(query);
-
         System.out.println("result :: " + result);
-
-        //Assert.assertTrue("Query result contains unexpected errors: " + result.getErrors(), result.getErrors().isEmpty());
+        Assert.assertNotNull(result.getData());
     }
 }

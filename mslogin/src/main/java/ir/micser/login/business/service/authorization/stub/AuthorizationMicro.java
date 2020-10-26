@@ -32,14 +32,7 @@ public final class AuthorizationMicro {
 
     /**
      * <pre>
-     *enum MethodEnum {
-     *  UNDEFINED = 0;
-     *  POST = 1;
-     *  GET = 2;
-     *  PUT = 3;
-     *  DELETE = 4;
-     *}
-     *  MethodEnum method = 3;
+     *  .google.protobuf.StringValue  access_token = 1;
      * </pre>
      *
      * <code>string url = 2;</code>
@@ -48,14 +41,7 @@ public final class AuthorizationMicro {
     java.lang.String getUrl();
     /**
      * <pre>
-     *enum MethodEnum {
-     *  UNDEFINED = 0;
-     *  POST = 1;
-     *  GET = 2;
-     *  PUT = 3;
-     *  DELETE = 4;
-     *}
-     *  MethodEnum method = 3;
+     *  .google.protobuf.StringValue  access_token = 1;
      * </pre>
      *
      * <code>string url = 2;</code>
@@ -195,14 +181,7 @@ public final class AuthorizationMicro {
     private volatile java.lang.Object url_;
     /**
      * <pre>
-     *enum MethodEnum {
-     *  UNDEFINED = 0;
-     *  POST = 1;
-     *  GET = 2;
-     *  PUT = 3;
-     *  DELETE = 4;
-     *}
-     *  MethodEnum method = 3;
+     *  .google.protobuf.StringValue  access_token = 1;
      * </pre>
      *
      * <code>string url = 2;</code>
@@ -222,14 +201,7 @@ public final class AuthorizationMicro {
     }
     /**
      * <pre>
-     *enum MethodEnum {
-     *  UNDEFINED = 0;
-     *  POST = 1;
-     *  GET = 2;
-     *  PUT = 3;
-     *  DELETE = 4;
-     *}
-     *  MethodEnum method = 3;
+     *  .google.protobuf.StringValue  access_token = 1;
      * </pre>
      *
      * <code>string url = 2;</code>
@@ -647,14 +619,7 @@ public final class AuthorizationMicro {
       private java.lang.Object url_ = "";
       /**
        * <pre>
-       *enum MethodEnum {
-       *  UNDEFINED = 0;
-       *  POST = 1;
-       *  GET = 2;
-       *  PUT = 3;
-       *  DELETE = 4;
-       *}
-       *  MethodEnum method = 3;
+       *  .google.protobuf.StringValue  access_token = 1;
        * </pre>
        *
        * <code>string url = 2;</code>
@@ -674,14 +639,7 @@ public final class AuthorizationMicro {
       }
       /**
        * <pre>
-       *enum MethodEnum {
-       *  UNDEFINED = 0;
-       *  POST = 1;
-       *  GET = 2;
-       *  PUT = 3;
-       *  DELETE = 4;
-       *}
-       *  MethodEnum method = 3;
+       *  .google.protobuf.StringValue  access_token = 1;
        * </pre>
        *
        * <code>string url = 2;</code>
@@ -702,14 +660,7 @@ public final class AuthorizationMicro {
       }
       /**
        * <pre>
-       *enum MethodEnum {
-       *  UNDEFINED = 0;
-       *  POST = 1;
-       *  GET = 2;
-       *  PUT = 3;
-       *  DELETE = 4;
-       *}
-       *  MethodEnum method = 3;
+       *  .google.protobuf.StringValue  access_token = 1;
        * </pre>
        *
        * <code>string url = 2;</code>
@@ -728,14 +679,7 @@ public final class AuthorizationMicro {
       }
       /**
        * <pre>
-       *enum MethodEnum {
-       *  UNDEFINED = 0;
-       *  POST = 1;
-       *  GET = 2;
-       *  PUT = 3;
-       *  DELETE = 4;
-       *}
-       *  MethodEnum method = 3;
+       *  .google.protobuf.StringValue  access_token = 1;
        * </pre>
        *
        * <code>string url = 2;</code>
@@ -749,14 +693,7 @@ public final class AuthorizationMicro {
       }
       /**
        * <pre>
-       *enum MethodEnum {
-       *  UNDEFINED = 0;
-       *  POST = 1;
-       *  GET = 2;
-       *  PUT = 3;
-       *  DELETE = 4;
-       *}
-       *  MethodEnum method = 3;
+       *  .google.protobuf.StringValue  access_token = 1;
        * </pre>
        *
        * <code>string url = 2;</code>
@@ -844,6 +781,10 @@ public final class AuthorizationMicro {
     int getResultCode();
 
     /**
+     * <pre>
+     *  .google.protobuf.Int32Value  result_code = 2;
+     * </pre>
+     *
      * <code>int64 check_date = 3;</code>
      * @return The checkDate.
      */
@@ -964,6 +905,10 @@ public final class AuthorizationMicro {
     public static final int CHECK_DATE_FIELD_NUMBER = 3;
     private long checkDate_;
     /**
+     * <pre>
+     *  .google.protobuf.Int32Value  result_code = 2;
+     * </pre>
+     *
      * <code>int64 check_date = 3;</code>
      * @return The checkDate.
      */
@@ -1371,6 +1316,10 @@ public final class AuthorizationMicro {
 
       private long checkDate_ ;
       /**
+       * <pre>
+       *  .google.protobuf.Int32Value  result_code = 2;
+       * </pre>
+       *
        * <code>int64 check_date = 3;</code>
        * @return The checkDate.
        */
@@ -1378,6 +1327,10 @@ public final class AuthorizationMicro {
         return checkDate_;
       }
       /**
+       * <pre>
+       *  .google.protobuf.Int32Value  result_code = 2;
+       * </pre>
+       *
        * <code>int64 check_date = 3;</code>
        * @param value The checkDate to set.
        * @return This builder for chaining.
@@ -1389,6 +1342,10 @@ public final class AuthorizationMicro {
         return this;
       }
       /**
+       * <pre>
+       *  .google.protobuf.Int32Value  result_code = 2;
+       * </pre>
+       *
        * <code>int64 check_date = 3;</code>
        * @return This builder for chaining.
        */
