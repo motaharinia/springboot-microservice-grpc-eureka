@@ -27,14 +27,17 @@ public class LogUploadedFileController {
 
 
     @RequestMapping(value = "/upload/{subSystem}/{entity}", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody PrimitiveResponse uploadBackPanel(HttpServletRequest request, Locale locale, @RequestParam MultipartFile file, @RequestParam String params, @PathVariable("subSystem") SubSystemEnum subSystem, @PathVariable("entity") String entity) throws Exception {
+    public @ResponseBody PrimitiveResponse uploadBackPanel(HttpServletRequest request, Locale locale,
+                                                           @RequestParam(value = "qqfile", required = true) MultipartFile qqfile,
+                                                           @RequestParam String params, @PathVariable("subSystem") SubSystemEnum subSystem,
+                                                           @PathVariable("entity") String entity) throws Exception {
         ObjectMapper mapper = new CustomObjectMapper();
         System.out.println("params:"+params);
         FileUploadChunkModel fileUploadChunkModel = mapper.readValue(params, FileUploadChunkModel.class);
         fileUploadChunkModel.setSubSystem(subSystem);
         fileUploadChunkModel.setEntity(entity);
         //ارسال اطلاعات قسمتی از اپلود برای سرویس آپلود فایل
-        logUploadedFileService.uploadToFileModel(file, fileUploadChunkModel);
+        logUploadedFileService.uploadToFileModel(qqfile, fileUploadChunkModel);
         //ایجاد خروجی برای آپلودر بک پنل
         return new PrimitiveResponse(true);
     }
@@ -43,7 +46,7 @@ public class LogUploadedFileController {
     public @ResponseBody
     FineUploaderResponseModel uploadFrontPanel(HttpServletRequest request, Locale locale, @RequestParam(required = true) String qquuid,
                                                @RequestParam(required = true) String qqfilename, @RequestParam(required = true) Long qqtotalfilesize,
-                                               @RequestParam MultipartFile qqfile, @RequestParam(required = false, defaultValue = "0") Integer qqpartindex,
+                                               @RequestParam(value = "qqfile", required = true) MultipartFile qqfile, @RequestParam(required = false, defaultValue = "0") Integer qqpartindex,
                                                @RequestParam(required = false, defaultValue = "0") Integer qqpartbyteoffset,
                                                @RequestParam(required = false, defaultValue = "0") Long qqchunksize,
                                                @RequestParam(required = false, defaultValue = "1") Integer qqtotalparts,
