@@ -18,7 +18,6 @@ import ir.micser.login.presentation.loguploadedfile.LogUploadedFileModel;
 import ir.micser.login.presentation.loguploadedfile.backuploader.FileUploadChunkModel;
 import ir.micser.login.presentation.loguploadedfile.frontuploader.FineUploaderChunkModel;
 import org.apache.commons.io.FileUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,15 +51,10 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      */
     private LogUploadedFileRepository logUploadedFileRepository;
 
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
-
-    @Autowired
-    @Qualifier(value = "LogUploadedFileServiceImpl")
-    private LogUploadedFileService logUploadedFileService;
+//    @Autowired
+//    @Qualifier(value = "LogUploadedFileServiceImpl")
+//    private LogUploadedFileService logUploadedFileService;
 
     @Autowired
     private FsoService fsoService;
@@ -70,9 +64,8 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      * متد سازنده
      */
     @Autowired
-    public LogUploadedFileServiceImpl(LogUploadedFileRepository logUploadedFileRepository, ModelMapper modelMapper) {
+    public LogUploadedFileServiceImpl(LogUploadedFileRepository logUploadedFileRepository) {
         this.logUploadedFileRepository = logUploadedFileRepository;
-        this.modelMapper = modelMapper;
     }
 
     /**
@@ -339,7 +332,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
             case ENTITY_CREATE:
                 for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = logUploadedFileService.getLogUploadedFileModel(fileViewModel.getKey());
+                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
                         for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
@@ -353,7 +346,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                 }
                 for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = logUploadedFileService.getLogUploadedFileModel(fileViewModel.getKey());
+                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
                         for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
@@ -376,7 +369,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                             }
                             fsoService.upload(fileUploadedModel);
                         }
-                        logUploadedFileService.delete(fileViewModel.getKey());
+                        this.delete(fileViewModel.getKey());
                     }
                 }
                 break;
@@ -385,7 +378,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                 for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
                     //اگر فایلی در کلاینت اضافه شده است
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = logUploadedFileService.getLogUploadedFileModel(fileViewModel.getKey());
+                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
                         for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
@@ -417,7 +410,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                             }
                             fsoService.upload(fileUploadedModel);
                         }
-                        logUploadedFileService.delete(fileViewModel.getKey());
+                        this.delete(fileViewModel.getKey());
                     }
                     //اگر فایلی در کلاینت حذف شده است
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.DELETED)) {

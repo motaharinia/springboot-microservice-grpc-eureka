@@ -9,7 +9,6 @@ import ir.micser.login.persistence.orm.adminuserorganizationunit.AdminUserOrgani
 import ir.micser.login.persistence.orm.adminuserorganizationunit.AdminUserOrganizationUnitRepository;
 import ir.micser.login.presentation.adminuserorganizationunit.AdminUserOrganizationUnitModel;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,10 +35,6 @@ public class AdminUserOrganizationUnitServiceImpl implements AdminUserOrganizati
      */
     private AdminUserOrganizationUnitRepository adminUserOrganizationUnitRepository;
 
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
     /**
      * متد سازنده پیش فرض
@@ -51,9 +46,8 @@ public class AdminUserOrganizationUnitServiceImpl implements AdminUserOrganizati
      * متد سازنده
      */
     @Autowired
-    public AdminUserOrganizationUnitServiceImpl(AdminUserOrganizationUnitRepository adminUserOrganizationUnitRepository, ModelMapper modelMapper) {
+    public AdminUserOrganizationUnitServiceImpl(AdminUserOrganizationUnitRepository adminUserOrganizationUnitRepository) {
         this.adminUserOrganizationUnitRepository = adminUserOrganizationUnitRepository;
-        this.modelMapper = modelMapper;
     }
 
     /**

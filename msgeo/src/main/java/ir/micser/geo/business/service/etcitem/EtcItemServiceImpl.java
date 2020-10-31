@@ -8,7 +8,6 @@ import com.motaharinia.msjpautility.entity.EntityTools;
 import ir.micser.geo.persistence.orm.etcitem.EtcItem;
 import ir.micser.geo.persistence.orm.etcitem.EtcItemRepository;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,12 +39,6 @@ public class EtcItemServiceImpl implements EtcItemService {
     private EtcItemRepository etcItemRepository;
 
     /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
-
-
-    /**
      * متد سازنده پیش فرض
      */
     public EtcItemServiceImpl() {
@@ -55,9 +48,8 @@ public class EtcItemServiceImpl implements EtcItemService {
      * متد سازنده
      */
     @Autowired
-    public EtcItemServiceImpl(EtcItemRepository etcItemRepository, ModelMapper modelMapper) {
+    public EtcItemServiceImpl(EtcItemRepository etcItemRepository) {
         this.etcItemRepository = etcItemRepository;
-        this.modelMapper = modelMapper;
     }
 
 

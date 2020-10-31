@@ -7,7 +7,6 @@ import ir.micser.login.persistence.orm.adminuserskill.AdminUserSkill;
 import ir.micser.login.persistence.orm.adminuserskill.AdminUserSkillRepository;
 import ir.micser.login.presentation.adminuser.AdminUserModel;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,11 +34,6 @@ public class AdminUserSkillServiceImpl implements AdminUserSkillService {
      */
     private AdminUserSkillRepository adminUserSkillRepository;
 
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
-
 
     /**
      * متد سازنده پیش فرض
@@ -51,9 +45,8 @@ public class AdminUserSkillServiceImpl implements AdminUserSkillService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserSkillServiceImpl(AdminUserSkillRepository adminUserSkillRepository, ModelMapper modelMapper) {
+    public AdminUserSkillServiceImpl(AdminUserSkillRepository adminUserSkillRepository) {
         this.adminUserSkillRepository = adminUserSkillRepository;
-        this.modelMapper = modelMapper;
     }
 
     /**
@@ -153,9 +146,5 @@ public class AdminUserSkillServiceImpl implements AdminUserSkillService {
     }
 
 
-    private AdminUserModel convertToDto(AdminUser adminUser) {
-        AdminUserModel adminUserModel = modelMapper.map(adminUser, AdminUserModel.class);
-//        userModel.setSubmissionDate(adminuser.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
-        return adminUserModel;
-    }
+
 }

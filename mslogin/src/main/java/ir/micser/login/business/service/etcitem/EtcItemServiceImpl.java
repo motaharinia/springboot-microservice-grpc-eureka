@@ -11,7 +11,6 @@ import ir.micser.login.persistence.orm.etcitem.EtcItem;
 import ir.micser.login.persistence.orm.etcitem.EtcItemRepository;
 import ir.micser.login.presentation.generic.CustomComboFilterModel;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,10 +40,6 @@ public class EtcItemServiceImpl implements EtcItemService {
      */
     private EtcItemRepository etcItemRepository;
 
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
 
     /**
@@ -57,9 +52,8 @@ public class EtcItemServiceImpl implements EtcItemService {
      * متد سازنده
      */
     @Autowired
-    public EtcItemServiceImpl(EtcItemRepository etcItemRepository, ModelMapper modelMapper) {
+    public EtcItemServiceImpl(EtcItemRepository etcItemRepository) {
         this.etcItemRepository = etcItemRepository;
-        this.modelMapper = modelMapper;
     }
 
 

@@ -20,17 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @Transactional(rollbackFor = Exception.class)
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-//    @Autowired
-//    @Qualifier(value = "UserDaoImpl")
-//    private UserDao userDao;
-//
-//    @Autowired
-//    @Qualifier(value = "NotificationServiceImpl")
-//    private NotificationService notificationService;
-//
-//    @Autowired
-//    @Qualifier(value = "NotificationSendServiceImpl")
-//    private NotificationSendService notificationSendService;
 
     /**
      * ریپازیتوری ادمین
@@ -77,15 +66,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         response.addHeader("loginException", loginExceptionModel.getLoginException().getValue());
         response.addHeader("loginFailureCount", loginExceptionModel.getLoginFailureCount().toString());
 
-
-
-        //handle notification
-//        UserNotificationSendModel userNotificationSendModel = new UserNotificationSendModel();
-//        userNotificationSendModel.setUsername(username);
-//        userNotificationSendModel.setMessage(loginExceptionEnum.getValue());
-//        notificationService.createLoginNotification(request, NotificationTypeEnum.LOGIN_FAILED, userNotificationSendModel, new HashMap<String, String>());
-//        notificationSendService.sendNotifications();
-//        }
         return loginExceptionModel;
     }
 

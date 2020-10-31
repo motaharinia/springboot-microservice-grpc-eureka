@@ -30,7 +30,6 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -78,10 +77,6 @@ public class AdminUserServiceImpl implements AdminUserService {
      * مشخصات جستجوی ادمین
      */
     private AdminUserSpecification adminUserSpecification;
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
     /**
      * سرویس Hibernate search
@@ -104,13 +99,12 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper,HibernateSearchService hibernateSearchService) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification,HibernateSearchService hibernateSearchService) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
         this.etcItemService=etcItemService;
         this.adminUserSpecification = adminUserSpecification;
-        this.modelMapper = modelMapper;
         this.hibernateSearchService=hibernateSearchService;
     }
 
@@ -279,13 +273,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser = adminUserSkillService.deleteByAdminUser(adminUser);
         adminUserRepository.save(adminUser);
         adminUserRepository.delete(adminUser);
-        return adminUserModel;
-    }
-
-    @NotNull
-    private AdminUserModel convertToDto(@NotNull AdminUser adminUser) {
-        AdminUserModel adminUserModel = modelMapper.map(adminUser, AdminUserModel.class);
-//        userModel.setSubmissionDate(adminuser.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
         return adminUserModel;
     }
 

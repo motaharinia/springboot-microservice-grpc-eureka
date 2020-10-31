@@ -12,14 +12,12 @@ import ir.micser.geo.business.service.cityplace.stub.CityPlaceGrpc.*;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceMicro.*;
 import ir.micser.geo.persistence.orm.city.City;
 import ir.micser.geo.persistence.orm.city.CityRepository;
-import ir.micser.geo.persistence.orm.city.CitySpecification;
 import ir.micser.geo.persistence.orm.cityplace.CityPlace;
 import ir.micser.geo.persistence.orm.cityplace.CityPlaceRepository;
 import ir.micser.geo.persistence.orm.cityplace.CityPlaceSpecification;
 import ir.micser.geo.presentation.cityplace.CityPlaceModel;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -62,10 +60,6 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
      * مشخصات جستجوی لوکیشن شهری
      */
     private CityPlaceSpecification cityPlaceSpecification;
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
     /**
      * متد سازنده پیش فرض
@@ -83,11 +77,10 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
      * متد سازنده
      */
     @Autowired
-    public CityPlaceServiceImpl(CityPlaceRepository cityPlaceRepository, CityRepository cityRepository, CityPlaceSpecification cityPlaceSpecification, ModelMapper modelMapper) {
+    public CityPlaceServiceImpl(CityPlaceRepository cityPlaceRepository, CityRepository cityRepository, CityPlaceSpecification cityPlaceSpecification) {
         this.cityPlaceRepository = cityPlaceRepository;
         this.cityRepository = cityRepository;
         this.cityPlaceSpecification = cityPlaceSpecification;
-        this.modelMapper = modelMapper;
     }
 
     /**
@@ -196,13 +189,6 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
         CityPlace cityPlace = cityPlaceRepository.findById(cityPlaceModel.getId()).get();
         cityPlaceRepository.save(cityPlace);
         cityPlaceRepository.delete(cityPlace);
-        return cityPlaceModel;
-    }
-
-    @NotNull
-    private CityPlaceModel convertToDto(@NotNull CityPlace cityPlace) {
-        CityPlaceModel cityPlaceModel = modelMapper.map(cityPlace, CityPlaceModel.class);
-//        cityPlaceModel.setSubmissionDate(cityPlace.getSubmissionDate(), cityPlaceService.getCurrentUser().getPreference().getTimezone());
         return cityPlaceModel;
     }
 

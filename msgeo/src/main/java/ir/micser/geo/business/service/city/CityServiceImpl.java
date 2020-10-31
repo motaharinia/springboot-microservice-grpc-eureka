@@ -16,7 +16,6 @@ import ir.micser.geo.persistence.orm.city.CitySpecification;
 import ir.micser.geo.presentation.city.CityModel;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -54,10 +53,6 @@ public class CityServiceImpl extends CityImplBase implements CityService {
      * مشخصات جستجوی شهر
      */
     private CitySpecification citySpecification;
-    /**
-     * تبدیل کننده مدل
-     */
-    private ModelMapper modelMapper;
 
     /**
      * متد سازنده پیش فرض
@@ -69,11 +64,10 @@ public class CityServiceImpl extends CityImplBase implements CityService {
      * متد سازنده
      */
     @Autowired
-    public CityServiceImpl(CityRepository cityRepository, EtcItemService etcItemService, CitySpecification citySpecification, ModelMapper modelMapper) {
+    public CityServiceImpl(CityRepository cityRepository, EtcItemService etcItemService, CitySpecification citySpecification) {
         this.cityRepository = cityRepository;
         this.etcItemService = etcItemService;
         this.citySpecification = citySpecification;
-        this.modelMapper = modelMapper;
     }
 
     /**
@@ -164,13 +158,6 @@ public class CityServiceImpl extends CityImplBase implements CityService {
         City city = cityRepository.findById(cityModel.getId()).get();
         cityRepository.save(city);
         cityRepository.delete(city);
-        return cityModel;
-    }
-
-    @NotNull
-    private CityModel convertToDto(@NotNull City city) {
-        CityModel cityModel = modelMapper.map(city, CityModel.class);
-//        cityModel.setSubmissionDate(city.getSubmissionDate(), cityService.getCurrentUser().getPreference().getTimezone());
         return cityModel;
     }
 
