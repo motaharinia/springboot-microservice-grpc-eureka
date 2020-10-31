@@ -45,6 +45,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <!--==========Web[GraphQL]==========-->
+        <dependency>
+            <groupId>io.leangen.graphql</groupId>
+            <artifactId>graphql-spqr-spring-boot-starter</artifactId>
+            <version>0.0.4</version>
+        </dependency>
 
         <!--==========Caching==========-->
         <dependency>
@@ -57,12 +69,7 @@
             <version>3.3.0</version>
         </dependency>
 
-        <!--==========Web[GraphQL]==========-->
-        <dependency>
-            <groupId>io.leangen.graphql</groupId>
-            <artifactId>graphql-spqr-spring-boot-starter</artifactId>
-            <version>0.0.4</version>
-        </dependency>
+
 
         <!--==========Data JPA & Indexing==========-->
         <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Release-Notes-->
@@ -204,13 +211,7 @@
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
         </dependency>
-        <!-- MvcConfiguration Multipart-->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.4</version>
-        </dependency>
-        <!--MsUtility-->
+        <!--MsJpaUtility-->
         <dependency>
             <groupId>com.motaharinia</groupId>
             <artifactId>MsJpaUtility</artifactId>
