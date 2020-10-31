@@ -5,6 +5,8 @@
  */
 package ir.micser.login.presentation.loguploadedfile;
 
+import com.motaharinia.msutility.fso.upload.FileUploadedModel;
+
 import java.util.Date;
 
 /**
@@ -26,6 +28,26 @@ public class LogUploadedFileModel {
     private byte[] fileByteArray;
     private String directoryRealPath;
     private String directoryHashedPath;
+
+
+    public FileUploadedModel getFileUploadedModel(){
+        FileUploadedModel fileUploadedModel=new FileUploadedModel();
+        fileUploadedModel.setUploadDateTime(this.getFileUploadDateTime());
+        fileUploadedModel.setDataByteArray(this.getFileByteArray());
+        fileUploadedModel.setDirectoryHashedPath(this.getDirectoryHashedPath());
+        fileUploadedModel.setDirectoryRealPath(this.getDirectoryRealPath());
+        fileUploadedModel.setEntity(this.getFileEntity());
+        fileUploadedModel.setSubSystem(this.getFileSubSystem());
+        fileUploadedModel.setUploadedPath(this.getFileUploadedPath());
+        fileUploadedModel.setExtension(this.getFileExtension());
+        fileUploadedModel.setFullName(this.getFileFullName());
+        fileUploadedModel.setMimeType(this.getFileMimeType());
+        fileUploadedModel.setName(this.getFileName());
+        fileUploadedModel.setSize(this.getFileSize());
+        return fileUploadedModel;
+    }
+
+
 
     //getter-setter:
     public String getFileKey() {

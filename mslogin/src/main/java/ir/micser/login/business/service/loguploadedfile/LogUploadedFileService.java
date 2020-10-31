@@ -1,5 +1,6 @@
 package ir.micser.login.business.service.loguploadedfile;
 
+import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleModel;
 import ir.micser.login.presentation.loguploadedfile.LogUploadedFileModel;
 import ir.micser.login.presentation.loguploadedfile.backuploader.FileUploadChunkModel;
 import ir.micser.login.presentation.loguploadedfile.frontuploader.FineUploaderChunkModel;
@@ -56,4 +57,10 @@ public interface LogUploadedFileService {
      */
     void delete(String fileKey) throws Exception;
 
+    /**
+     * این متد مدل یک فایل آپلود شده را میگیرد و فایل را نسبت به فعل ثبت یا ویرایش یا حذف در فایل سیستم سامانه مدیریت میکند
+     * @param logUploadedFileHandleModel مدل فایل آپلود شده
+     * @throws Exception خطا
+     */
+    void logUploadedFileHandle(LogUploadedFileHandleModel logUploadedFileHandleModel) throws Exception;
 }

@@ -15,14 +15,21 @@ import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFileHandleActionEnum;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFileService;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFileServiceImpl;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
+import ir.micser.login.persistence.orm.loguploadedfile.LogUploadedFile;
+import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleFsoModel;
+import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,9 +46,13 @@ import java.util.Optional;
 public class AdminUserController {
 
     private final AdminUserService adminUserService;
+
+    private final LogUploadedFileService logUploadedFileService;
+
     @Autowired
-    public AdminUserController(AdminUserService adminUserService) {
+    public AdminUserController(AdminUserService adminUserService,LogUploadedFileService logUploadedFileService) {
         this.adminUserService = adminUserService;
+        this.logUploadedFileService=logUploadedFileService;
     }
 
     /**
@@ -53,7 +64,12 @@ public class AdminUserController {
     @GraphQLMutation(name = "create")
     //@PostMapping("/v1/adminUser")
     public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
-        return adminUserService.create(adminUserModel);
+        adminUserModel=  adminUserService.create(adminUserModel);
+
+        LogUploadedFileHandleModel logUploadedFileHandleModel = new LogUploadedFileHandleModel(adminUserModel.getId(), LogUploadedFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new LogUploadedFileHandleFsoModel(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        logUploadedFileService.logUploadedFileHandle(logUploadedFileHandleModel);
+
+        return adminUserModel;
     }
 
     /**

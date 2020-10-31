@@ -2,6 +2,7 @@ package ir.micser.login.presentation.adminuser;
 
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.customvalidation.required.Required;
+import com.motaharinia.msutility.fso.view.FileViewModel;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
 
@@ -80,6 +81,9 @@ public class AdminUserModel implements Serializable {
     private List<AdminUserSkillModel> skillList = new ArrayList<>();
 
     private String referenceCode;
+
+    //تصاویر پروفایل
+    private List<FileViewModel> imageFileList = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -185,5 +189,13 @@ public class AdminUserModel implements Serializable {
 
     public void setReferenceCode(String referenceCode) {
         this.referenceCode = referenceCode;
+    }
+
+    public List<FileViewModel> getImageFileList() {
+        return imageFileList;
+    }
+
+    public void setImageFileList(List<FileViewModel> imageFileList) {
+        this.imageFileList = imageFileList;
     }
 }
