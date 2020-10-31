@@ -62,11 +62,7 @@ public class FsoService {
      */
     @Value("${fso.path.module}")
     private String FSO_PATH_MODULE = "/mbazardata/fso";
-    /**
-     * مسیر موقت جهت آپلود فایلهای پروزه
-     */
-    @Value("${fso.path.upload.directory}")
-    private String FSO_PATH_UPLOAD_DIRECTORY = "/mbazardata/uploadedfile";
+
 
 
     private FsoConfigModel FSO_CONFIG_MODEL = new FsoConfigModel(new Integer[]{FSO_THUMB_SIZE_SMALL, FSO_THUMB_SIZE_LARGE}, FSO_IMAGE_THUMB_EXTENSION, FSO_DIRECTORY_FILE_LIMIT);
@@ -125,14 +121,7 @@ public class FsoService {
     }
 
 
-    /**
-     * این متد یک کلید فایل آپلود شده را از ورودی دریافت میکند و آن را حذف می نماید
-     *
-     * @param fileKey کلید فایل آپلود شده
-     */
-    public void deleteUploadedFile(@NotNull String fileKey) {
-        FsoTools.delete(FSO_PATH_UPLOAD_DIRECTORY + "/" + fileKey, false, FSO_CONFIG_MODEL);
-    }
+
 
     /**
      * این متد یک مسیر را از ورودی دریافت میکند و آن را در صورت عدم وجود می سازد
@@ -325,18 +314,5 @@ public class FsoService {
      */
     public byte[] readFromFile(File file) throws Exception {
         return FileUtils.readFileToByteArray(file);
-    }
-
-
-    public String getFSO_PATH_MODULE() {
-        return FSO_PATH_MODULE;
-    }
-
-    public String getFSO_PATH_UPLOAD_DIRECTORY() {
-        return FSO_PATH_UPLOAD_DIRECTORY;
-    }
-
-    public FsoConfigModel getFSO_CONFIG_MODEL() {
-        return FSO_CONFIG_MODEL;
     }
 }

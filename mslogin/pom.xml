@@ -213,7 +213,7 @@
         <!--MsUtility-->
         <dependency>
             <groupId>com.motaharinia</groupId>
-            <artifactId>MsUtility</artifactId>
+            <artifactId>MsJpaUtility</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

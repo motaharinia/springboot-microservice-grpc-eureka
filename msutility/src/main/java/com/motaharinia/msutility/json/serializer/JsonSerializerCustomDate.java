@@ -26,6 +26,7 @@ public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
     @Override
     public void serialize(CustomDate customDate, JsonGenerator jg, SerializerProvider sp) {
         try {
+            System.out.println("**********serialize start customDate:"+customDate.toString());
             //برای حفظ ترتیب درج بجای هشمپ از لینکدهشمپ استفاده میکنیم
             LinkedHashMap<String, String> output = new LinkedHashMap<>();
             if (CustomDate.isEmpty(customDate)) {
@@ -34,6 +35,7 @@ public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
                 output.put("day", "");
             } else {
                 Locale currentLocale = LocaleContextHolder.getLocale();
+                System.out.println("**********serialize currentLocale.getLanguage():"+currentLocale.getLanguage());
                 if (currentLocale.getLanguage().equals("fa")) {
                     Date date = CalendarTools.getDateFromCustomDate(customDate);
                     customDate = CalendarTools.gregorianToJalaliDate(date);
@@ -41,6 +43,7 @@ public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
                 output.put("year", customDate.getYear().toString());
                 output.put("month", CalendarTools.fixOneDigit(customDate.getMonth().toString()));
                 output.put("day", CalendarTools.fixOneDigit(customDate.getDay().toString()));
+                System.out.println("**********serialize end customDate:"+customDate.toString());
             }
             jg.writeObject(output);
         } catch (Exception ex) {

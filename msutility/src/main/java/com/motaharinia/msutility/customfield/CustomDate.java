@@ -67,6 +67,8 @@ public class CustomDate implements Comparable, Serializable {
             return;
         }
         Locale currentLocale = LocaleContextHolder.getLocale();
+        System.out.println("currentLocale:" + currentLocale);
+        System.out.println(this.toString());
         if (!validateByLocal(currentLocale.getLanguage())) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.DATE_VALIDATION_FAILED, "");
         }

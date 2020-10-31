@@ -3,9 +3,6 @@ package com.motaharinia.msutility.jstree;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +21,6 @@ public class JstreeNodeModel implements Serializable {
      * شناسه اضافه شونده
      */
     @JsonIgnore
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_incr;
 
 

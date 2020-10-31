@@ -15,10 +15,12 @@ import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -387,16 +389,20 @@ public interface FsoTools {
     /**
      * این متد یک نشانی وب فایل را میخواند و محتویات آن را به صورت آرایه ای از بایت خروجی میدهد
      *
-     * @param url نشانی وب
+     * @param urlAddress نشانی وب
      * @return خروجی:  آرایه ای از بایت نشانی وب داده شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
     @NotNull
-    static byte[] downloadUrlAndRead(@NotNull String url) throws Exception {
-        if (ObjectUtils.isEmpty(url)) {
+    static byte[] downloadUrlAndRead(@NotNull String urlAddress) throws Exception {
+        if (ObjectUtils.isEmpty(urlAddress)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "url");
         }
-        InputStream inputStream = new URL(url).openStream();
+        URL url =new URL(urlAddress);
+       URLConnection connection = url.openConnection();
+        connection.connect();
+
+        InputStream inputStream = connection.getInputStream();
         return IOUtils.toByteArray(inputStream);
     }
 
@@ -585,5 +591,7 @@ public interface FsoTools {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.FSO_MIMETYPE_NOT_VALID_FILE_PATH, "filePath:" + filePath);
         }
     }
+
+
 
 }

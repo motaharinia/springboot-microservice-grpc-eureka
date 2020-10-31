@@ -22,7 +22,8 @@ this project is a demo for all technologies i have in the repository, containing
 - Front-end: ReactJs 16.8
 
 ### Projects Domain:
-1. msutility: this project is a shared utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
+1. msutility: this project is a shared common utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
+1. msjpautility: this project is a shared jpa utility project(msutility is used inside msjpautility) for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
 2. msdiscoveryserver: a eureka discovery server project
 3. msgeo: a business microservice which contains geo domain like city
 4. mslogin: a business microservice which contains authentication and user and etc.
@@ -68,10 +69,14 @@ steps:
     - if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility" folder, remove it.
     - open msutility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
     - in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility"
-4. msdiscoveryserver start:
+4. msjpautility build:
+    - if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility" folder, remove it.
+    - open msjpautility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility"    
+5. msdiscoveryserver start:
     - open msdiscoveryserver project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
     - run msdiscoveryserver project and open "http://localhost:8761" to monitor eureka clients that register themselves later on eureka server.
-5. msgeo and mslogin start:
+6. msgeo and mslogin start:
     - follow msgeo and mslogin steps like "springboot-caching" and "springboot-indexinghibernatesearch" steps in their repository readme project description, that you can run these two projects.
     - open msgeo project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
     - run msgeo project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
@@ -79,7 +84,7 @@ steps:
     - if table "OAUTH_CLIENT_DETAILS" is empty or in table "ADMIN_USER" there is not any user with username "eng.motahari@gmail.com" and bcrypted password in mslogin database, before go to next step, only one time rename file from "resources/data-oracle222.sql" to "resources/data-oracle.sql", and after next step(running mslogin project), one row will be inserted to "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database.
     - run mslogin project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
     - do not forget to rename sql file again to "resources/data-oracle222.sql". this file only used for the first time that "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database are empty.
-6. client side changes and apps like "reactjs-graphqlapollo" is inside the "client" folder 
+7. client side changes and apps like "reactjs-graphqlapollo" is inside the "client" folder 
     
 ### IntellliJ IDEA Configurations:
 - IntelijIDEA: Help -> Edit Custom Vm Options -> add these two line:

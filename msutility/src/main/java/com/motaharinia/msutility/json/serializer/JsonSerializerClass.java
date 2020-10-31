@@ -18,7 +18,6 @@ public class JsonSerializerClass  extends JsonSerializer<Object> {
 
     @Override
     public void serialize(Object object, JsonGenerator jsonGen, SerializerProvider sp) throws IOException {
-        System.out.println("object:" + object);
         if(!ObjectUtils.isEmpty(object)) {
             jsonGen.writeString(object.getClass().getName());
         }else{

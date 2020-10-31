@@ -318,7 +318,7 @@ public class FsoToolsTests {
     @Test
     void downloadUrlAndReadTest() {
         try {
-            byte[] data = FsoTools.downloadUrlAndRead("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
+            byte[] data = FsoTools.downloadUrlAndRead("http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
             assertThat(data.length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());

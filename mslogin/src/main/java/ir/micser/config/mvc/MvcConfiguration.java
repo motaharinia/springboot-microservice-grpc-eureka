@@ -29,18 +29,6 @@ import java.util.Locale;
 public class MvcConfiguration  implements WebMvcConfigurer {
 
     /**
-     * تنظیمات آپلود فایل در سامانه
-     * pom dependency: commons-fileupload
-     * @return خروجی: ریزالور آپلود فایل با تنظیمات سفارشی شده
-     */
-    @Bean
-    public MultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(200 * 1024 * 1024);
-        return multipartResolver;
-    }
-
-    /**
      * تنظیمات چندزبانی سامانه
      * @return خروجی: منبع ترجمه برای چندزبانی با تنظیمات سفارشی شده
      */

@@ -26,7 +26,7 @@ public class FsoServiceTests {
     @Autowired
     private FsoService fsoService;
 
-    String parentDirPath = fsoService.getFSO_CONFIG_MODEL().getThumbExtension() + "/MsUtilityTests";
+    String parentDirPath =  "/MsUtilityTests";
     String parentDirFile1Path = parentDirPath + "/parentfile1.txt";
     String parentDirFile2Path = parentDirPath + "/parentfile2.txt";
 
