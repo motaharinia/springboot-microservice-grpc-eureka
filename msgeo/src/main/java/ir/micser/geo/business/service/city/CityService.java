@@ -2,8 +2,8 @@ package ir.micser.geo.business.service.city;
 
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
-import com.motaharinia.msutility.search.data.SearchDataModel;
-import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import com.motaharinia.msjpautility.search.data.SearchDataModel;
+import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
 import ir.micser.geo.presentation.city.CityModel;
 import org.jetbrains.annotations.NotNull;
 

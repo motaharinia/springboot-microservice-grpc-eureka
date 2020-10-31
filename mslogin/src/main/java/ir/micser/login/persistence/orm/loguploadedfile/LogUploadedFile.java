@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ir.micser.login.persistence.orm.loguploadedfile;
 
-import com.motaharinia.msutility.entity.GenericEntity;
-import com.motaharinia.msutility.entity.OracleUtility;
+import com.motaharinia.msjpautility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.OracleUtility;
 
 import javax.persistence.*;
 import java.util.Date;

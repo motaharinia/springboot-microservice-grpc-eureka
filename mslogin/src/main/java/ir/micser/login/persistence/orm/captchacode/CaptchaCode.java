@@ -3,7 +3,7 @@ package ir.micser.login.persistence.orm.captchacode;
 
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.GenericEntity;
 import ir.micser.login.business.service.captchacode.CaptchCodeTypeEnum;
 
 import javax.persistence.*;

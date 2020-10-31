@@ -1,7 +1,7 @@
 package ir.micser.geo.persistence.orm.cityplace;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.GenericEntity;
 import ir.micser.geo.persistence.orm.city.City;
 
 import javax.persistence.*;

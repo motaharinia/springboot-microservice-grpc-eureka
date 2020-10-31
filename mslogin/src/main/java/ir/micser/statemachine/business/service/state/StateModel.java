@@ -1,13 +1,10 @@
 package ir.micser.statemachine.business.service.state;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
-import com.motaharinia.msutility.entity.OracleUtility;
 
-import javax.persistence.*;
+import com.motaharinia.msjpautility.entity.GenericEntity;
+
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 
 
 /**

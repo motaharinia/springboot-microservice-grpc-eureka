@@ -3,9 +3,9 @@ package ir.micser.geo.business.service.cityplace;
 
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
-import com.motaharinia.msutility.entity.EntityTools;
-import com.motaharinia.msutility.search.data.SearchDataModel;
-import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import com.motaharinia.msjpautility.entity.EntityTools;
+import com.motaharinia.msjpautility.search.data.SearchDataModel;
+import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
 import io.grpc.stub.StreamObserver;
 import ir.micser.geo.business.service.city.CitySearchViewTypeBrief;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceGrpc.*;

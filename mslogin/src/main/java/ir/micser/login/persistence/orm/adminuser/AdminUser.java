@@ -1,8 +1,8 @@
 package ir.micser.login.persistence.orm.adminuser;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
-import com.motaharinia.msutility.entity.OracleUtility;
+import com.motaharinia.msjpautility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.OracleUtility;
 import ir.micser.login.persistence.orm.adminusercontact.AdminUserContact;
 import ir.micser.login.persistence.orm.adminuserskill.AdminUserSkill;
 import ir.micser.login.persistence.orm.etcitem.EtcItem;

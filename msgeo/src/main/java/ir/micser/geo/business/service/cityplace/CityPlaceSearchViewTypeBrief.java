@@ -2,8 +2,8 @@ package ir.micser.geo.business.service.cityplace;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.motaharinia.msutility.search.SearchRowView;
-import com.motaharinia.msutility.search.annotation.SearchDataColumn;
+import com.motaharinia.msjpautility.search.SearchRowView;
+import com.motaharinia.msjpautility.search.annotation.SearchDataColumn;
 import ir.micser.geo.persistence.orm.cityplace.CityPlace;
 
 

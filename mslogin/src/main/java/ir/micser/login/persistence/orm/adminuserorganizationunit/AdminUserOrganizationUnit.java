@@ -1,6 +1,6 @@
 package ir.micser.login.persistence.orm.adminuserorganizationunit;
 
-import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.GenericEntity;
 
 import javax.persistence.*;
 import java.util.Collection;

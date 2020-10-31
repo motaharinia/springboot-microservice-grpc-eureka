@@ -4,7 +4,7 @@ package ir.micser.geo.business.service.etcitem;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
-import com.motaharinia.msutility.entity.EntityTools;
+import com.motaharinia.msjpautility.entity.EntityTools;
 import ir.micser.geo.persistence.orm.etcitem.EtcItem;
 import ir.micser.geo.persistence.orm.etcitem.EtcItemRepository;
 import org.jetbrains.annotations.NotNull;

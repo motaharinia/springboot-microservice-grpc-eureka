@@ -2,7 +2,7 @@ package ir.micser.login.business.service.loguploadedfile;
 
 
 import com.motaharinia.msutility.customexception.BusinessException;
-import com.motaharinia.msutility.entity.EntityTools;
+import com.motaharinia.msjpautility.entity.EntityTools;
 import com.motaharinia.msutility.fso.FsoTools;
 import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.persistence.orm.loguploadedfile.LogUploadedFile;

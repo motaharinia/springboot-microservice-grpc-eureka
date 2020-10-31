@@ -1,7 +1,7 @@
 package ir.micser.statemachine.persistence.orm.statedetail;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.GenericEntity;
 import ir.micser.statemachine.business.service.state.EntityNameEnum;
 import ir.micser.statemachine.business.service.state.GRPCNameEnum;
 import ir.micser.statemachine.persistence.orm.state.State;

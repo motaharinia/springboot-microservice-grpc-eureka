@@ -1,8 +1,9 @@
 package ir.micser.statemachine.persistence.orm.state;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
-import com.motaharinia.msutility.entity.OracleUtility;
+
+import com.motaharinia.msjpautility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.OracleUtility;
 import ir.micser.statemachine.business.service.state.MethodTypeEnum;
 import ir.micser.statemachine.business.service.state.ServiceNameEnum;
 

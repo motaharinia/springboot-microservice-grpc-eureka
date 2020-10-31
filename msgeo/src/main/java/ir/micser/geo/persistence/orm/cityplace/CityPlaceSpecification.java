@@ -1,7 +1,7 @@
 package ir.micser.geo.persistence.orm.cityplace;
 
 
-import com.motaharinia.msutility.jparepository.GenericSpecification;
+import com.motaharinia.msjpautility.jparepository.GenericSpecification;
 import org.springframework.stereotype.Component;
 
 

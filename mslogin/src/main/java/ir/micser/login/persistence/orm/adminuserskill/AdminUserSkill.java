@@ -1,7 +1,7 @@
 package ir.micser.login.persistence.orm.adminuserskill;
 
 
-import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msjpautility.entity.GenericEntity;
 import ir.micser.login.persistence.orm.adminuser.AdminUser;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
