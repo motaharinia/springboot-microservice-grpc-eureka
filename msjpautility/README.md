@@ -1,11 +1,11 @@
-## MSUtility
-this project is a shared utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
+## MSJpaUtility
+this project is a shared jpa utility project(msutility is used inside msjpautility) for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
 
 ### Project Descriptions:
 build with java-doc:
-- if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility" folder, remove it.
-- open msutility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
-- in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility"
+- if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility" folder, remove it.
+- open msjpautility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+- in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility"
 
 ### IntellliJ IDEA Configurations:
 - IntelijIDEA: Help -> Edit Custom Vm Options -> add these two line:

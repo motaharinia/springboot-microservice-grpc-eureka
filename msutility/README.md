@@ -1,5 +1,5 @@
 ## MSUtility
-this project is a shared utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
+this project is a shared common utility project for microservice projects as a pom dependency to reduce boilerplate code in multiple projects.
 
 ### Project Descriptions:
 build with java-doc:
