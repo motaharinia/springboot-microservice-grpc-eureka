@@ -5,13 +5,12 @@ import "react-fine-uploader/gallery/gallery.css";
 
 
 import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
+import CloseIcon from "@material-ui/icons/Close";
 
 
 import {changeActionEnum, typeEnum, statusEnum, entityEnum, fileKindFolderEnum} from './UploaderData'
-import CloseIcon from "@material-ui/icons/Close";
 import {useStyles} from "../Styles";
-import Modal from "@material-ui/core/Modal";
-import CustomFileView from "./FileView";
 
 
 function Uploader(props) {
