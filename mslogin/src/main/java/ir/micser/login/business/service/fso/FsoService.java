@@ -108,16 +108,23 @@ public class FsoService {
     public void delete(@NotNull List<String> pathList) throws Exception {
         FsoMimeTypeModel fsoMimeTypeModel;
         for (String pathFile : pathList) {
-            FsoPathCheckModel fsoPathCheckModel = pathExistCheck(FSO_PATH_MODULE + pathFile);
-            if (fsoPathCheckModel.getTypeEnum().equals(FsoPathCheckTypeEnum.FILE)) {
-                fsoMimeTypeModel = FsoTools.getMimeTypeModel(FSO_PATH_MODULE + pathFile);
-                if (fsoMimeTypeModel.getType().equals(FsoMimeTypeEnum.IMAGE)) {
-                    FsoTools.delete(FSO_PATH_MODULE + pathFile, true, FSO_CONFIG_MODEL);
+            FsoPathCheckModel fsoPathCheckModel=null;
+            try{
+                 fsoPathCheckModel = pathExistCheck(FSO_PATH_MODULE + pathFile);
+            }catch(Exception exception){
+
+            }
+            if(!ObjectUtils.isEmpty(fsoPathCheckModel)) {
+                if (fsoPathCheckModel.getTypeEnum().equals(FsoPathCheckTypeEnum.FILE)) {
+                    fsoMimeTypeModel = FsoTools.getMimeTypeModel(FSO_PATH_MODULE + pathFile);
+                    if (fsoMimeTypeModel.getType().equals(FsoMimeTypeEnum.IMAGE)) {
+                        FsoTools.delete(FSO_PATH_MODULE + pathFile, true, FSO_CONFIG_MODEL);
+                    } else {
+                        FsoTools.delete(FSO_PATH_MODULE + pathFile, false, FSO_CONFIG_MODEL);
+                    }
                 } else {
                     FsoTools.delete(FSO_PATH_MODULE + pathFile, false, FSO_CONFIG_MODEL);
                 }
-            } else {
-                FsoTools.delete(FSO_PATH_MODULE + pathFile, false, FSO_CONFIG_MODEL);
             }
         }
     }
