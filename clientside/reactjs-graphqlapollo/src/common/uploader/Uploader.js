@@ -28,7 +28,6 @@ function Uploader(props) {
     //"CANCEL": وقتی که یک فایل در آپلودر کنسل شود
     //"COMPLETE": وقتی که یکی از آپلود فایلها کامل گردد
     const onStatusChange = (id, oldStatus, newStatus, openModal) => {
-        console.log("oldStatus",oldStatus)
         const {uploader} = fileData;
         uploader.methods.getUploads().map(function (obj, index) {
             let fileObject = JSON.parse(JSON.stringify(obj));
@@ -202,10 +201,7 @@ function Uploader(props) {
         if (fileData.objectSelectedList !== undefined && Object.keys(fileData.objectSelectedList).length !== 0) {
             let objectList = fileData.objectList;
             let changeObjectList = [];
-            console.log("11111111111111111111111111111")
             fileData.objectSelectedList.forEach(function (object, index) {
-                console.log("222222222222222222222222222222222")
-                console.log("object.status",object.status)
                 if (object.status == statusEnum.UPLOAD_SUCCESSFUL) {
                     let fileViewModel = {
                         extension: object.originalName.split(".")[1],
@@ -215,10 +211,9 @@ function Uploader(props) {
                         mimetype: "",
                         name: object.originalName.split(".")[0],
                         size: object.size,
-                        fileKey: object.uuid,
+                        key: object.uuid,
                         statusEnum: statusEnum.ADDED
                     };
-                    console.log("fileViewModel",fileViewModel)
                     changeObjectList.push(fileViewModel);
                 }
             });
