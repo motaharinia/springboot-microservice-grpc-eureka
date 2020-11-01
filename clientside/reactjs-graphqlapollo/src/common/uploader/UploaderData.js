@@ -1,5 +1,12 @@
 import React from "react";
 
+
+const changeActionEnum = {
+    "ADD": "ADD", //فایل جدید آپلود شده است
+    "DELETE": "DELETE",  //فایل حذف شده است
+};
+
+
 const typeEnum = {
     "SINGLE": "SINGLE", //آپلودر تک فایل. در این حالت نیاز به پر کردن پراپس ولیدیشن آیتم لیمیت نیست.
     "MULTI": "MULTI", //آپلودر چندتایی. در این حالت با پراپس ولیدیشن آیتم لیمیت میتوان تعداد را هم محدود کرد
@@ -38,6 +45,8 @@ const fileKindFolderEnum = {
 };
 
 const statusEnum = {
+    "ADDED": "ADDED", //فایل جدید آپلود شده است
+    "EXISTED": "EXISTED", //فایل از قبل وجود داشته و بدون تغییر مانده است
     "SUBMITTING": "submitting", //وقتی که یک فایل برای اضافه شدن به آپلودر انتخاب میشود
     "SUBMITTED": "submitted", //وقتی که یک فایل به آپلودر اضافه شود
     "REJECTED": "rejected", //
@@ -67,5 +76,5 @@ const actionEnum = {
 };
 
 
-export { typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum}
+export {changeActionEnum,typeEnum, statusEnum, actionEnum, subSystemEnum, entityEnum, fileKindFolderEnum}
 
