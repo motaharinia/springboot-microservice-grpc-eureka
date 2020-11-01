@@ -9,7 +9,7 @@ import Modal from "@material-ui/core/Modal";
 import CloseIcon from "@material-ui/icons/Close";
 
 
-import {changeActionEnum, typeEnum, statusEnum, entityEnum, fileKindFolderEnum} from './UploaderData'
+import {changeActionEnum, typeEnum, statusEnum} from './UploaderData'
 import {useStyles} from "../Styles";
 
 
