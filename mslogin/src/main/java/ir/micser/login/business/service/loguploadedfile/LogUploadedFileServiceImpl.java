@@ -92,7 +92,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
         if (fileUploadChunkModel.getChunks() - 1 == fileUploadChunkModel.getChunk()) {
             logUploadedFileModel.setFileKey(fileUploadChunkModel.getFileKey());
             logUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            logUploadedFileModel.setFileSize(logUploadedFileModel.getFileByteArray().length);
+            logUploadedFileModel.setFileSize(Long.valueOf(logUploadedFileModel.getFileByteArray().length));
             logUploadedFileModel.setFileUploadDateTime(new Date());
             fileUploadChunkModel.setName(this.fixFailedFileNameCharacter(fileUploadChunkModel.getName()));
             logUploadedFileModel.setFileFullName(fileUploadChunkModel.getName());
@@ -141,7 +141,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
         if (fineUploaderChunkModel.getQqtotalparts() - 1 == fineUploaderChunkModel.getQqpartindex()) {
             logUploadedFileModel.setFileKey(fineUploaderChunkModel.getQquuid());
             logUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            logUploadedFileModel.setFileSize(logUploadedFileModel.getFileByteArray().length);
+            logUploadedFileModel.setFileSize(Long.valueOf(logUploadedFileModel.getFileByteArray().length));
             logUploadedFileModel.setFileUploadDateTime(new Date());
             fineUploaderChunkModel.setQqfilename(this.fixFailedFileNameCharacter(fineUploaderChunkModel.getQqfilename()));
             logUploadedFileModel.setFileFullName(fineUploaderChunkModel.getQqfilename());
