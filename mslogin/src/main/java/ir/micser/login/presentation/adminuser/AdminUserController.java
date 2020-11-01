@@ -72,19 +72,22 @@ public class AdminUserController {
         return adminUserModel;
     }
 
+
     /**
      * متد جستجوی با شناسه
      *
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
+     * @throws Exception خطا
      */
     @GraphQLQuery(name = "common_adminUser_readById")
     //@GetMapping("/v1/adminUser/{id}")
-    public AdminUserModel readById(@PathVariable Integer id) throws UtilityException {
+    public AdminUserModel readById(@PathVariable Integer id) throws Exception {
         if (id.equals(0)) {
             throw new GraphQLCustomException(BusinessExceptionEnum.ID_NOT_FOUND, "sample description");
         }
-        return adminUserService.readById(id);
+        AdminUserModel adminUserModel=adminUserService.readById(id);
+        return adminUserModel;
     }
 
     /**
@@ -94,7 +97,7 @@ public class AdminUserController {
      * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
      * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
-     * @throws UtilityException
+     * @throws UtilityException خطا
      */
     @GraphQLQuery(name = "readGrid")
     //@GetMapping("/v1/adminUser")
@@ -163,7 +166,7 @@ public class AdminUserController {
      */
     @GraphQLMutation(name = "delete")
     //@DeleteMapping("/v1/adminUser/{id}")
-    public AdminUserModel delete(@PathVariable Integer id) throws UtilityException {
+    public AdminUserModel delete(@PathVariable Integer id) throws Exception {
         return adminUserService.delete(id);
     }
 

@@ -16,6 +16,8 @@ import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeModel;
 import com.motaharinia.msutility.fso.upload.FileUploadedModel;
 import com.motaharinia.msutility.fso.view.FileViewModel;
 import com.motaharinia.msutility.zip.ZipTools;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -64,7 +67,6 @@ public class FsoService {
      */
     @Value("${fso.path.module}")
     private String FSO_PATH_MODULE = "/fso/module";
-
 
 
     private FsoConfigModel FSO_CONFIG_MODEL = new FsoConfigModel(new Integer[]{FSO_THUMB_SIZE_SMALL, FSO_THUMB_SIZE_LARGE}, FSO_IMAGE_THUMB_EXTENSION, FSO_DIRECTORY_FILE_LIMIT);
@@ -108,13 +110,13 @@ public class FsoService {
     public void delete(@NotNull List<String> pathList) throws Exception {
         FsoMimeTypeModel fsoMimeTypeModel;
         for (String pathFile : pathList) {
-            FsoPathCheckModel fsoPathCheckModel=null;
-            try{
-                 fsoPathCheckModel = pathExistCheck(FSO_PATH_MODULE + pathFile);
-            }catch(Exception exception){
+            FsoPathCheckModel fsoPathCheckModel = null;
+            try {
+                fsoPathCheckModel = pathExistCheck(FSO_PATH_MODULE + pathFile);
+            } catch (Exception exception) {
 
             }
-            if(!ObjectUtils.isEmpty(fsoPathCheckModel)) {
+            if (!ObjectUtils.isEmpty(fsoPathCheckModel)) {
                 if (fsoPathCheckModel.getTypeEnum().equals(FsoPathCheckTypeEnum.FILE)) {
                     fsoMimeTypeModel = FsoTools.getMimeTypeModel(FSO_PATH_MODULE + pathFile);
                     if (fsoMimeTypeModel.getType().equals(FsoMimeTypeEnum.IMAGE)) {
@@ -128,8 +130,6 @@ public class FsoService {
             }
         }
     }
-
-
 
 
     /**
@@ -169,7 +169,7 @@ public class FsoService {
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      */
-    public void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation){
+    public void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation) {
         pathTo = FSO_PATH_MODULE + pathTo;
         pathFrom = FSO_PATH_MODULE + pathFrom;
         FsoTools.move(pathFrom, pathTo, withThumbnail, FSO_CONFIG_MODEL, withDirectoryCreation);
@@ -297,7 +297,7 @@ public class FsoService {
      * @param path مسیر کامل فایل یا دایرکتوری ورودی
      * @return خروجی: مدل حاوی نوع مسیر (فایل یا دایرکتوری) و مرجع فایل
      */
-    public FsoPathCheckModel pathExistCheck(String path)  {
+    public FsoPathCheckModel pathExistCheck(String path) {
         return FsoTools.pathExistCheck(FSO_PATH_MODULE + path);
     }
 
@@ -323,5 +323,34 @@ public class FsoService {
      */
     public byte[] readFromFile(File file) throws Exception {
         return FileUtils.readFileToByteArray(file);
+    }
+
+    //این متد طبق شرایط ورودی لیست مدلهای کامل اطلاعات فایلهای یک ماژول را خروجی میدهد
+    //شرح ورودی ها:
+    //LogUploadedFsoEnum logUploadedFsoEnum : چه فایلی از چه ماژولی را میخواهیم
+    //Integer entityId : شناسه انتیتی مورد نظر که فایلهای آن را میخواهیم
+
+    /**
+     * @param logUploadedFsoEnum چه فایلی از چه ماژولی را میخواهیم
+     * @param entityId           شناسه انتیتی مورد نظر که فایلهای آن را میخواهیم
+     * @return خروجی: لیستی از مدل مشاهده فایل
+     * @throws Exception خطا
+     */
+    public List<FileViewModel> getFileViewModelList(LogUploadedFsoEnum logUploadedFsoEnum, Integer entityId) throws Exception {
+        //example: "/eshop/product/27/image3dfile/"
+        String entityKindDirectoryPath = logUploadedFsoEnum.getEntityKindDirectoryPath(entityId);
+        //example: "/27/image3dfile/"
+        String kindDirectoryPath = logUploadedFsoEnum.getKindDirectoryPath(entityId);
+        FsoPathCheckModel fsoPathCheckModel = null;
+        try {
+            fsoPathCheckModel = FsoTools.pathExistCheck(FSO_PATH_MODULE + entityKindDirectoryPath);
+        } catch (Exception exception) {
+
+        }
+        if ((!ObjectUtils.isEmpty(fsoPathCheckModel)) && (fsoPathCheckModel.getTypeEnum().equals(FsoPathCheckTypeEnum.DIRECTORY))) {
+            return this.fileViewModelList(entityKindDirectoryPath, kindDirectoryPath);
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
