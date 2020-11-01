@@ -20,7 +20,7 @@ public class LogUploadedFileModel {
     private String fileExtension;
     private String fileFullName;
     private Date fileUploadDateTime;
-    private long fileSize;
+    private Long fileSize;
     private String fileMimeType;
     private String fileUploadedPath;
     private String fileEntity;
@@ -90,11 +90,11 @@ public class LogUploadedFileModel {
         this.fileUploadDateTime = fileUploadDateTime;
     }
 
-    public long getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(long fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

@@ -330,9 +330,9 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
         }
         switch (logUploadedFileHandleModel.getLogUploadedFileHandleActionEnum()) {
             case ENTITY_CREATE:
+                //در صورتی که فایلی برای اضافه شدن در ثبت وجود دارد پوشه انتیتی آن را حذف میکنیم
                 for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
                         for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
@@ -344,6 +344,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                         }
                     }
                 }
+                //آپلود فایلهای جدید اضافه شده
                 for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
                         LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());

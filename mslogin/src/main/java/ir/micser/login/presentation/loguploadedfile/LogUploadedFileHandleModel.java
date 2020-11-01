@@ -16,9 +16,22 @@ import java.util.List;
 
 public class LogUploadedFileHandleModel {
 
+    /**
+     * شناسه انتیتی
+     */
     private Integer entityId;
+    /**
+     * نوع عملیات فایل که میتواند ثبت ، ویرایش یا حذف باشد
+     */
     private LogUploadedFileHandleActionEnum logUploadedFileHandleActionEnum;
+    /**
+     * لیست مدل مشاهده فایلها
+     */
     private List<FileViewModel> fileViewModelList = new ArrayList<>();
+    /**
+     * لیست مدل آپلود هندل فایلها<br>
+     *     که نشان میدهد لیست فایلها در چه مسیرهایی با چه ابعادی و به صورت تکی یا چند تایی ذخیره شود
+     */
     private List<LogUploadedFileHandleFsoModel> logUploadedFileHandleFsoModelList = new ArrayList<>();
 
     //getter-setter:

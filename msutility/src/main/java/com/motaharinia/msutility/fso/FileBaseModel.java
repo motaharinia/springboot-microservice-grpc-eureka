@@ -26,7 +26,7 @@ public class FileBaseModel {
      * حجم فایل
      * example:12109
      */
-    protected long size;
+    protected Long size;
     /**
      * نوع mimeType فایل
      * example:"image/png"
@@ -64,11 +64,11 @@ public class FileBaseModel {
         this.fullName = fullName;
     }
 
-    public long getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(long size) {
+    public void setSize(Long size) {
         this.size = size;
     }
 
