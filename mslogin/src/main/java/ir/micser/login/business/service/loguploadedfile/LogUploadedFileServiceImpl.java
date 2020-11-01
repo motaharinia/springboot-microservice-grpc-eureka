@@ -362,7 +362,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                                 //اگر فایل مورد نظر تصویر باشد و در ورودی خواسته شده باشد که آن فایل تغییر اندازه بشود
                                 byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), logUploadedFileHandleFsoModel.getWidth(), logUploadedFileHandleFsoModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
-                                fileUploadedModel.setSize(fileUploadedModel.getDataByteArray().length);
+                                fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
                             } else {
                                 //اگر فایل مورد نظر تصویر نباشد و یا نیاز به تغییر اندازه نداشته باشد
                                 fileUploadedModel.setName(dateTime + "_" + fileUploadedModel.getName());
@@ -403,7 +403,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                                 //logUploadedFileModel.setFileFullName(dateTime + "_" + logUploadedFileModel.getFileFullName());
                                 byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), logUploadedFileHandleFsoModel.getWidth(), logUploadedFileHandleFsoModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
-                                fileUploadedModel.setSize(fileUploadedModel.getDataByteArray().length);
+                                fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
                             } else {
                                 //اگر فایل مورد نظر تصویر نباشد و یا نیاز به تغییر اندازه نداشته باشد
                                 logUploadedFileModel.setFileName(dateTime + "_" + logUploadedFileModel.getFileName());
