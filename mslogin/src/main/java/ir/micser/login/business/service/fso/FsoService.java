@@ -196,7 +196,7 @@ public class FsoService {
         Path path = Paths.get(fileFullPath);
         byte[] dataByteArray = FsoTools.downloadPathAndRead(fileFullPath);
         fileDownloadModel.setDataByteArray(dataByteArray);
-        fileDownloadModel.setSize(dataByteArray.length);
+        fileDownloadModel.setSize(Long.valueOf(dataByteArray.length));
         fileDownloadModel.setMimeType(Files.probeContentType(path));
         fileDownloadModel.setFullName(path.getFileName().toString());
         fileDownloadModel.setName(FsoTools.getFileNameWithoutExtension(fileDownloadModel.getFullName()));
@@ -235,7 +235,7 @@ public class FsoService {
         Path path = Paths.get(fileFullPath);
         byte[] dataByteArray = FsoTools.downloadPathAndRead(fileFullPath);
         fileDownloadModel.setDataByteArray(dataByteArray);
-        fileDownloadModel.setSize(dataByteArray.length);
+        fileDownloadModel.setSize(Long.valueOf(dataByteArray.length));
         fileDownloadModel.setMimeType(Files.probeContentType(path));
         fileDownloadModel.setFullName(path.getFileName().toString());
         fileDownloadModel.setName(FsoTools.getFileNameWithoutExtension(fileDownloadModel.getFullName()));
