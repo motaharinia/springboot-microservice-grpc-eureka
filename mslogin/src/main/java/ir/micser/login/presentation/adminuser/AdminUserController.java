@@ -155,7 +155,12 @@ public class AdminUserController {
     @GraphQLMutation(name = "update")
     //@PutMapping("/v1/adminUser")
     public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
-        return adminUserService.update(adminUserModel);
+        adminUserModel= adminUserService.update(adminUserModel);
+
+        LogUploadedFileHandleModel logUploadedFileHandleModel = new LogUploadedFileHandleModel(adminUserModel.getId(), LogUploadedFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new LogUploadedFileHandleFsoModel(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        logUploadedFileService.logUploadedFileHandle(logUploadedFileHandleModel);
+
+        return adminUserModel;
     }
 
     /**
