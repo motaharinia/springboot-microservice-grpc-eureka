@@ -15,6 +15,8 @@ import {useStyles} from './AdminStyles'
 import {ADMIN_USER_READ_GRID_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminQueries";
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
+import Uploader from "../../common/uploader/Uploader";
+import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/uploader/UploaderData";
 
 // کلید انصراف
 function CloseButton() {
@@ -33,13 +35,7 @@ export default function AdminUpdate() {
         error:""
     });
 
-    let initialState = {
-        username: "",
-        firstName: "",
-        lastName: "",
-        gender_id: "",
-        defaultUserAdminContact_address: 1
-    };
+    let initialState = {};
 
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
@@ -53,6 +49,16 @@ export default function AdminUpdate() {
         } else {
             formData[inoutName] = inputValue;
         }
+        setFormData({
+            ...formData
+        });
+    };
+
+
+    // آپلودر تصاویر
+    const onChangeUploader = (state) => {
+        let imageFileList = state.objectList;
+        formData["imageFileList"] = imageFileList;
         setFormData({
             ...formData
         });
@@ -92,6 +98,10 @@ export default function AdminUpdate() {
         }
     }, [loading, error, data]);
 
+
+    let urlBase = "http://localhost:8082/fso/download/common/adminuser/";
+
+
     //در صورت عدم لود داده لودینگ نمایش داده شود
     if (loading === undefined || loading) {
         return (<div><CircularProgress /></div>)
@@ -102,6 +112,8 @@ export default function AdminUpdate() {
         return (<div>  <ResultHandling result={error}  open={true} key={Math.random()} /></div>)
     }
 
+
+    if(formData !== undefined && Object.keys(formData).length !== 0){
     //نمایش اطلاعات state در فرم
     return (
         <div>
@@ -223,6 +235,31 @@ export default function AdminUpdate() {
                 <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
+                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Uploader
+                                urlBase={urlBase}
+                                objectList={formData.imageFileList}
+                                hasDownload={true}
+                                hasView={true}
+                                hasDelete={true}
+                                type={typeEnum.MULTI}
+                                subSystem={subSystemEnum.COMMON}
+                                entity={entityEnum.MEMBER}
+                                fileKindFolder={fileKindFolderEnum.ATTACHMENT}
+                                validationSizeLimit={5 * 1024 * 1024}
+                                validationItemLimit={50}
+                                onChange={onChangeUploader}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                    </Grid>
+                </div>
+                <div>
+                    <Grid container spacing={1}>
+                        <Grid item xs={4}>
                         </Grid>
                         <Grid item xs={4}>
                             <Button onClick={submitUpdate} type="submit" variant="contained" color="primary">
@@ -241,5 +278,8 @@ export default function AdminUpdate() {
             <ResultHandling result={formResult}  open={true} key={Math.random()} />
         </div>
     );
+    }else{
+        return (<div><CircularProgress /></div>)
+    }
 }
 

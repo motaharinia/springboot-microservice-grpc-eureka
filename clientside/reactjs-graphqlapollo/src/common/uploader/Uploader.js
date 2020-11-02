@@ -10,12 +10,15 @@ import CloseIcon from "@material-ui/icons/Close";
 
 
 import {changeActionEnum, typeEnum, statusEnum} from './UploaderData'
+import {UploaderFileView} from './UploaderFileView'
 import {useStyles} from "../Styles";
 
 
-function Uploader(props) {
+export default function Uploader(props) {
+
     //تعریف متغیر استایل
     const classes = useStyles();
+
 
     //وضعیتها
     //"SUBMIT": وقتی که یک فایل برای اضافه شدن به آپلودر انتخاب میشود
@@ -40,7 +43,6 @@ function Uploader(props) {
         if (openModal !== undefined && openModal !== null) {
             fileData["openModal"] = openModal;
         }
-        fileData["objectList"] = oldStatus;
         setFileData({
             ...fileData
         });
@@ -150,12 +152,16 @@ function Uploader(props) {
 
     let initialStateFileData = {
         "openModal": false,
+        "urlBase":props.urlBase,
         "customClass": props.customClass,
         "customStyle": props.customStyle,
         "type": props.type,
         "subSystem": props.subSystem,
         "entity": props.entity,
         "fileKindFolder": props.fileKindFolder,
+        "hasDownload": props.hasDownload,
+        "hasView": props.hasView,
+        "hasDelete": props.hasDelete,
         "validationExtensionList": props.validationExtensionList,
         "validationSizeLimit": props.validationSizeLimit,
         "validationItemLimit": props.validationItemLimit,
@@ -163,17 +169,22 @@ function Uploader(props) {
         "name": props.name,
         "title": props.title,
         "label": props.label,
+        "objectList": props.objectList,
         "uploader": uploader,
-        "objectList": [],
         "objectSelectedList": [],
         "submitFileDataObject": {}
     };
     //تعریف متغیر state آپلودر
     const [fileData, setFileData] = useState(initialStateFileData);
 
+    // useEffect(() => {
+    //     let stateFileData = initialStateFileData;
+    //     setFileData(stateFileData);
+    // }, [props]);
+
     useEffect(() => {
         props.onChange(fileData);
-    }, [fileData]);
+    },[fileData]);
 
 
     const onOpenModal = () => {
@@ -206,13 +217,22 @@ function Uploader(props) {
                         key: object.uuid,
                         statusEnum: statusEnum.ADDED
                     };
+                    fileData["objectList"].push(fileViewModel);
                     changeObjectList.push(fileViewModel);
+                    setFileData({
+                        ...fileData
+                    });
                 }
             });
             onStatusChange(fileData, changeObjectList, changeActionEnum.ADD, false);
         }
     };
 
+    const onDelete = (state, fileViewModel) => {
+        var changeObjectList = [];
+        changeObjectList.push(fileViewModel);
+        onStatusChange(state.objectList, changeObjectList, changeActionEnum.DELETE);
+    };
 
     const fileInputChildren = <span>انتخاب فایل...</span>;
     const dropZoneContent = <span>میتوانید فایل مورد نظر خود را در اینجا drag نمایید</span>;
@@ -231,7 +251,7 @@ function Uploader(props) {
             default:
                 return (<span>Invalid type : {fileData.type}</span>);
         }
-    }
+    };
 
     const handleClose = () => {
         fileData["openModal"] = false;
@@ -274,6 +294,10 @@ function Uploader(props) {
                 <Button onClick={onOpenModal} type="submit" variant="outlined">
                     {"بارگذاری فایل"}
                 </Button>
+                <UploaderFileView key={Math.random()} objectList={fileData.objectList} urlBase={fileData.urlBase}
+                                  hasDownload={fileData.hasDownload} hasView={fileData.hasView}
+                                  hasDelete={fileData.hasDelete}
+                                  onChange={onDelete}/>
             </React.Fragment>
         )
 
@@ -282,5 +306,5 @@ function Uploader(props) {
 }
 
 
-export {Uploader}
+
 

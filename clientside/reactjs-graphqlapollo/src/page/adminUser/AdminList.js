@@ -23,6 +23,17 @@ const columns: ColDef[] = [
     { field: 'address', headerName: 'نشانی', width: 250 },
 ];
 
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+
 function rowsGrid(data) {
     if (data !== undefined) {
         let rowsGrid = [];
@@ -66,6 +77,7 @@ function OnClickButtonDelete() {
 
 function AdminList() {
     const classes = useStyles();
+
     //تعریف متغیر state فرم
     const [gridData, setGridData] = useState([]);
 

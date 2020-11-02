@@ -3,13 +3,13 @@ import React, {useEffect, useState} from "react";
 import Downloader from "js-file-downloader";
 
 import Grid from "@material-ui/core/Grid";
+import Fab from "@material-ui/core/Fab";
 import CloudDownload from '@material-ui/icons/CloudDownload';
-import Eye from '@material-ui/icons/PanoramaFishEye';
-import Remove from '@material-ui/icons/Remove';
+import Visibility from '@material-ui/icons/Visibility';
+import Delete from '@material-ui/icons/Delete';
 
 import {statusEnum} from './UploaderData'
-import Fab from "@material-ui/core/Fab";
-import EditIcon from "@material-ui/icons/Edit";
+import {useStyles} from "../Styles";
 
 const margin1px = {
     margin: "1px",
@@ -17,6 +17,9 @@ const margin1px = {
 
 
 function UploaderFileView(props) {
+
+    //تعریف متغیر استایل
+    const classes = useStyles();
 
     let initialState = {
         "objectList": props.objectList,
@@ -34,7 +37,7 @@ function UploaderFileView(props) {
 
 
     const onChange = e => {
-        let objectList = this.state.objectList;
+        let objectList = fileData.objectList;
         let index = e.currentTarget.getAttribute("index");
         if (objectList[index] !== undefined) {
             objectList[index]["statusEnum"] = statusEnum.DELETED;
@@ -52,6 +55,19 @@ function UploaderFileView(props) {
             props.onChange(fileData, fileData.objectList[fileData.objectListIndex]);
         }
     }, [fileData]);
+
+    const onClick=(e)=> {
+        const { objectList } = fileData;
+        // var index = e.currentTarget.getAttribute("index");
+        // var fileViewModel = objectList[index];
+        // if (fileViewModel !== undefined) {
+        //     if (this.props.onClick) {
+        //         this.props.onClick(fileViewModel);
+        //     }
+        // }
+    };
+
+
 
     const onView = e => {
         const {objectList, urlBase} = fileData;
@@ -118,23 +134,23 @@ function UploaderFileView(props) {
             let htmlView = <div></div>;
             let htmlDelete = <div></div>;
             let url = "";
-            let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + this.getSizeTitle(fileViewModel.size);
+            let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + getSizeTitle(fileViewModel.size);
             if (fileViewModel.hashedPath !== undefined && fileViewModel.hashedPath !== null && fileViewModel.hashedPath !== "") {
                 url = urlBase + fileViewModel.hashedPath + "/";
-                title += "\n آخرین تغییر:" + fileViewModel.lastModifiedDate.year + "/" + fileViewModel.lastModifiedDate.month + "/" + fileViewModel.lastModifiedDate.day;
+                // title += "\n آخرین تغییر:" + fileViewModel.lastModifiedDate.year + "/" + fileViewModel.lastModifiedDate.month + "/" + fileViewModel.lastModifiedDate.day;
                 if (hasDownload) {
                     hasAction = true;
                     htmlDownload =
-                        <Fab index={index} onClick={onDownload} color="primary" aria-label="دانلود">
+                        <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
                             <CloudDownload/>
-                        </Fab>
+                        </div>
                 }
                 if (hasView) {
                     hasAction = true;
                     htmlView =
-                        <Fab index={index} onClick={onView} color="primary" aria-label="مشاهده">
-                            <Eye/>
-                        </Fab>
+                        <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
+                            <Visibility/>
+                        </div>
                 }
 
                 switch (fileViewModel.extension) {
@@ -155,58 +171,58 @@ function UploaderFileView(props) {
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
-                    <Fab index={index} onClick={onChange} color="primary" aria-label="مشاهده">
-                        <Remove/>
-                    </Fab>
+                    <div index={index} onClick={onChange} color="primary" aria-label="مشاهده">
+                        <Delete/>
+                    </div>
             }
 
 
             if (isImage) {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <div className="boxImgFileView">
+                        <Grid item xs={3} className={classes.boxImgFileView}>
                             <div className="divParentImg">
                                 <Grid container spacing={1} style={margin1px}>
-                                    <img title={title} index={index} onClick={this.onClick} src={url}
+                                    <img title={title} index={index} onClick={onClick} src={url}
                                          width={thumbnailWidth} height={thumbnailHeight}
                                          style={{"cursor": "pointer"}}/>
                                 </Grid>
                             </div>
-                            <Grid container spacing={1} className="boxButtonFileview">
-                                <Grid item xs={2}>
+                            <Grid container spacing={1} className={classes.boxButtonFileview}>
+                                <Grid item xs={3}>
                                     {htmlDownload}
                                 </Grid>
                                 <Grid item xs={1}>
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={4}>
-                                </Grid>
                                 <Grid item xs={1}>
+                                </Grid>
+                                <Grid item xs={3}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
-                        </div>
+                        </Grid>
                     </React.Fragment>);
                 } else {
                     return (<React.Fragment key={Math.random()}>
-                        <div className="boxImgFileView">
+                        <Grid item xs={3} className={classes.boxImgFileView}>
                             <Grid container spacing={1} style={margin1px}>
-                                <img title={title} index={index} onClick={this.onClick} src={url}
+                                <img title={title} index={index} onClick={onClick} src={url}
                                      width={thumbnailWidth} height={thumbnailHeight}
                                      style={{"cursor": "pointer"}}/>
                             </Grid>
-                        </div>
+                        </Grid>
                     </React.Fragment>);
                 }
             } else {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <div className="boxImgFileView">
+                        <Grid item xs={3} className={classes.boxImgFileView}>
                             <div className="divParentImg">
                                 <Grid container spacing={1} style={margin1px}>
-                                    <div title={title} index={index} onClick={this.onClick}
+                                    <div title={title} index={index} onClick={onClick}
                                          className={"fi fi-" + fileViewModel.extension} style={{
                                         "width": thumbnailWidth,
                                         "height": "88px",
@@ -214,32 +230,32 @@ function UploaderFileView(props) {
                                         <div className="fi-content" style={{
                                             "textAlign": "center",
                                             "fontSize": "25px",
-                                        }}>{fileViewModel.extension.toUpperCase()}</div>
+                                        }}>{fileViewModel.extension}</div>
                                     </div>
                                 </Grid>
                             </div>
-                            <Grid container spacing={1} className="boxButtonFileview">
-                                <Grid item xs={2}>
+                            <Grid container spacing={1} className={classes.boxButtonFileview}>
+                                <Grid item xs={3}>
                                     {htmlDownload}
                                 </Grid>
                                 <Grid item xs={1}>
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={3}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={4}>
-                                </Grid>
                                 <Grid item xs={1}>
+                                </Grid>
+                                <Grid item xs={3}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
-                        </div>
+                        </Grid>
                     </React.Fragment>);
                 } else {
                     return (<React.Fragment key={Math.random()}>
-                        <div className="boxImgFileView">
+                        <Grid item xs={3} className={classes.boxImgFileView}>
                             <Grid container spacing={1} style={margin1px}>
-                                <div title={title} index={index} onClick={this.onClick}
+                                <div title={title} index={index} onClick={onClick}
                                      className={"fi fi-" + fileViewModel.extension} style={{
                                     "width": thumbnailWidth,
                                     "height": "88px",
@@ -250,18 +266,16 @@ function UploaderFileView(props) {
                                     }}>{fileViewModel.extension.toUpperCase()}</div>
                                 </div>
                             </Grid>
-                        </div>
+                        </Grid>
                     </React.Fragment>);
                 }
             }
         }
     }, this);
     return (<React.Fragment>
-        <Container fluid={false} style={{}}>
             <Grid container spacing={1}>
                 {fileViewHtmlList}
             </Grid>
-        </Container>
     </React.Fragment>);
 
 

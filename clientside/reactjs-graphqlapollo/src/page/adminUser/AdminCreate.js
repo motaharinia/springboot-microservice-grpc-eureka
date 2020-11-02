@@ -13,9 +13,7 @@ import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
 import FormLabel from "@material-ui/core/FormLabel";
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
-import {
-    Uploader
-} from "../../common/uploader/Uploader"
+import Uploader from "../../common/uploader/Uploader"
 import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/uploader/UploaderData"
 
 function CloseButton() {
@@ -92,6 +90,7 @@ export default function AdminCreate() {
 
 
     let urlBase = "http://localhost:8082/fso/download/common/member/";
+
 
     //نمایش اطلاعات state در فرم
     return (

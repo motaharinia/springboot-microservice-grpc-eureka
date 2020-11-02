@@ -40,7 +40,7 @@ function ResultHandling(props) {
     let titleModal = "پیام";
     // پیام
     let message = "";
-     // بررسی پر بودن خطا ها
+    // بررسی پر بودن خطا ها
     if (props.result.error === "") {
         // بررسی پر بودن داده ها
         if (props.result.data !== "") {
@@ -55,7 +55,7 @@ function ResultHandling(props) {
         let dataError = props.result;
         flagOpen = true;
         if (props.result.error !== undefined) {
-             dataError = props.result.error;
+            dataError = props.result.error;
             flagOpen = false;
         }
         // بررسی پر بودن graphQLErrors
@@ -72,7 +72,6 @@ function ResultHandling(props) {
     if (message === "") {
         return (<div> </div>)
     }
-    // پا آپ پیام
     let body = (<div className={messageStyle}>
         <CloseIcon onClick={handleClose} className={classes.closeButtonError}/>
         <h3 id="simple-modal-title">{titleModal}</h3>
