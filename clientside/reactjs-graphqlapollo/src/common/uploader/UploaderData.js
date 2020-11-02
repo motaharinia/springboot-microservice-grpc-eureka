@@ -1,4 +1,3 @@
-import React from "react";
 
 
 const changeActionEnum = {
@@ -43,6 +42,8 @@ const fileKindFolderEnum = {
     "DELIVERY_CONFIRM_FORM": "deliveryconfirmform"
 
 };
+
+
 
 const statusEnum = {
     "ADDED": "ADDED", //فایل جدید آپلود شده است

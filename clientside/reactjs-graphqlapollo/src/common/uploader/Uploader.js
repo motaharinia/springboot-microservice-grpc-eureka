@@ -37,7 +37,7 @@ function Uploader(props) {
                 fileData["objectSelectedList"].push(fileObject)
             }
         });
-        if(openModal !== undefined && openModal !== null){
+        if (openModal !== undefined && openModal !== null) {
             fileData["openModal"] = openModal;
         }
         fileData["objectList"] = oldStatus;
@@ -164,7 +164,7 @@ function Uploader(props) {
         "title": props.title,
         "label": props.label,
         "uploader": uploader,
-        "objectList":[],
+        "objectList": [],
         "objectSelectedList": [],
         "submitFileDataObject": {}
     };
@@ -188,8 +188,8 @@ function Uploader(props) {
         if (props.validationItemLimit > newList.length) {
             fileData["openModal"] = true;
             setFileData({
-                    ...fileData
-                });
+                ...fileData
+            });
         } else {
             alert("خطا", " شما فقط " + props.validationItemLimit + " فایل می توانید آپلود نمائید ")
         }
@@ -198,18 +198,11 @@ function Uploader(props) {
 
     const onAdd = () => {
         if (fileData.objectSelectedList !== undefined && Object.keys(fileData.objectSelectedList).length !== 0) {
-            let objectList = fileData.objectList;
             let changeObjectList = [];
             fileData.objectSelectedList.forEach(function (object, index) {
-                if (object.status == statusEnum.UPLOAD_SUCCESSFUL) {
+                if (object.status === statusEnum.UPLOAD_SUCCESSFUL) {
                     let fileViewModel = {
-                        extension: object.originalName.split(".")[1],
-                        fullName: object.originalName,
-                        hashedPath: "",
-                        lastModifiedDate: {year: "", month: "", day: ""},
-                        mimetype: "",
-                        name: object.originalName.split(".")[0],
-                        size: object.size,
+
                         key: object.uuid,
                         statusEnum: statusEnum.ADDED
                     };
@@ -242,9 +235,9 @@ function Uploader(props) {
 
     const handleClose = () => {
         fileData["openModal"] = false;
-        setFileData(
+        setFileData({
             ...fileData
-        )
+        });
     };
 
     let body = (
