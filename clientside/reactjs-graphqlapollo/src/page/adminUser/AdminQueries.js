@@ -75,6 +75,7 @@ const ADMIN_USER_UPDATE_MUTATION = gql`
     $lastName:String,
     $defaultAdminUserContact_address:String,
     $skillList:[AdminUserSkillModelInput],
+    $imageFileList:[FileViewModelInput!],
     $gender_id:Int!,
     $defaultAdminUserContact_city_id:Int!,
     $id:Int!
@@ -85,6 +86,7 @@ const ADMIN_USER_UPDATE_MUTATION = gql`
   lastName:$lastName,
   defaultAdminUserContact_address:$defaultAdminUserContact_address,
   skillList:$skillList,
+  imageFileList:$imageFileList,
   defaultAdminUserContact_city_id:$defaultAdminUserContact_city_id,
   gender_id:$gender_id,
   id:$id
