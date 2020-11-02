@@ -211,18 +211,18 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
 
         CityPlace cityPlace = new CityPlace();
 
-         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+//         TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+//
+//        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+//        definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
+//        definition.setTimeout(3);
+//        definition.setName("test");
+//        TransactionStatus status = transactionManager.getTransaction(definition);
 
-        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-        definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
-        definition.setTimeout(3);
-        definition.setName("test");
-        TransactionStatus status = transactionManager.getTransaction(definition);
-
-        try {
+//        try {
             cityPlace.setAdminUserId(cityPlaceModel.getAdminUserId());
             City city = cityRepository.findById(cityPlaceModel.getCity_id()).get();
-            EntityTools.checkEntity(city, City.class, true);
+//            EntityTools.checkEntity(city, City.class, true);
             cityPlace.setCity(city);
             cityPlace.setLatitude(cityPlaceModel.getLatitude());
             cityPlace.setLongitude(cityPlaceModel.getLongitude());
@@ -231,9 +231,9 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
 
 //            entityManager.persist(payment);
 //            transactionManager.commit(status);
-        } catch (Exception ex) {
-            transactionManager.rollback(status);
-        }
+//        } catch (Exception ex) {
+//            transactionManager.rollback(status);
+//        }
 
 //        try {
 //            cityPlaceModel = this.create(cityPlaceModel);
@@ -247,7 +247,7 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
         createResponseModel.setLatitude(cityPlaceModel.getLatitude());
         createResponseModel.setLongitude(cityPlaceModel.getLongitude());
         createResponseModel.setTitle(cityPlaceModel.getTitle());
-        createResponseModel.setTransactionName(definition.getName());
+//        createResponseModel.setTransactionName(definition.getName());
 
         responseObserver.onNext(createResponseModel.build());
         responseObserver.onCompleted();

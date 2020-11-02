@@ -56,8 +56,7 @@ query  common_adminUser_readById($id:Int!){
         lastName,
         gender_id,
          imageFileList{
-      fullPath
-      hashedPath
+      hashedPath,
       statusEnum
     },
         defaultAdminUserContact_city_id,

@@ -40,6 +40,8 @@ function ResultHandling(props) {
     let titleModal = "پیام";
     // پیام
     let message = "";
+	// شرح پیام
+	let messageDetail="";
     // بررسی پر بودن خطا ها
     if (props.result.error === "") {
         // بررسی پر بودن داده ها
@@ -58,15 +60,21 @@ function ResultHandling(props) {
             dataError = props.result.error;
             flagOpen = false;
         }
-        // بررسی پر بودن graphQLErrors
-        if (dataError.graphQLErrors !== undefined && dataError.graphQLErrors !== null) {
-            message = `پیام خطا : ${dataError.graphQLErrors[0].message}`;
-        }
-        // بررسی پر بودن networkError
+		// بررسی پر بودن networkError
         if (dataError.networkError !== undefined && dataError.networkError !== null) {
             message = `پیام خطا : ${dataError.networkError}`;
             flagOpen = true;
+			if(dataError.networkError.result !== undefined && dataError.networkError.result !== null){
+				messageDetail=dataError.networkError.result.trace;
+			}
+        }else{
+			 // بررسی پر بودن graphQLErrors
+        if (dataError.graphQLErrors !== undefined && dataError.graphQLErrors !== null) {
+            message = `پیام خطا : ${dataError.graphQLErrors[0].message}`;
         }
+		}
+       
+        
     }
 
     if (message === "") {
@@ -77,6 +85,8 @@ function ResultHandling(props) {
         <h3 id="simple-modal-title">{titleModal}</h3>
         <p id="simple-modal-description">
             {message}
+			<textarea rows="10" cols="65" style={{'direction': 'ltr'}}>{messageDetail}</textarea>
+				
         </p>
     </div>);
 

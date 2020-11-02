@@ -94,7 +94,8 @@ public class FsoService {
             fileViewModel.setName(fsoPathContentModel.getFileModelList().get(i).getName());
             fileViewModel.setExtension(fsoPathContentModel.getFileModelList().get(i).getExtension());
             fileViewModel.setMimeType(fsoPathContentModel.getFileModelList().get(i).getMimeType());
-            fileViewModel.setSize(fsoPathContentModel.getFileModelList().get(i).getSize());
+            Long size=fsoPathContentModel.getFileModelList().get(i).getSize();
+            fileViewModel.setSize(size);
             fileViewModelList.add(fileViewModel);
         }
         return fileViewModelList;

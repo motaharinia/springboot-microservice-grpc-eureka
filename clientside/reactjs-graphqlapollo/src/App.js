@@ -41,7 +41,9 @@ const splitLink =split(
 // ساخت کلاینت برای ارسال به سرور
 const client = new ApolloClient({
     link:splitLink,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache({
+		addTypename: false
+	})
 });
 
 class App extends Component {

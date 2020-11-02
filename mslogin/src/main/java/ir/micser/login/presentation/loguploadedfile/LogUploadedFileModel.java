@@ -43,7 +43,8 @@ public class LogUploadedFileModel {
         fileUploadedModel.setFullName(this.getFileFullName());
         fileUploadedModel.setMimeType(this.getFileMimeType());
         fileUploadedModel.setName(this.getFileName());
-        fileUploadedModel.setSize(this.getFileSize());
+        Long size=this.getFileSize();
+        fileUploadedModel.setSize(size);
         return fileUploadedModel;
     }
 

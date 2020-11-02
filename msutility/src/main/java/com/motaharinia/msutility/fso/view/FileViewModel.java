@@ -3,6 +3,7 @@ package com.motaharinia.msutility.fso.view;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.fso.FileBaseModel;
+import io.leangen.graphql.annotations.GraphQLIgnore;
 
 
 /**
@@ -19,6 +20,7 @@ public class FileViewModel extends FileBaseModel {
      * مسیر کامل دایرکتوری به همراه نام فایل
      * example:"/70755/personality/2019-06-12_10-39-29_dsa - Copy (2).png"
      */
+    @GraphQLIgnore
     @JsonIgnore
     private String fullPath;
     /**
