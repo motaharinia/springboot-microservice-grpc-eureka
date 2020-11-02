@@ -219,7 +219,7 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                             <Uploader
                                 urlBase={urlBase}
-                                objectList={formData.attachmentFileList}
+                                objectList={formData.imageFileList}
                                 hasDownload={true}
                                 hasView={true}
                                 hasDelete={true}
