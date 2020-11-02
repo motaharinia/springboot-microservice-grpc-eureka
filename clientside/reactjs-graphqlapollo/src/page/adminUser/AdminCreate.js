@@ -13,6 +13,10 @@ import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
 import FormLabel from "@material-ui/core/FormLabel";
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
+import {
+    Uploader
+} from "../../common/uploader/Uploader"
+import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/uploader/UploaderData"
 
 function CloseButton() {
     window.location.href = "/"
@@ -24,9 +28,9 @@ export default function AdminCreate() {
 
     //تعریف متغیر state فرم
     const [formResult, setFormResult] = useState({
-        crudType:"CREATE",
-        data:"",
-        error:""
+        crudType: "CREATE",
+        data: "",
+        error: ""
     });
 
 
@@ -37,10 +41,11 @@ export default function AdminCreate() {
         username: "",
         firstName: "",
         lastName: "",
-        defaultUserAdminContact_address: "",
-        defaultAdminUserContact_city_id:1,
-        gender_id: ""
-    }
+        defaultAdminUserContact_address: "",
+        defaultAdminUserContact_city_id: 1,
+        gender_id: "",
+        imageFileList: []
+    };
 
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
@@ -67,18 +72,31 @@ export default function AdminCreate() {
     const submitCreate = (event) => {
         adminCreate({variables: formData})
             .then(({data}) => {
-                setFormResult({...formResult,"data":data});
+                setFormResult({...formResult, "data": data});
             })
             .catch(error => {
-                setFormResult({...formResult,"error":error});
-            })
+                setFormResult({...formResult, "error": error});
+            });
         setFormData(formData);
     };
+
+
+    // آپلودر تصاویر
+    const onChangeUploader = (state) => {
+        let imageFileList = state.objectList;
+        formData["imageFileList"] = imageFileList;
+        setFormData({
+            ...formData
+        });
+    };
+
+
+    let urlBase = "http://localhost:8082/fso/download/common/member/";
 
     //نمایش اطلاعات state در فرم
     return (
         <div>
-        <Header viewCloseButton={true}   pageTitle="ثبت ادمین جدید" />
+            <Header viewCloseButton={true} pageTitle="ثبت ادمین جدید"/>
             <div className={classes.root}>
                 <div>
                     <Grid container spacing={1}>
@@ -196,14 +214,39 @@ export default function AdminCreate() {
                 <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
+                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Uploader
+                                urlBase={urlBase}
+                                objectList={formData.attachmentFileList}
+                                hasDownload={true}
+                                hasView={true}
+                                hasDelete={true}
+                                type={typeEnum.MULTI}
+                                subSystem={subSystemEnum.COMMON}
+                                entity={entityEnum.MEMBER}
+                                fileKindFolder={fileKindFolderEnum.ATTACHMENT}
+                                validationSizeLimit={5 * 1024 * 1024}
+                                validationItemLimit={50}
+                                onChange={onChangeUploader}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                    </Grid>
+                </div>
+                <div>
+                    <Grid container spacing={1}>
+                        <Grid item xs={4}>
                         </Grid>
                         <Grid item xs={4}>
                             <Button onClick={submitCreate} type="submit" variant="contained" color="primary">
-                                تایید
+                                {"تایید"}
                             </Button>
                             <Button onClick={CloseButton} variant="contained" color="secondary"
                                     className={classes.marginButton}>
-                                انصراف
+                                {"انصراف"}
                             </Button>
                         </Grid>
                         <Grid item xs={4}>
@@ -211,7 +254,7 @@ export default function AdminCreate() {
                     </Grid>
                 </div>
             </div>
-            <ResultHandling result={formResult}  open={true} key={Math.random()} />
+            <ResultHandling result={formResult} open={true} key={Math.random()}/>
         </div>
     );
 }
