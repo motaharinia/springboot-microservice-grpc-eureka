@@ -18,7 +18,9 @@ import ir.micser.login.business.service.adminuserskill.AdminUserSkillService;
 import ir.micser.login.business.service.authentication.PasswordEncoderGenerator;
 import ir.micser.login.business.service.etcitem.EtcItemService;
 import ir.micser.login.business.service.etcitem.GenderEnum;
+import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.business.service.hibernatesearch.HibernateSearchService;
+import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
 import ir.micser.login.persistence.orm.adminuser.AdminUser;
 import ir.micser.login.persistence.orm.adminuser.AdminUserRepository;
 import ir.micser.login.persistence.orm.adminuser.AdminUserSpecification;
@@ -83,6 +85,11 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     private HibernateSearchService hibernateSearchService;
 
+    /**
+     * سرویس مدیریت فایل
+     */
+    private FsoService fsoService;
+
     @GrpcClient("grpcClientCity")
     private CityBlockingStub cityStub;
 
@@ -99,13 +106,14 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification,HibernateSearchService hibernateSearchService) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification,HibernateSearchService hibernateSearchService,FsoService fsoService) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
         this.etcItemService=etcItemService;
         this.adminUserSpecification = adminUserSpecification;
         this.hibernateSearchService=hibernateSearchService;
+        this.fsoService=fsoService;
     }
 
     /**
@@ -210,7 +218,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Cacheable(value = "AdminUser", key = "#id")
     @Override
     @NotNull
-    public AdminUserModel readById(@NotNull Integer id) throws UtilityException {
+    public AdminUserModel readById(@NotNull Integer id) throws Exception {
         AdminUser adminUser = adminUserRepository.findById(id).get();
         AdminUserModel adminUserModel = new AdminUserModel();
         adminUserModel.setId(adminUser.getId());
@@ -230,7 +238,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                 adminUserModel.getSkillList().add(new AdminUserSkillModel(item.getId(), item.getTitle()));
             });
         }
-//    UserModel  userModel= (UserModel) SerializationUtils.clone(adminuser);
+        adminUserModel.setImageFileList(fsoService.getFileViewModelList(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, adminUserModel.getId()));
         return adminUserModel;
     }
 
@@ -264,7 +272,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @NotNull
     @CacheEvict(value = "AdminUser", key = "#id")
-    public AdminUserModel delete(@NotNull Integer id) throws UtilityException {
+    public AdminUserModel delete(@NotNull Integer id) throws Exception {
         AdminUserModel adminUserModel = this.readById(id);
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         //حذف اطلاعات تماس ادمین

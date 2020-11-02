@@ -35,7 +35,7 @@ public interface AdminUserService {
      * @return خروجی: مدل جستجو شده
      */
     @NotNull
-    AdminUserModel readById(@NotNull Integer id) throws UtilityException;
+    AdminUserModel readById(@NotNull Integer id) throws Exception;
 
     /**
      * متد جستجو با مدل فیلتر جستجو
@@ -66,7 +66,7 @@ public interface AdminUserService {
      * @return خروجی: مدل حذف شده
      */
     @NotNull
-    AdminUserModel delete(@NotNull Integer id) throws UtilityException;
+    AdminUserModel delete(@NotNull Integer id) throws Exception;
 
     /**
      *  این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
