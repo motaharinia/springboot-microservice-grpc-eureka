@@ -84,7 +84,13 @@ steps:
     - if table "OAUTH_CLIENT_DETAILS" is empty or in table "ADMIN_USER" there is not any user with username "eng.motahari@gmail.com" and bcrypted password in mslogin database, before go to next step, only one time rename file from "resources/data-oracle222.sql" to "resources/data-oracle.sql", and after next step(running mslogin project), one row will be inserted to "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database.
     - run mslogin project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
     - do not forget to rename sql file again to "resources/data-oracle222.sql". this file only used for the first time that "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database are empty.
-7. client side changes and apps like "reactjs-graphqlapollo" is inside the "client" folder 
+7. client side changes and apps like "reactjs-graphqlapollo" is inside the "client" folder:
+yarn install
+yarn add fine-uploader
+yarn add react-fine-uploader
+yarn add fine-uploader-wrappers
+yarn add js-file-downloader
+yarn start
     
 ### IntellliJ IDEA Configurations:
 - IntelijIDEA: Help -> Edit Custom Vm Options -> add these two line:
