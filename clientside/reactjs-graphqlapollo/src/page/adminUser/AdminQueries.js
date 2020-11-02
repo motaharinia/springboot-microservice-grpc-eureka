@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 // کوئری درخواست نمایش اطلاعات گرید
-const ADMIN_USER_READ_GRID = gql `
+const ADMIN_USER_READ_GRID = gql`
     query {
   readGridByModel(
     searchFilterModel: {}
@@ -20,13 +20,14 @@ const ADMIN_USER_READ_GRID = gql `
 `;
 
 // کوئری درخواست ثبت ادمین جدید
-const ADMIN_USER_CREATE_MUTATION = gql `
+const ADMIN_USER_CREATE_MUTATION = gql`
     mutation Create(
     $username:String!,
     $firstName:String,
     $lastName:String,
     $defaultAdminUserContact_address:String,
     $skillList:[AdminUserSkillModelInput],
+    $imageFileList:[FileViewModelInput!],
     $gender_id:Int!,
     $defaultAdminUserContact_city_id:Int!
     
@@ -37,6 +38,7 @@ const ADMIN_USER_CREATE_MUTATION = gql `
   lastName:$lastName,
   defaultAdminUserContact_address:$defaultAdminUserContact_address,
   skillList:$skillList,
+  imageFileList:$imageFileList,
   defaultAdminUserContact_city_id:$defaultAdminUserContact_city_id,
   gender_id:$gender_id
   }) {
@@ -46,13 +48,18 @@ const ADMIN_USER_CREATE_MUTATION = gql `
 `;
 
 // کوئری درخواست اطلاعات ادمین با ایدی مورد نظر
-const ADMIN_USER_READ_GRID_BY_ID = gql `
+const ADMIN_USER_READ_GRID_BY_ID = gql`
 query  common_adminUser_readById($id:Int!){
     common_adminUser_readById(id: $id) {
         username,
         firstName,
         lastName,
         gender_id,
+         imageFileList{
+      fullPath
+      hashedPath
+      statusEnum
+    },
         defaultAdminUserContact_city_id,
         defaultAdminUserContact_address,
         id
@@ -61,7 +68,7 @@ query  common_adminUser_readById($id:Int!){
 `;
 
 // کوئری درخواست ویرایش اطلاعات ادمین
-const ADMIN_USER_UPDATE_MUTATION = gql `
+const ADMIN_USER_UPDATE_MUTATION = gql`
     mutation Update(
     $username:String!,
     $firstName:String,
@@ -78,7 +85,7 @@ const ADMIN_USER_UPDATE_MUTATION = gql `
   lastName:$lastName,
   defaultAdminUserContact_address:$defaultAdminUserContact_address,
   skillList:$skillList,
-    defaultAdminUserContact_city_id:$defaultAdminUserContact_city_id,
+  defaultAdminUserContact_city_id:$defaultAdminUserContact_city_id,
   gender_id:$gender_id,
   id:$id
   }) {
@@ -92,7 +99,7 @@ const ADMIN_USER_UPDATE_MUTATION = gql `
 `;
 
 // کوئری درخواست حذف ادمین
-const ADMIN_USER_DELETE_MUTATION = gql `
+const ADMIN_USER_DELETE_MUTATION = gql`
   mutation Delete($id:Int!) 
    {
       delete( id:$id)
@@ -103,7 +110,7 @@ const ADMIN_USER_DELETE_MUTATION = gql `
 `;
 
 
-export  {
+export {
     ADMIN_USER_READ_GRID,
     ADMIN_USER_READ_GRID_BY_ID,
     ADMIN_USER_CREATE_MUTATION,
