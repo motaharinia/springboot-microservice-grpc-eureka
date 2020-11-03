@@ -1,21 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ir.micser.login.business.service.captchacode;
 
 /**
- *
- * @author Administrator
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:09:56<br>
+ * Description:<br>
+ * مقادیر ثابت انواع سرویس های کد کپچا<br>
  */
 public enum CaptchCodeTypeEnum {
-    USER_GIFT_CHECK_BY_LOGGED_IN_USER_ID("USER_GIFT_CHECK_BY_LOGGED_IN_USER_ID"),
+    /**
+     * کد کپچا برای سرویس احراز هویت
+     */
     LOGIN_CHECK_BY_USERNAME("LOGIN_CHECK_BY_USERNAME");
 
     private final String value;
 
-    private CaptchCodeTypeEnum(String value) {
+     CaptchCodeTypeEnum(String value) {
         this.value = value;
     }
 

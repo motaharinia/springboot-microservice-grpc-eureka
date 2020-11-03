@@ -1,14 +1,20 @@
-package ir.micser.login.business.service.loguploadedfile;
+package ir.micser.login.business.service.fso;
 
-
-public enum LogUploadedFsoEnum {
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:مقادیر ثابت عنوان (شامل نام و نوع فایل مربوط به انتیتی) و مقدار (مسیر قرار گیری فایلهای ماژول)
+ *
+ */
+public enum FsoModuleEnum {
     //common subsystem:
     ADMIN_USER_PROFILE_IMAGE("/common/adminuser/%ENTITYID%/profileimage/"),
     ;
 
     private final String value;
 
-    private LogUploadedFsoEnum(String value) {
+    private FsoModuleEnum(String value) {
         this.value = value;
     }
 

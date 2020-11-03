@@ -15,13 +15,11 @@ import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFileHandleActionEnum;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFileService;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFileServiceImpl;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
-import ir.micser.login.persistence.orm.loguploadedfile.LogUploadedFile;
-import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleFsoModel;
-import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleModel;
+import ir.micser.login.business.service.fso.FsoUploadedFileHandleActionEnum;
+import ir.micser.login.business.service.fso.FsoUploadedFileService;
+import ir.micser.login.business.service.fso.FsoModuleEnum;
+import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleDetailModel;
+import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
@@ -47,12 +45,12 @@ public class AdminUserController {
 
     private final AdminUserService adminUserService;
 
-    private final LogUploadedFileService logUploadedFileService;
+    private final FsoUploadedFileService fsoUploadedFileService;
 
     @Autowired
-    public AdminUserController(AdminUserService adminUserService,LogUploadedFileService logUploadedFileService) {
+    public AdminUserController(AdminUserService adminUserService, FsoUploadedFileService fsoUploadedFileService) {
         this.adminUserService = adminUserService;
-        this.logUploadedFileService=logUploadedFileService;
+        this.fsoUploadedFileService = fsoUploadedFileService;
     }
 
     /**
@@ -66,8 +64,8 @@ public class AdminUserController {
     public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
         adminUserModel=  adminUserService.create(adminUserModel);
 
-        LogUploadedFileHandleModel logUploadedFileHandleModel = new LogUploadedFileHandleModel(adminUserModel.getId(), LogUploadedFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new LogUploadedFileHandleFsoModel(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        logUploadedFileService.logUploadedFileHandle(logUploadedFileHandleModel);
+        FsoUploadedFileHandleModel fsoUploadedFileHandleModel = new FsoUploadedFileHandleModel(adminUserModel.getId(), FsoUploadedFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new FsoUploadedFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        fsoUploadedFileService.logUploadedFileHandle(fsoUploadedFileHandleModel);
 
         return adminUserModel;
     }
@@ -157,8 +155,8 @@ public class AdminUserController {
     public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
         adminUserModel= adminUserService.update(adminUserModel);
 
-        LogUploadedFileHandleModel logUploadedFileHandleModel = new LogUploadedFileHandleModel(adminUserModel.getId(), LogUploadedFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new LogUploadedFileHandleFsoModel(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        logUploadedFileService.logUploadedFileHandle(logUploadedFileHandleModel);
+        FsoUploadedFileHandleModel fsoUploadedFileHandleModel = new FsoUploadedFileHandleModel(adminUserModel.getId(), FsoUploadedFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new FsoUploadedFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        fsoUploadedFileService.logUploadedFileHandle(fsoUploadedFileHandleModel);
 
         return adminUserModel;
     }

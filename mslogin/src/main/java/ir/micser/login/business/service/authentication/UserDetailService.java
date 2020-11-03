@@ -12,6 +12,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:09:56<br>
+ * Description:<br>
+ * کلاس سرویس کاربران جهت احراز هویت<br>
+ */
+
 @Component
 public class UserDetailService implements UserDetailsService {
 
@@ -26,7 +36,7 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         AdminUser optionalUser = null;
-        UserDetails userDetails=null;
+        UserDetails userDetails = null;
         try {
             optionalUser = adminUserRepository.findUserByUsername(username);
             userDetails = new UserAuthenticatedDetail(optionalUser);

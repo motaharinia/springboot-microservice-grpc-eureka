@@ -16,8 +16,6 @@ import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeModel;
 import com.motaharinia.msutility.fso.upload.FileUploadedModel;
 import com.motaharinia.msutility.fso.view.FileViewModel;
 import com.motaharinia.msutility.zip.ZipTools;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +27,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -332,16 +329,16 @@ public class FsoService {
     //Integer entityId : شناسه انتیتی مورد نظر که فایلهای آن را میخواهیم
 
     /**
-     * @param logUploadedFsoEnum چه فایلی از چه ماژولی را میخواهیم
+     * @param fsoModuleEnum چه فایلی از چه ماژولی را میخواهیم
      * @param entityId           شناسه انتیتی مورد نظر که فایلهای آن را میخواهیم
      * @return خروجی: لیستی از مدل مشاهده فایل
      * @throws Exception خطا
      */
-    public List<FileViewModel> getFileViewModelList(LogUploadedFsoEnum logUploadedFsoEnum, Integer entityId) throws Exception {
+    public List<FileViewModel> getFileViewModelList(FsoModuleEnum fsoModuleEnum, Integer entityId) throws Exception {
         //example: "/eshop/product/27/image3dfile/"
-        String entityKindDirectoryPath = logUploadedFsoEnum.getEntityKindDirectoryPath(entityId);
+        String entityKindDirectoryPath = fsoModuleEnum.getEntityKindDirectoryPath(entityId);
         //example: "/27/image3dfile/"
-        String kindDirectoryPath = logUploadedFsoEnum.getKindDirectoryPath(entityId);
+        String kindDirectoryPath = fsoModuleEnum.getKindDirectoryPath(entityId);
         FsoPathCheckModel fsoPathCheckModel = null;
         try {
             fsoPathCheckModel = FsoTools.pathExistCheck(FSO_PATH_MODULE + entityKindDirectoryPath);

@@ -1,4 +1,4 @@
-package ir.micser.login.persistence.orm.loguploadedfile;
+package ir.micser.login.persistence.orm.fso;
 
 import com.motaharinia.msjpautility.entity.GenericEntity;
 import com.motaharinia.msjpautility.entity.OracleUtility;
@@ -11,8 +11,8 @@ import java.util.Date;
  * @author Administrator
  */
 @Entity
-@Table(name = "log_uploaded_file")
-public class LogUploadedFile extends GenericEntity {
+@Table(name = "fso_uploaded_file")
+public class FsoUploadedFile extends GenericEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

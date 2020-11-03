@@ -8,7 +8,7 @@ import com.motaharinia.msutility.customexception.CustomExceptionKey;
  * Date: 2020-06-11<br>
  * Time: 01:22:13<br>
  * Description:<br>
- * مقادیر ثابت کلید اکسپشنهای بیزینسی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
+ * مقادیر ثابت خطاهای بیزینسی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
  */
 public enum CaptchaCodeBusinessExceptionKeyEnum implements CustomExceptionKey {
 

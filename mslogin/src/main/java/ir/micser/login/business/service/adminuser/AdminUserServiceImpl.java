@@ -20,7 +20,7 @@ import ir.micser.login.business.service.etcitem.EtcItemService;
 import ir.micser.login.business.service.etcitem.GenderEnum;
 import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.business.service.hibernatesearch.HibernateSearchService;
-import ir.micser.login.business.service.loguploadedfile.LogUploadedFsoEnum;
+import ir.micser.login.business.service.fso.FsoModuleEnum;
 import ir.micser.login.persistence.orm.adminuser.AdminUser;
 import ir.micser.login.persistence.orm.adminuser.AdminUserRepository;
 import ir.micser.login.persistence.orm.adminuser.AdminUserSpecification;
@@ -238,7 +238,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                 adminUserModel.getSkillList().add(new AdminUserSkillModel(item.getId(), item.getTitle()));
             });
         }
-        adminUserModel.setImageFileList(fsoService.getFileViewModelList(LogUploadedFsoEnum.ADMIN_USER_PROFILE_IMAGE, adminUserModel.getId()));
+        adminUserModel.setImageFileList(fsoService.getFileViewModelList(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, adminUserModel.getId()));
         return adminUserModel;
     }
 

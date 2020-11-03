@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ir.micser.login.presentation.loguploadedfile.frontuploader;
+package ir.micser.login.presentation.fso.frontuploader;
 
-/**
- *
- * @author Administrator
- */
+
 public class FineUploaderResponseModel {
 
     private Boolean success;

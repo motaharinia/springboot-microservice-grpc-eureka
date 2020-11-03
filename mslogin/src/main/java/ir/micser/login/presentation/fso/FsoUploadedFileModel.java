@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ir.micser.login.presentation.loguploadedfile;
+package ir.micser.login.presentation.fso;
 
 import com.motaharinia.msutility.fso.upload.FileUploadedModel;
 
 import java.util.Date;
 
-/**
- *
- * @author Administrator
- */
-public class LogUploadedFileModel {
+
+public class FsoUploadedFileModel {
 
     private String fileKey;
     private String fileName;

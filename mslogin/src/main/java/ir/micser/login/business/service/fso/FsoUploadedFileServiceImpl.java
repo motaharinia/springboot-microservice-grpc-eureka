@@ -1,4 +1,4 @@
-package ir.micser.login.business.service.loguploadedfile;
+package ir.micser.login.business.service.fso;
 
 
 import com.motaharinia.msutility.customexception.BusinessException;
@@ -9,14 +9,13 @@ import com.motaharinia.msutility.fso.view.FileViewModel;
 import com.motaharinia.msutility.fso.view.FileViewModelStatusEnum;
 import com.motaharinia.msutility.image.ImageTools;
 import ir.micser.login.business.service.BusinessExceptionEnum;
-import ir.micser.login.business.service.fso.FsoService;
-import ir.micser.login.persistence.orm.loguploadedfile.LogUploadedFile;
-import ir.micser.login.persistence.orm.loguploadedfile.LogUploadedFileRepository;
-import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleFsoModel;
-import ir.micser.login.presentation.loguploadedfile.LogUploadedFileHandleModel;
-import ir.micser.login.presentation.loguploadedfile.LogUploadedFileModel;
-import ir.micser.login.presentation.loguploadedfile.backuploader.FileUploadChunkModel;
-import ir.micser.login.presentation.loguploadedfile.frontuploader.FineUploaderChunkModel;
+import ir.micser.login.persistence.orm.fso.FsoUploadedFile;
+import ir.micser.login.persistence.orm.fso.FsoUploadedFileRepository;
+import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleDetailModel;
+import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleModel;
+import ir.micser.login.presentation.fso.FsoUploadedFileModel;
+import ir.micser.login.presentation.fso.backuploader.FileUploadChunkModel;
+import ir.micser.login.presentation.fso.frontuploader.FineUploaderChunkModel;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,12 +32,19 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:09:56<br>
+ * Description:<br>
+ * کلاس پیاده سازی سرویس فایلهای آپلود شده<br>
+ */
 
 @Component
 @Qualifier("LogUploadedFileServiceImpl")
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class LogUploadedFileServiceImpl implements LogUploadedFileService {
+public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
 
     /**
      * مسیر موقت جهت آپلود فایلهای پروزه
@@ -49,12 +55,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
     /**
      * ریپازیتوری ادمین
      */
-    private LogUploadedFileRepository logUploadedFileRepository;
-
-
-//    @Autowired
-//    @Qualifier(value = "LogUploadedFileServiceImpl")
-//    private LogUploadedFileService logUploadedFileService;
+    private FsoUploadedFileRepository fsoUploadedFileRepository;
 
     @Autowired
     private FsoService fsoService;
@@ -64,8 +65,8 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      * متد سازنده
      */
     @Autowired
-    public LogUploadedFileServiceImpl(LogUploadedFileRepository logUploadedFileRepository) {
-        this.logUploadedFileRepository = logUploadedFileRepository;
+    public FsoUploadedFileServiceImpl(FsoUploadedFileRepository fsoUploadedFileRepository) {
+        this.fsoUploadedFileRepository = fsoUploadedFileRepository;
     }
 
     /**
@@ -77,7 +78,7 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      * @throws Exception
      */
     @Override
-    public LogUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FileUploadChunkModel fileUploadChunkModel) throws Exception {
+    public FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FileUploadChunkModel fileUploadChunkModel) throws Exception {
         //تعریف و ساخت پوشه ای برای فایلهای در حال آپلود"uploading" در پوشه آپلود
         String uploadingDirectory = FSO_PATH_UPLOAD_DIRECTORY + "/" + "uploading";
         FsoTools.createDirectoryIfNotExist(uploadingDirectory);
@@ -88,30 +89,30 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
         FileUtils.writeByteArrayToFile(uploadingFile, multipartFile.getBytes(), true);
 
         //ایجاد مدل فایل آپلود
-        LogUploadedFileModel logUploadedFileModel = new LogUploadedFileModel();
+        FsoUploadedFileModel fsoUploadedFileModel = new FsoUploadedFileModel();
         if (fileUploadChunkModel.getChunks() - 1 == fileUploadChunkModel.getChunk()) {
-            logUploadedFileModel.setFileKey(fileUploadChunkModel.getFileKey());
-            logUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            logUploadedFileModel.setFileSize(Long.valueOf(logUploadedFileModel.getFileByteArray().length));
-            logUploadedFileModel.setFileUploadDateTime(new Date());
+            fsoUploadedFileModel.setFileKey(fileUploadChunkModel.getFileKey());
+            fsoUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
+            fsoUploadedFileModel.setFileSize(Long.valueOf(fsoUploadedFileModel.getFileByteArray().length));
+            fsoUploadedFileModel.setFileUploadDateTime(new Date());
             fileUploadChunkModel.setName(this.fixFailedFileNameCharacter(fileUploadChunkModel.getName()));
-            logUploadedFileModel.setFileFullName(fileUploadChunkModel.getName());
-            logUploadedFileModel.setFileEntity(fileUploadChunkModel.getEntity());
-            logUploadedFileModel.setFileSubSystem(fileUploadChunkModel.getSubSystem().getValue());
-            logUploadedFileModel.setFileExtension(FsoTools.getFileExtension(fileUploadChunkModel.getName()));
-            logUploadedFileModel.setFileName(FsoTools.getFileNameWithoutExtension(fileUploadChunkModel.getName()));
+            fsoUploadedFileModel.setFileFullName(fileUploadChunkModel.getName());
+            fsoUploadedFileModel.setFileEntity(fileUploadChunkModel.getEntity());
+            fsoUploadedFileModel.setFileSubSystem(fileUploadChunkModel.getSubSystem().getValue());
+            fsoUploadedFileModel.setFileExtension(FsoTools.getFileExtension(fileUploadChunkModel.getName()));
+            fsoUploadedFileModel.setFileName(FsoTools.getFileNameWithoutExtension(fileUploadChunkModel.getName()));
             String mainPath = "/" + removeNonAlphabetic(fileUploadChunkModel.getSubSystem().getValue()) + "/" + removeNonAlphabetic(fileUploadChunkModel.getEntity());
-            logUploadedFileModel.setDirectoryRealPath(checkLastCharOfPath(mainPath + fileUploadChunkModel.getFilePath()));
+            fsoUploadedFileModel.setDirectoryRealPath(checkLastCharOfPath(mainPath + fileUploadChunkModel.getFilePath()));
 
             //ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده
-            logUploadedFileModel = this.saveUploadedFile(logUploadedFileModel, logUploadedFileModel.getFileKey());
+            fsoUploadedFileModel = this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey());
             //ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
-            this.create(logUploadedFileModel);
+            this.create(fsoUploadedFileModel);
 
             //حذف فایل موقت در حال آپلود
             uploadingFile.delete();
 
-            return logUploadedFileModel;
+            return fsoUploadedFileModel;
         } else {
             return null;
         }
@@ -126,59 +127,59 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      * @throws Exception
      */
     @Override
-    public LogUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FineUploaderChunkModel fineUploaderChunkModel) throws Exception {
+    public FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FineUploaderChunkModel fineUploaderChunkModel) throws Exception {
         //تعریف و ساخت پوشه ای برای فایلهای در حال آپلود"uploading" در پوشه آپلود
         String uploadingDirectory = FSO_PATH_UPLOAD_DIRECTORY + "/" + "uploading";
         FsoTools.createDirectoryIfNotExist(uploadingDirectory);
 
         //مسیر فایل در حال آپلود طبق کلید فایل که از سمت کلاینت می آبد
-        String uploadingFilePath = uploadingDirectory + "/" + fineUploaderChunkModel.getQquuid();
+        String uploadingFilePath = uploadingDirectory + "/" + fineUploaderChunkModel.getFileKey();
         File uploadingFile = new File(uploadingFilePath);
         FileUtils.writeByteArrayToFile(uploadingFile, multipartFile.getBytes(), true);
 
         //ایجاد مدل فایل آپلود
-        LogUploadedFileModel logUploadedFileModel = new LogUploadedFileModel();
-        if (fineUploaderChunkModel.getQqtotalparts() - 1 == fineUploaderChunkModel.getQqpartindex()) {
-            logUploadedFileModel.setFileKey(fineUploaderChunkModel.getQquuid());
-            logUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            logUploadedFileModel.setFileSize(Long.valueOf(logUploadedFileModel.getFileByteArray().length));
-            logUploadedFileModel.setFileUploadDateTime(new Date());
-            fineUploaderChunkModel.setQqfilename(this.fixFailedFileNameCharacter(fineUploaderChunkModel.getQqfilename()));
-            logUploadedFileModel.setFileFullName(fineUploaderChunkModel.getQqfilename());
-            logUploadedFileModel.setFileEntity(fineUploaderChunkModel.getEntity());
-            logUploadedFileModel.setFileSubSystem(fineUploaderChunkModel.getSubSystem().getValue());
-            logUploadedFileModel.setFileExtension(FsoTools.getFileExtension(fineUploaderChunkModel.getQqfilename()));
-            logUploadedFileModel.setFileName(FsoTools.getFileNameWithoutExtension(fineUploaderChunkModel.getQqfilename()));
+        FsoUploadedFileModel fsoUploadedFileModel = new FsoUploadedFileModel();
+        if (fineUploaderChunkModel.getChunks() - 1 == fineUploaderChunkModel.getChunk()) {
+            fsoUploadedFileModel.setFileKey(fineUploaderChunkModel.getFileKey());
+            fsoUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
+            fsoUploadedFileModel.setFileSize(Long.valueOf(fsoUploadedFileModel.getFileByteArray().length));
+            fsoUploadedFileModel.setFileUploadDateTime(new Date());
+            fineUploaderChunkModel.setName(this.fixFailedFileNameCharacter(fineUploaderChunkModel.getName()));
+            fsoUploadedFileModel.setFileFullName(fineUploaderChunkModel.getName());
+            fsoUploadedFileModel.setFileEntity(fineUploaderChunkModel.getEntity());
+            fsoUploadedFileModel.setFileSubSystem(fineUploaderChunkModel.getSubSystem().getValue());
+            fsoUploadedFileModel.setFileExtension(FsoTools.getFileExtension(fineUploaderChunkModel.getName()));
+            fsoUploadedFileModel.setFileName(FsoTools.getFileNameWithoutExtension(fineUploaderChunkModel.getName()));
             String mainPath = "/" + removeNonAlphabetic(fineUploaderChunkModel.getSubSystem().getValue()) + "/" + removeNonAlphabetic(fineUploaderChunkModel.getEntity());
 //            logUploadedFileModel.setDirectoryRealPath(checkLastCharOfPath(mainPath + fineUploaderChunkModel.getFilePath()));
 
             //ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده
-            logUploadedFileModel = this.saveUploadedFile(logUploadedFileModel, logUploadedFileModel.getFileKey());
+            fsoUploadedFileModel = this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey());
             //ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
-            this.create(logUploadedFileModel);
+            this.create(fsoUploadedFileModel);
 
-            return logUploadedFileModel;
+            return fsoUploadedFileModel;
         } else {
             return null;
         }
     }
 
     @Override
-    public LogUploadedFileModel create(LogUploadedFileModel logUploadedFileModel) throws Exception {
+    public FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel) throws Exception {
         //ساخت انتیتی فایل آپلود شده از مدل فایل آپلود شده
-        LogUploadedFile logUploadedFile = new LogUploadedFile();
-        logUploadedFile.setFileExtension(logUploadedFileModel.getFileExtension());
-        logUploadedFile.setFileFullName(logUploadedFileModel.getFileFullName());
-        logUploadedFile.setFileKey(logUploadedFileModel.getFileKey());
-        logUploadedFile.setFileMimeType(logUploadedFileModel.getFileMimeType());
-        logUploadedFile.setFileName(logUploadedFileModel.getFileName());
-        logUploadedFile.setFileSize(logUploadedFileModel.getFileSize());
-        logUploadedFile.setFileUploadDateTime(new Date());
-        logUploadedFile.setFileUploadedPath(logUploadedFileModel.getFileUploadedPath());
-        logUploadedFile.setFileEntity(logUploadedFileModel.getFileEntity());
-        logUploadedFile.setFileSubSystem(logUploadedFileModel.getFileSubSystem());
-        logUploadedFileRepository.save(logUploadedFile);
-        return logUploadedFileModel;
+        FsoUploadedFile fsoUploadedFile = new FsoUploadedFile();
+        fsoUploadedFile.setFileExtension(fsoUploadedFileModel.getFileExtension());
+        fsoUploadedFile.setFileFullName(fsoUploadedFileModel.getFileFullName());
+        fsoUploadedFile.setFileKey(fsoUploadedFileModel.getFileKey());
+        fsoUploadedFile.setFileMimeType(fsoUploadedFileModel.getFileMimeType());
+        fsoUploadedFile.setFileName(fsoUploadedFileModel.getFileName());
+        fsoUploadedFile.setFileSize(fsoUploadedFileModel.getFileSize());
+        fsoUploadedFile.setFileUploadDateTime(new Date());
+        fsoUploadedFile.setFileUploadedPath(fsoUploadedFileModel.getFileUploadedPath());
+        fsoUploadedFile.setFileEntity(fsoUploadedFileModel.getFileEntity());
+        fsoUploadedFile.setFileSubSystem(fsoUploadedFileModel.getFileSubSystem());
+        fsoUploadedFileRepository.save(fsoUploadedFile);
+        return fsoUploadedFileModel;
     }
 
     /**
@@ -189,28 +190,28 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      * @throws Exception
      */
     @Override
-    public LogUploadedFileModel getLogUploadedFileModel(String fileKey) throws Exception {
+    public FsoUploadedFileModel readByFileKey(String fileKey) throws Exception {
         if ((fileKey == null) || (fileKey.length() == 0)) {
-            throw new BusinessException(LogUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
+            throw new BusinessException(FsoUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
         }
 
-        LogUploadedFileModel logUploadedFileModel = new LogUploadedFileModel();
-        LogUploadedFile logUploadedFile = logUploadedFileRepository.findByFileKey(fileKey);
+        FsoUploadedFileModel fsoUploadedFileModel = new FsoUploadedFileModel();
+        FsoUploadedFile fsoUploadedFile = fsoUploadedFileRepository.findByFileKey(fileKey);
 
-        if (logUploadedFile != null) {
-            logUploadedFileModel = (LogUploadedFileModel) EntityTools.convertToModel(logUploadedFileModel, logUploadedFile);
+        if (fsoUploadedFile != null) {
+            fsoUploadedFileModel = (FsoUploadedFileModel) EntityTools.convertToModel(fsoUploadedFileModel, fsoUploadedFile);
             //خواندن اطلاعات فایل در مدل
-            File uploadedFile = new File(logUploadedFileModel.getFileUploadedPath());
+            File uploadedFile = new File(fsoUploadedFileModel.getFileUploadedPath());
             FileInputStream fileInputStream = null;
             fileInputStream = new FileInputStream(uploadedFile);
             byte fileContent[] = new byte[(int) uploadedFile.length()];
             fileInputStream.read(fileContent);
-            logUploadedFileModel.setFileByteArray(fileContent);
+            fsoUploadedFileModel.setFileByteArray(fileContent);
         } else {
-            throw new BusinessException(LogUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
+            throw new BusinessException(FsoUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
         }
 
-        return logUploadedFileModel;
+        return fsoUploadedFileModel;
     }
 
     /**
@@ -221,15 +222,15 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
      */
     @Override
     public void delete(String fileKey) throws Exception {
-        LogUploadedFile logUploadedFile = logUploadedFileRepository.findByFileKey(fileKey);
-        if (logUploadedFile != null) {
-            logUploadedFileRepository.delete(logUploadedFile);
-            File file = new File(FSO_PATH_UPLOAD_DIRECTORY + "/" + logUploadedFile.getFileKey());
+        FsoUploadedFile fsoUploadedFile = fsoUploadedFileRepository.findByFileKey(fileKey);
+        if (fsoUploadedFile != null) {
+            fsoUploadedFileRepository.delete(fsoUploadedFile);
+            File file = new File(FSO_PATH_UPLOAD_DIRECTORY + "/" + fsoUploadedFile.getFileKey());
             if ((file.exists())) {
                 FileUtils.deleteQuietly(file);
             }
         } else {
-            throw new BusinessException(LogUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
+            throw new BusinessException(FsoUploadedFileServiceImpl.class, BusinessExceptionEnum.INVALID_FILE_KEY, "fileKey:" + fileKey);
         }
     }
 
@@ -237,24 +238,24 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
     /**
      * این متد مطابق مدل دیتابیسی اطلاعات فایل آپلود شده آن را در فایل سیستم ذخیره مینماید
      *
-     * @param logUploadedFileModel مدل فایل آپلود شده
+     * @param fsoUploadedFileModel مدل فایل آپلود شده
      * @param fileKey              کلید فایل آپلود شده
      * @return خروجی: مدل فایل آپلود شده کامل شده
      * @throws Exception
      */
-    private LogUploadedFileModel saveUploadedFile(LogUploadedFileModel logUploadedFileModel, String fileKey) throws Exception {
+    private FsoUploadedFileModel saveUploadedFile(FsoUploadedFileModel fsoUploadedFileModel, String fileKey) throws Exception {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         Calendar cal = Calendar.getInstance();
-        String fileName = "uploaded_" + sdf.format(cal.getTime()) + "_" + logUploadedFileModel.getFileFullName();
+        String fileName = "uploaded_" + sdf.format(cal.getTime()) + "_" + fsoUploadedFileModel.getFileFullName();
         String fileKeyDirectoryPath = FSO_PATH_UPLOAD_DIRECTORY + "/" + fileKey;
         File directory = new File(fileKeyDirectoryPath);
         if (!directory.exists()) {
             directory.mkdir();
         }
-        FileUtils.writeByteArrayToFile(new File(fileKeyDirectoryPath + "/" + fileName), logUploadedFileModel.getFileByteArray());
-        logUploadedFileModel.setFileMimeType(FsoTools.getMimeTypeModel(fileKeyDirectoryPath + "/" + fileName).getMimeType());
-        logUploadedFileModel.setFileUploadedPath(fileKeyDirectoryPath + "/" + fileName);
-        return logUploadedFileModel;
+        FileUtils.writeByteArrayToFile(new File(fileKeyDirectoryPath + "/" + fileName), fsoUploadedFileModel.getFileByteArray());
+        fsoUploadedFileModel.setFileMimeType(FsoTools.getMimeTypeModel(fileKeyDirectoryPath + "/" + fileName).getMimeType());
+        fsoUploadedFileModel.setFileUploadedPath(fileKeyDirectoryPath + "/" + fileName);
+        return fsoUploadedFileModel;
     }
 
 
@@ -313,11 +314,11 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
     /**
      * این متد مدل یک فایل آپلود شده را میگیرد و فایل را نسبت به فعل ثبت یا ویرایش یا حذف در فایل سیستم سامانه مدیریت میکند
      *
-     * @param logUploadedFileHandleModel مدل فایل آپلود شده
+     * @param fsoUploadedFileHandleModel مدل فایل آپلود شده
      * @throws Exception خطا
      */
     @Override
-    public void logUploadedFileHandle(LogUploadedFileHandleModel logUploadedFileHandleModel) throws Exception {
+    public void logUploadedFileHandle(FsoUploadedFileHandleModel fsoUploadedFileHandleModel) throws Exception {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         Calendar cal = Calendar.getInstance();
         String dateTime = sdf.format(cal.getTime());
@@ -325,42 +326,42 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
 //        if (CollectionUtils.isEmpty(logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList())) {
 //            throw new BusinessException(this.getEntityClass(), CommonBusinessExceptionKeyImpl.INVALID_LOG_UPLOADED_FSO_MODEL_LIST_ENUM);
 //        }
-        if (logUploadedFileHandleModel.getEntityId() == null) {
-            throw new BusinessException(LogUploadedFileServiceImpl.class, BusinessExceptionEnum.LOG_UPLOADED_FILE_HANDLE_ENTITY_ID_INVALID, "logUploadedFileHandleModel.getEntityId() ");
+        if (fsoUploadedFileHandleModel.getEntityId() == null) {
+            throw new BusinessException(FsoUploadedFileServiceImpl.class, BusinessExceptionEnum.LOG_UPLOADED_FILE_HANDLE_ENTITY_ID_INVALID, "logUploadedFileHandleModel.getEntityId() ");
         }
-        switch (logUploadedFileHandleModel.getLogUploadedFileHandleActionEnum()) {
+        switch (fsoUploadedFileHandleModel.getFsoUploadedFileHandleActionEnum()) {
             case ENTITY_CREATE:
                 //در صورتی که فایلی برای اضافه شدن در ثبت وجود دارد پوشه انتیتی آن را حذف میکنیم
-                for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
+                for (FileViewModel fileViewModel : fsoUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
+                        for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
-                            String entityDirectoryPath = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getEntityDirectoryPath();
+                            String entityDirectoryPath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getEntityDirectoryPath();
                             //چون در حالت ثبت ماژول هستیم پس اگر از قبل دایرکتوری در مسیر پوشه نوع فایل انتیتی ثبت شده است را کلا حذف میکنیم
                             List<String> deleteDirectoryList = new ArrayList<>();
-                            deleteDirectoryList.add(entityDirectoryPath + logUploadedFileHandleModel.getEntityId().toString());
+                            deleteDirectoryList.add(entityDirectoryPath + fsoUploadedFileHandleModel.getEntityId().toString());
                             fsoService.delete(deleteDirectoryList);
                         }
                     }
                 }
                 //آپلود فایلهای جدید اضافه شده
-                for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
+                for (FileViewModel fileViewModel : fsoUploadedFileHandleModel.getFileViewModelList()) {
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
-                        for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
+                        FsoUploadedFileModel fsoUploadedFileModel = this.readByFileKey(fileViewModel.getKey());
+                        for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
-                            String directoryPath = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getValue().replace("%ENTITYID%", logUploadedFileHandleModel.getEntityId().toString());
+                            String directoryPath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().replace("%ENTITYID%", fsoUploadedFileHandleModel.getEntityId().toString());
                             //بررسی و در صورت نیاز ساخت مسیر پوشه نوع فایل مورد نظر انتیتی
                             FsoTools.pathDirectoryPrepare(directoryPath);
                            //تبدیل مدل فایل آپلود به مدل آپلود جهت آپلود
-                            FileUploadedModel fileUploadedModel=logUploadedFileModel.getFileUploadedModel();
+                            FileUploadedModel fileUploadedModel= fsoUploadedFileModel.getFileUploadedModel();
                             fileUploadedModel.setDirectoryRealPath(directoryPath);
                             //بررسی نیاز به تغییر اندازه داشتن فایلهای تصویری
-                            if ((logUploadedFileHandleFsoModel.getHeight() != null) && (logUploadedFileHandleFsoModel.getWidth() != null) && (logUploadedFileHandleFsoModel.getHeight() > 0) && (logUploadedFileHandleFsoModel.getWidth() > 0)) {
+                            if ((fsoUploadedFileHandleDetailModel.getHeight() != null) && (fsoUploadedFileHandleDetailModel.getWidth() != null) && (fsoUploadedFileHandleDetailModel.getHeight() > 0) && (fsoUploadedFileHandleDetailModel.getWidth() > 0)) {
                                 //اگر فایل مورد نظر تصویر باشد و در ورودی خواسته شده باشد که آن فایل تغییر اندازه بشود
-                                byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), logUploadedFileHandleFsoModel.getWidth(), logUploadedFileHandleFsoModel.getHeight(), true);
+                                byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), fsoUploadedFileHandleDetailModel.getWidth(), fsoUploadedFileHandleDetailModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
                                 fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
                             } else {
@@ -376,16 +377,16 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                 break;
             case ENTITY_UPDATE:
                 //حذف فایلهای حذف شده در کلاینت
-                for (FileViewModel fileViewModel : logUploadedFileHandleModel.getFileViewModelList()) {
+                for (FileViewModel fileViewModel : fsoUploadedFileHandleModel.getFileViewModelList()) {
                     //اگر فایلی در کلاینت اضافه شده است
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.ADDED)) {
-                        LogUploadedFileModel logUploadedFileModel = this.getLogUploadedFileModel(fileViewModel.getKey());
-                        for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
+                        FsoUploadedFileModel fsoUploadedFileModel = this.readByFileKey(fileViewModel.getKey());
+                        for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
                             //به دست آوردن مسیر پوشه نوع فایل مورد نظر در انتیتی مورد نظر
                             ///common/socialgroup/120/logo/
-                            String directoryPath = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getValue().replace("%ENTITYID%", logUploadedFileHandleModel.getEntityId().toString());
+                            String directoryPath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().replace("%ENTITYID%", fsoUploadedFileHandleModel.getEntityId().toString());
                             //اگر فایلی برای آپلود ارسال شده است و آن فایل سینگل میباشد پوشه اش را حذف میکنیم
-                            if (logUploadedFileHandleFsoModel.getIsSingle()) {
+                            if (fsoUploadedFileHandleDetailModel.getIsSingle()) {
                                 List<String> deleteDirectoryList = new ArrayList<>();
                                 deleteDirectoryList.add(directoryPath);
                                 fsoService.delete(deleteDirectoryList);
@@ -393,21 +394,21 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                             //بررسی و در صورت نیاز ساخت مسیر پوشه نوع فایل مورد نظر انتیتی
                             FsoTools.pathDirectoryPrepare(directoryPath);
                             //تبدیل مدل فایل آپلود به مدل آپلود جهت آپلود
-                            FileUploadedModel fileUploadedModel=logUploadedFileModel.getFileUploadedModel();
+                            FileUploadedModel fileUploadedModel= fsoUploadedFileModel.getFileUploadedModel();
                             fileUploadedModel.setDirectoryRealPath(directoryPath);
 
                             //بررسی نیاز به تغییر اندازه داشتن فایلهای تصویری
-                            if ((logUploadedFileHandleFsoModel.getHeight() != null) && (logUploadedFileHandleFsoModel.getWidth() != null) && (logUploadedFileHandleFsoModel.getHeight() > 0) && (logUploadedFileHandleFsoModel.getWidth() > 0)) {
+                            if ((fsoUploadedFileHandleDetailModel.getHeight() != null) && (fsoUploadedFileHandleDetailModel.getWidth() != null) && (fsoUploadedFileHandleDetailModel.getHeight() > 0) && (fsoUploadedFileHandleDetailModel.getWidth() > 0)) {
                                 //اگر فایل مورد نظر تصویر باشد و در ورودی خواسته شده باشد که آن فایل تغییر اندازه بشود
                                 //logUploadedFileModel.setFileName(dateTime + "_" + logUploadedFileModel.getFileName());
                                 //logUploadedFileModel.setFileFullName(dateTime + "_" + logUploadedFileModel.getFileFullName());
-                                byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), logUploadedFileHandleFsoModel.getWidth(), logUploadedFileHandleFsoModel.getHeight(), true);
+                                byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), fsoUploadedFileHandleDetailModel.getWidth(), fsoUploadedFileHandleDetailModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
                                 fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
                             } else {
                                 //اگر فایل مورد نظر تصویر نباشد و یا نیاز به تغییر اندازه نداشته باشد
-                                logUploadedFileModel.setFileName(dateTime + "_" + logUploadedFileModel.getFileName());
-                                logUploadedFileModel.setFileFullName(dateTime + "_" + logUploadedFileModel.getFileFullName());
+                                fsoUploadedFileModel.setFileName(dateTime + "_" + fsoUploadedFileModel.getFileName());
+                                fsoUploadedFileModel.setFileFullName(dateTime + "_" + fsoUploadedFileModel.getFileFullName());
                             }
                             fsoService.upload(fileUploadedModel);
                         }
@@ -416,9 +417,9 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
                     //اگر فایلی در کلاینت حذف شده است
                     if (fileViewModel.getStatusEnum().equals(FileViewModelStatusEnum.DELETED)) {
                         //حذف فایل های حذف شده در کلاینت
-                        for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
+                        for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
 
-                            String fileForDeletePath = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getValue().replace("%ENTITYID%", logUploadedFileHandleModel.getEntityId().toString()) + fileViewModel.getFullName();
+                            String fileForDeletePath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().replace("%ENTITYID%", fsoUploadedFileHandleModel.getEntityId().toString()) + fileViewModel.getFullName();
 
                             List<String> fileForDeletePathList = new ArrayList<>();
                             fileForDeletePathList.add(fileForDeletePath);
@@ -431,16 +432,16 @@ public class LogUploadedFileServiceImpl implements LogUploadedFileService {
             case ENTITY_DELETE:
                 List<String> deleteDirectoryList = new ArrayList<>();
                 String entityDirectoryPath = "";
-                for (LogUploadedFileHandleFsoModel logUploadedFileHandleFsoModel : logUploadedFileHandleModel.getLogUploadedFileHandleFsoModelList()) {
-                    Integer entityIdIndex = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getValue().indexOf("%ENTITYID%");
-                    entityDirectoryPath = logUploadedFileHandleFsoModel.getLogUploadedFsoEnum().getValue().substring(0, entityIdIndex);
-                    deleteDirectoryList.add(entityDirectoryPath + logUploadedFileHandleModel.getEntityId());
+                for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
+                    Integer entityIdIndex = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().indexOf("%ENTITYID%");
+                    entityDirectoryPath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().substring(0, entityIdIndex);
+                    deleteDirectoryList.add(entityDirectoryPath + fsoUploadedFileHandleModel.getEntityId());
                     break;
                 }
                 fsoService.delete(deleteDirectoryList);
                 break;
             default:
-                throw new BusinessException(LogUploadedFileServiceImpl.class, BusinessExceptionEnum.LOG_UPLOADED_FILE_HANDLE_ACTION_ENUM_INVALID, "logUploadedFileHandleModel.getLogUploadedFileHandleActionEnum():" + logUploadedFileHandleModel.getLogUploadedFileHandleActionEnum());
+                throw new BusinessException(FsoUploadedFileServiceImpl.class, BusinessExceptionEnum.LOG_UPLOADED_FILE_HANDLE_ACTION_ENUM_INVALID, "logUploadedFileHandleModel.getLogUploadedFileHandleActionEnum():" + fsoUploadedFileHandleModel.getFsoUploadedFileHandleActionEnum());
         }
     }
 

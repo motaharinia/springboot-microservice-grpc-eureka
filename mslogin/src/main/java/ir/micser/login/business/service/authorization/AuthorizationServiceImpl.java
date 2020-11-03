@@ -16,7 +16,7 @@ import java.util.Optional;
  * User: https://github.com/motaharinia<br>
  * Date: 2020-07-01<br>
  * Time: 14:02:31<br>
- * Description:<br>
+ * Description:کلاس چیاده سازی احراز هویت
  */
 @GrpcService(interceptors = { GrpcExceptionHandler.class })
 public class AuthorizationServiceImpl extends AuthorizationGrpc.AuthorizationImplBase implements AuthorizationService {

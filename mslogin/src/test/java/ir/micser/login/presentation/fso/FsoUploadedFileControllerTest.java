@@ -1,4 +1,4 @@
-package ir.micser.login.presentation.loguploadedfile;
+package ir.micser.login.presentation.fso;
 
 
 import com.motaharinia.msutility.customexception.BusinessException;
@@ -6,7 +6,8 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
-import ir.micser.login.presentation.loguploadedfile.backuploader.FileUploadChunkModel;
+import ir.micser.login.business.service.SubSystemEnum;
+import ir.micser.login.presentation.fso.backuploader.FileUploadChunkModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +37,7 @@ import static org.assertj.core.api.Assertions.fail;
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class LogUploadedFileControllerTest {
+public class FsoUploadedFileControllerTest {
     @LocalServerPort
     private int port;
 

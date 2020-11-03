@@ -1,8 +1,24 @@
 package ir.micser.login.business.service.authentication;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:09:56<br>
+ * Description:<br>
+ * مدل خطا احراز هویت<br>
+ */
 public class LoginExceptionModel {
+    /**
+     * نوع خطا
+     */
     private LoginExceptionEnum loginException;
+    /**
+     * تعداد ورود ناصحیح کلمه کاربری یا رمز عبور
+     */
     private Integer loginFailureCount;
+    /**
+     * توضیحات خطا
+     */
     private String exceptionDescription;
 
     //getter-setter:

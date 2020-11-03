@@ -8,7 +8,7 @@ import com.motaharinia.msutility.customexception.CustomExceptionKey;
  * Date: 2020-06-11<br>
  * Time: 01:22:13<br>
  * Description:<br>
- *    کلید اکسپشنهای مجوز دسترسی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
+ *    مقادیر ثابت خطاهای مجوز دسترسی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
  */
 public enum AuthorizationBusinessExceptionKeyEnum implements CustomExceptionKey {
 
