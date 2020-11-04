@@ -77,12 +77,11 @@ public class AdminUserModel implements Serializable {
     /**
      * لیست مهارتها
      */
-    @GraphQLQuery(name = "skillList", description = " لیست مهارتها")
+    @GraphQLQuery(name = "skillList", description = "لیست مهارتها")
     private List<AdminUserSkillModel> skillList = new ArrayList<>();
 
-    private String referenceCode;
-
     //تصاویر پروفایل
+    @GraphQLQuery(name = "imageFileList", description = "تصاویر پروفایل")
     private List<FileViewModel> imageFileList = new ArrayList<>();
 
     @Override
@@ -181,14 +180,6 @@ public class AdminUserModel implements Serializable {
 
     public void setDefaultAdminUserContact_city_id(Integer defaultAdminUserContact_city_id) {
         this.defaultAdminUserContact_city_id = defaultAdminUserContact_city_id;
-    }
-
-    public String getReferenceCode() {
-        return referenceCode;
-    }
-
-    public void setReferenceCode(String referenceCode) {
-        this.referenceCode = referenceCode;
     }
 
     public List<FileViewModel> getImageFileList() {
