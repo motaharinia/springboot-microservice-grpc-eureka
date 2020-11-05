@@ -56,8 +56,8 @@ export default function AdminUpdate() {
 
 
     // آپلودر تصاویر
-    const onChangeUploader = (state) => {
-        let imageFileList = state.objectList;
+    const onChangeUploader = (objectList) => {
+        let imageFileList = objectList;
         formData["imageFileList"] = imageFileList;
         setFormData({
             ...formData
