@@ -1,3 +1,4 @@
+import FineUploaderTraditional from "fine-uploader-wrappers";
 
 
 const changeActionEnum = {
@@ -61,7 +62,7 @@ const statusEnum = {
     "UPLOAD_FAILED": "upload failed", //آپلود یک فایل با موفقیت انجام نشده است
     "DELETE_FAILED": "delete failed", //حذف فایل آپلود شده با موفقیت انجام نشده است
     "DELETING": "deleting", //در حال حذف فایل آپلود شده
-    "DELETED": "deleted", //حذف فایل آپلود شده با موفقیت انجام شده است
+    "DELETED": "DELETED", //حذف فایل آپلود شده با موفقیت انجام شده است
 };
 
 
@@ -77,5 +78,98 @@ const actionEnum = {
 };
 
 
-export {changeActionEnum,typeEnum, statusEnum, actionEnum, subSystemEnum, entityEnum, fileKindFolderEnum}
+
+const getNewUploader = (subSystem,entity,type,validationExtensionList,validationSizeLimit,validationItemLimit,fileNameList,onStatusChange) => {
+
+    let validationObject = {};
+    if (validationExtensionList !== undefined) {
+        validationObject["allowedExtensions"] = validationExtensionList;
+    }
+    if (validationSizeLimit !== undefined) {
+        validationObject["sizeLimit"] = validationSizeLimit;
+    }
+    if (type === typeEnum.SINGLE) {
+        validationObject["itemLimit"] = 1;
+    } else {
+        if (validationItemLimit !== undefined) {
+            validationObject["itemLimit"] = validationItemLimit;
+        }
+    }
+
+    let linitialStateUploader = new FineUploaderTraditional({
+        options: {
+            chunking: {
+                enabled: true,
+                mandatory: true,
+                concurrent: {
+                    enabled: false
+                },
+                partSize: 2 * 1024 * 1024  //2mb
+            },
+            deleteFile: {
+                method: "POST",
+                enabled: true,
+                endpoint: "/fso/deleteUploadedFile"
+            },
+            request: {
+                customHeaders: {
+                    "Authorization": "Basic 999jaGFkbWluOkNieWxjZTY3"
+                },
+                endpoint: "http://localhost:8082/fso/upload/" + subSystem + "/" + entity + "/fine"
+            },
+            cors: {
+                autoUpload: false,
+                //all requests are expected to be cross-domain requests
+                expected: true,
+                //if you want cookies to be sent along with the request
+                sendCredentials: true,
+                maxConnections: 1
+            },
+            resume: {
+                enabled: true
+            },
+            retry: {
+                enableAuto: false,
+                maxAutoAttempts: 2,
+            },
+            validation: validationObject,
+            text: {
+                sizeSymbols: ["کیلوبایت", "مگابایت", "گیگابایت", "ترابایت", "PB", "EB"]
+            },
+            messages: {
+                emptyError: "فایل خالی است",
+                maxHeightImageError: "ارتفاع تصویر زیاد است",
+                maxWidthImageError: "عرض تصویر زیاد است",
+                minHeightImageError: "ارتفاع تصویر کم است",
+                minWidthImageError: "عرض تصویر کم است",
+                minSizeError: "حجم فایل کم است. حداقل حجم فایل {minSizeLimit} باید باشد",
+                noFilesError: "هیچ فایلی آپلود نشده است",
+                onLeave: "فایل در حال آپلود است. با ترک آپلودر آپلود کنسل میشود",
+                retryFailTooManyItemsError: "تلاش مجدد آپلود بی نتیجه بود. تعداد فایل آپلود به حداکثر خود رسیده است",
+                sizeError: "حجم فایل زیاد است. حداکثر حجم فایل {sizeLimit} میتواند باشد",
+                tooManyItemsError: "محدودیت در تعداد آپلود فایل. تعداد فایل مجاز برای آپلود {itemLimit} است",
+                typeError: "نوع فایل آپلود غیر مجاز است. پسوندهای فایل مجاز قابل آپلود {extensions} میباشد",
+                unsupportedBrowserIos8Safari: "خطا در آپلود. لطفا به جای مرورگر ios8safari از ios8chrome استفاده نمایید"
+            },
+            callbacks: {
+                onUploadChunk: function (id, name, chunkData) {
+
+                },
+                onValidate: function (fileData) {
+                    return fileNameList.indexOf(fileData.name) < 0;
+                },
+                onError: function (id, name, errorReason, xhr) {
+                    // UtilModal.open("خطا", errorReason, "", true, "");
+                },
+                onStatusChange: onStatusChange,
+            }
+        }
+    });
+return linitialStateUploader;
+};
+
+
+
+
+export {changeActionEnum,typeEnum, statusEnum, actionEnum, subSystemEnum, entityEnum, fileKindFolderEnum, getNewUploader}
 
