@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import Downloader from "js-file-downloader";
 
 import Grid from "@material-ui/core/Grid";
-import Fab from "@material-ui/core/Fab";
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Visibility from '@material-ui/icons/Visibility';
 import Delete from '@material-ui/icons/Delete';
@@ -36,37 +35,28 @@ function UploaderFileView(props) {
     const [fileData, setFileData] = useState(initialState);
 
 
-    const onChange = e => {
-        let objectList = fileData.objectList;
+    const onDelete = e => {
         let index = e.currentTarget.getAttribute("index");
+        let objectList = JSON.parse(JSON.stringify(fileData["objectList"]));
         if (objectList[index] !== undefined) {
             objectList[index]["statusEnum"] = statusEnum.DELETED;
-            fileData["objectList"] = objectList;
-            fileData["objectListIndex"] = index;
-
             setFileData({
-                ...fileData
+                ...fileData,
+                "objectList": objectList,
+                "objectListIndex": index
             });
         }
     };
 
     useEffect(() => {
         if (fileData.objectListIndex !== "") {
-            props.onChange(fileData, fileData.objectList[fileData.objectListIndex]);
+            props.onChange(JSON.parse(JSON.stringify(fileData.objectList)), fileData.objectList[fileData.objectListIndex]);
         }
-    }, [fileData]);
+    }, [fileData.objectList]);
 
-    const onClick=(e)=> {
-        const { objectList } = fileData;
-        // var index = e.currentTarget.getAttribute("index");
-        // var fileViewModel = objectList[index];
-        // if (fileViewModel !== undefined) {
-        //     if (this.props.onClick) {
-        //         this.props.onClick(fileViewModel);
-        //     }
-        // }
+    const onClick = () => {
+
     };
-
 
 
     const onView = e => {
@@ -106,7 +96,6 @@ function UploaderFileView(props) {
         return sizeTitle;
     };
     const {
-        customClass,
         objectList,
         urlBase,
         thumbnailWidth,
@@ -116,23 +105,14 @@ function UploaderFileView(props) {
         hasDelete,
     } = fileData;
 
-    let className = "form-control";
-    if (customClass !== undefined) {
-        className += " " + customClass;
-    }
-
-    // const widthMy = {
-    // 	width: thumbnailWidth - 14
-    // };
-
     var fileViewHtmlList = [];
-    fileViewHtmlList = objectList.map(function (fileViewModel, index) {
+    fileViewHtmlList = objectList.map((fileViewModel, index) => {
         if (fileViewModel.statusEnum !== statusEnum.DELETED) {
             let isImage = false;
             let hasAction = false;
-            let htmlDownload = <div></div>;
-            let htmlView = <div></div>;
-            let htmlDelete = <div></div>;
+            let htmlDownload = <div> </div>;
+            let htmlView = <div>  </div>;
+            let htmlDelete = <div> </div>;
             let url = "";
             let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + getSizeTitle(fileViewModel.size);
             if (fileViewModel.hashedPath !== undefined && fileViewModel.hashedPath !== null && fileViewModel.hashedPath !== "") {
@@ -166,15 +146,16 @@ function UploaderFileView(props) {
                         isImage = false;
                 }
             } else {
-                title += "\n آخرین تغییر:" + " تازه بارگذاری شده است";
+
+                title += "آخرین تغییر:  تازه بارگذاری شده است";
             }
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
-                    <div index={index} onClick={onChange} color="primary" aria-label="مشاهده">
+                    <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
                         <Delete/>
                     </div>
-            }
+            };
 
 
             if (isImage) {
@@ -183,7 +164,7 @@ function UploaderFileView(props) {
                         <Grid item xs={3} className={classes.boxImgFileView}>
                             <div className="divParentImg">
                                 <Grid container spacing={1} style={margin1px}>
-                                    <img title={title} index={index} onClick={onClick} src={url}
+                                    <img alt="" title={title} index={index} onClick={onClick} src={url}
                                          width={thumbnailWidth} height={thumbnailHeight}
                                          style={{"cursor": "pointer"}}/>
                                 </Grid>
@@ -209,7 +190,7 @@ function UploaderFileView(props) {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
                             <Grid container spacing={1} style={margin1px}>
-                                <img title={title} index={index} onClick={onClick} src={url}
+                                <img alt="" title={title} index={index} onClick={onClick} src={url}
                                      width={thumbnailWidth} height={thumbnailHeight}
                                      style={{"cursor": "pointer"}}/>
                             </Grid>
@@ -273,9 +254,9 @@ function UploaderFileView(props) {
         }
     }, this);
     return (<React.Fragment>
-            <Grid container spacing={1}>
-                {fileViewHtmlList}
-            </Grid>
+        <Grid container spacing={1}>
+            {fileViewHtmlList}
+        </Grid>
     </React.Fragment>);
 
 
