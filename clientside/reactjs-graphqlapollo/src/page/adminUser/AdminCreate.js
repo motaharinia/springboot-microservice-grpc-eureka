@@ -79,15 +79,6 @@ export default function AdminCreate() {
     };
 
 
-    // آپلودر تصاویر
-    const onChangeUploader = (state) => {
-        let imageFileList = state.objectList;
-        formData["imageFileList"] = imageFileList;
-        setFormData({
-            ...formData
-        });
-    };
-
 
     let urlBase = "http://localhost:8082/fso/download/common/member/";
 
@@ -228,7 +219,6 @@ export default function AdminCreate() {
                                 fileKindFolder={fileKindFolderEnum.ATTACHMENT}
                                 validationSizeLimit={5 * 1024 * 1024}
                                 validationItemLimit={50}
-                                onChange={onChangeUploader}
                             />
                         </Grid>
                         <Grid item xs={4}>
