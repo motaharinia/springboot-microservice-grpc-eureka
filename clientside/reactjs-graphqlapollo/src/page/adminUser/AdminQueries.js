@@ -55,10 +55,18 @@ query  common_adminUser_readById($id:Int!){
         firstName,
         lastName,
         gender_id,
-         imageFileList{
-      hashedPath,
-      statusEnum
-    },
+        imageFileList{
+              fullName
+              size
+              key
+              lastModifiedDate{
+                        year
+                        month
+                        day
+              }
+              hashedPath
+              statusEnum
+         },
         defaultAdminUserContact_city_id,
         defaultAdminUserContact_address,
         id
