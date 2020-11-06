@@ -14,7 +14,7 @@ import { ApolloProvider } from 'react-apollo';
 import AdminList  from "./page/adminUser/AdminList";
 import AdminUserCreate from "./page/adminUser/AdminUserCreate"
 import AdminUpdate from "./page/adminUser/AdminUpdate"
-import AdminDelete from "./page/adminUser/AdminDelete"
+import AdminUserDelete from "./page/adminUser/AdminUserDelete"
 
 //لینک ارتباط وب سوکت برای سابسکریپشن
 const wsLink = new WebSocketLink({
@@ -54,7 +54,7 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route path="/adminDelete/:Id">
-                            <AdminDelete />
+                            <AdminUserDelete />
                         </Route>
                         <Route path="/adminUpdate/:Id">
                             <AdminUpdate />

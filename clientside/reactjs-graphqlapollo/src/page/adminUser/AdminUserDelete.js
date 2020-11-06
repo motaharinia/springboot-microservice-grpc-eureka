@@ -16,7 +16,7 @@ function CloseButton() {
     window.location.href="/"
 }
 
-function AdminDelete() {
+function AdminUserDelete() {
 
     //تعریف متغیر استایل
     const classes = useStyles();
@@ -171,4 +171,4 @@ function AdminDelete() {
 
 }
 
-export default AdminDelete;
+export default AdminUserDelete;
