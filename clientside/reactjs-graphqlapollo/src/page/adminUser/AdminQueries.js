@@ -48,7 +48,7 @@ const ADMIN_USER_CREATE_MUTATION = gql`
 `;
 
 // کوئری درخواست اطلاعات ادمین با ایدی مورد نظر
-const ADMIN_USER_READ_GRID_BY_ID = gql`
+const ADMIN_USER_READ_BY_ID = gql`
 query  common_adminUser_readById($id:Int!){
     common_adminUser_readById(id: $id) {
         username,
@@ -122,7 +122,7 @@ const ADMIN_USER_DELETE_MUTATION = gql`
 
 export {
     ADMIN_USER_READ_GRID,
-    ADMIN_USER_READ_GRID_BY_ID,
+    ADMIN_USER_READ_BY_ID,
     ADMIN_USER_CREATE_MUTATION,
     ADMIN_USER_UPDATE_MUTATION,
     ADMIN_USER_DELETE_MUTATION

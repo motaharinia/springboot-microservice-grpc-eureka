@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
 import { useStyles } from './AdminStyles'
-import {ADMIN_USER_READ_GRID_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminQueries";
+import {ADMIN_USER_READ_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminQueries";
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 
@@ -58,7 +58,7 @@ function AdminDelete() {
 
     //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
     let rowNewId = window.location.pathname.split("/")[2];
-    const {loading, error, data} = useQuery(ADMIN_USER_READ_GRID_BY_ID,{
+    const {loading, error, data} = useQuery(ADMIN_USER_READ_BY_ID,{
         variables:{id:rowNewId}
     });
 
