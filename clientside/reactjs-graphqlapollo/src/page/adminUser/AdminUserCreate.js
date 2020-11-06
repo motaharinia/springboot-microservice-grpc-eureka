@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import {useStyles} from './AdminStyles'
+import {useStyles} from './AdminUserStyles'
 import {ADMIN_USER_CREATE_MUTATION} from "./AdminUserQueries";
 import FormLabel from "@material-ui/core/FormLabel";
 import Header from "../../common/header/Header";

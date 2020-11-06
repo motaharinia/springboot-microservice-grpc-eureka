@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
-import {useStyles} from './AdminStyles'
+import {useStyles} from './AdminUserStyles'
 import {ADMIN_USER_READ_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminUserQueries";
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";

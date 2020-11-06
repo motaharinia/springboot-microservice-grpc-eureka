@@ -10,7 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import {ADMIN_USER_READ_GRID } from './AdminUserQueries.js'
-import { useStyles } from './AdminStyles'
+import { useStyles } from './AdminUserStyles'
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 
