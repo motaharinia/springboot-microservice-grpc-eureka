@@ -65,7 +65,7 @@ function OnClickButtonDelete() {
     }
 }
 
-function AdminList() {
+function AdminUserList() {
     const classes = useStyles();
 
     //تعریف متغیر state فرم
@@ -120,4 +120,4 @@ function AdminList() {
     );
 }
 
-export default AdminList;
+export default AdminUserList;

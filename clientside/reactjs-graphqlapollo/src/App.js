@@ -11,7 +11,7 @@ import ApolloClient from "apollo-client";
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
-import AdminList  from "./page/adminUser/AdminList";
+import AdminUserList  from "./page/adminUser/AdminUserList";
 import AdminUserCreate from "./page/adminUser/AdminUserCreate"
 import AdminUpdate from "./page/adminUser/AdminUpdate"
 import AdminUserDelete from "./page/adminUser/AdminUserDelete"
@@ -63,7 +63,7 @@ class App extends Component {
                             <AdminUserCreate />
                         </Route>
                         <Route path="/">
-                            <AdminList />
+                            <AdminUserList />
                         </Route>
                     </Switch>
                 </div>
