@@ -6,7 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {useStyles} from './Styles'
 
 
-function ResultHandling(props) {
+export default function ResultHandling(props) {
     //تعریف متغیر استایل
     const classes = useStyles();
     //تعریف متغیر state نمایش دادن یا ندادن پاپ آپ
@@ -96,5 +96,3 @@ function ResultHandling(props) {
     );
 
 }
-
-export {ResultHandling}

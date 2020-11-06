@@ -9,7 +9,7 @@ import {useStyles} from '../Styles';
 import {BRIEF_MESSEAGES_SUBSCRIPTION} from '../Queries';
 
 
-function BriefMesseages(props) {
+export default function BriefMesseages(props) {
     //تعریف متغیر استایل
     const classes = useStyles();
     //تعریف متغیر state فرم
@@ -37,5 +37,3 @@ function BriefMesseages(props) {
     );
 
 }
-
-export {BriefMesseages}

@@ -8,8 +8,8 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 import { useStyles } from './AdminStyles'
 import {ADMIN_USER_READ_GRID_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminQueries";
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
 
 
 function CloseButton() {

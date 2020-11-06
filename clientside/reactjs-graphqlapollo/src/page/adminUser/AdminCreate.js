@@ -11,8 +11,8 @@ import Select from '@material-ui/core/Select';
 import {useStyles} from './AdminStyles'
 import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
 import FormLabel from "@material-ui/core/FormLabel";
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
 import File from "../../common/file/File"
 import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/file/FileInit"
 

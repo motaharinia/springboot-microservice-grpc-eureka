@@ -11,8 +11,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import {ADMIN_USER_READ_GRID } from './AdminQueries.js'
 import { useStyles } from './AdminStyles'
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
 
 
 const columns =  [
