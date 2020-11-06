@@ -1,26 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 
 import Grid from '@material-ui/core/Grid';
-import { DataGrid } from '@material-ui/data-grid';
+import {DataGrid} from '@material-ui/data-grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete'
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import {ADMIN_USER_READ_GRID } from './AdminUserQueries.js'
-import { useStyles } from './AdminUserStyles'
+import {ADMIN_USER_READ_GRID} from './AdminUserQueries.js'
+import {useStyles} from './AdminUserStyles'
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 
 
-const columns =  [
-    { field: 'id', hide: true },
-    { field: 'firstName', headerName: 'نام', width: 200 },
-    { field: 'lastName', headerName: 'نام خانوادگی', width: 250 },
-    { field: 'date', headerName: 'تاریخ', width: 150 },
-    { field: 'address', headerName: 'نشانی', width: 250 },
+const columns = [
+    {field: 'id', hide: true},
+    {field: 'firstName', headerName: 'نام', width: 200},
+    {field: 'lastName', headerName: 'نام خانوادگی', width: 250},
+    {field: 'date', headerName: 'تاریخ', width: 150},
+    {field: 'address', headerName: 'نشانی', width: 250},
 ];
 
 
@@ -45,22 +45,23 @@ function rowsGrid(data) {
 }
 
 let rowId = "";
+
 function OnSelectRowGrid(dataRow) {
     rowId = dataRow.data.id;
 }
 
 function OnClickButtonUpdate() {
-    if( rowId !== ""){
-    window.location.href="/adminUpdate/"+rowId;
-    }else{
+    if (rowId !== "") {
+        window.location.href = "/adminUpdate/" + rowId;
+    } else {
         alert(" سطری انتخاب نشده است")
     }
 }
 
 function OnClickButtonDelete() {
-    if(rowId !== ""){
-        window.location.href="/adminDelete/"+rowId;
-    }else{
+    if (rowId !== "") {
+        window.location.href = "/adminDelete/" + rowId;
+    } else {
         alert(" سطری انتخاب نشده است")
     }
 }
@@ -70,52 +71,60 @@ function AdminUserList() {
 
     //تعریف متغیر state فرم
     const [gridData, setGridData] = useState([]);
-
+    let searchFilterModel = {
+        page: 0,
+        rows: 100
+    };
     //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
-    const { loading, error, data } = useQuery(ADMIN_USER_READ_GRID);
+    const {loading, error, data} = useQuery(ADMIN_USER_READ_GRID, {
+        variables: {searchFilterModel:searchFilterModel}
+    });
 
     //فراخوانی داده از سرور فقط برای یک بار و جلوگیری از رفرش تو در توی صفحه و ذخیره داده سرور در متغیر  state
     useEffect(() => {
         if (!loading && !error) {
-            let readGridByModel =  rowsGrid(data.readGridByModel);
+            let readGridByModel = rowsGrid(data.readGridByModel);
             setGridData(readGridByModel);
         }
     }, [loading, error, data]);
 
     //در صورت عدم لود داده لودینگ نمایش داده شود
     if (loading === undefined || loading) {
-        return (<div><CircularProgress /></div>)
+        return (<div><CircularProgress/></div>)
     }
     //در صورت بروز خطا ، پیام آن نمایش داده شود
     if (error) {
-        error["crudType"]= "m";
-        return (<div>  <ResultHandling result={error}  open={true} key={Math.random()} /></div>)
+        error["crudType"] = "m";
+        return (<div><ResultHandling result={error} open={true} key={Math.random()}/></div>)
     }
 
 
     return (
         <div>
-            <Header viewCloseButton={false}  pageTitle="لیست ادمین ها" />
-                <Grid>
-                    <Grid item   xs={12}  className={classes.gridHeight}>
-                        <DataGrid onRowSelected={OnSelectRowGrid} rows={gridData} columns={columns}     loading={gridData.length === 0} />
-                    </Grid>
+            <Header viewCloseButton={false} pageTitle="لیست ادمین ها"/>
+            <Grid>
+                <Grid item xs={12} className={classes.gridHeight}>
+                    <DataGrid onRowSelected={OnSelectRowGrid} rows={gridData} columns={columns}
+                              loading={gridData.length === 0}/>
                 </Grid>
-                <Grid>
-                    <Grid item xs={12}  >
-                        <div className={classes.root}>
-                            <Fab onClick={()=>{window.location.href="/adminCreate"}} color="primary" aria-label="ثبت ادمین" className={classes.marginButton}  >
-                                <AddIcon />
-                            </Fab>
-                            <Fab  onClick={OnClickButtonUpdate} color="primary" aria-label="ویرایش اطلاعات ادمین">
-                                <EditIcon />
-                            </Fab>
-                            <Fab  onClick={OnClickButtonDelete} color="secondary" aria-label="حذف ادمین">
-                                <DeleteIcon />
-                            </Fab>
-                        </div>
-                    </Grid>
+            </Grid>
+            <Grid>
+                <Grid item xs={12}>
+                    <div className={classes.root}>
+                        <Fab onClick={() => {
+                            window.location.href = "/adminCreate"
+                        }} color="primary" aria-label="ثبت ادمین" className={classes.marginButton}>
+                            <AddIcon/>
+                        </Fab>
+                        <Fab onClick={OnClickButtonUpdate} color="primary" aria-label="ویرایش اطلاعات ادمین">
+                            <EditIcon/>
+                        </Fab>
+                        <Fab onClick={OnClickButtonDelete} color="secondary" aria-label="حذف ادمین">
+                            <DeleteIcon/>
+                        </Fab>
+                    </div>
                 </Grid>
+            </Grid>
         </div>
     );
 }
