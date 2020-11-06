@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
 import { useStyles } from './AdminStyles'
-import {ADMIN_USER_READ_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminQueries";
+import {ADMIN_USER_READ_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminUserQueries";
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 

@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import {useStyles} from './AdminStyles'
-import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
+import {ADMIN_USER_CREATE_MUTATION} from "./AdminUserQueries";
 import FormLabel from "@material-ui/core/FormLabel";
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
