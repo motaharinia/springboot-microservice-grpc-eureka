@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import Grid from '@material-ui/core/Grid';
-import { DataGrid, ColDef } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
@@ -14,24 +14,6 @@ import { useStyles } from './AdminStyles'
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
 
-
-const columns: ColDef[] = [
-    { field: 'id', hide: true },
-    { field: 'firstName', headerName: 'نام', width: 200 },
-    { field: 'lastName', headerName: 'نام خانوادگی', width: 250 },
-    { field: 'date', headerName: 'تاریخ', width: 150 },
-    { field: 'address', headerName: 'نشانی', width: 250 },
-];
-
-// function makeid(length) {
-//     var result           = '';
-//     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//     var charactersLength = characters.length;
-//     for ( var i = 0; i < length; i++ ) {
-//         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-//     }
-//     return result;
-// }
 
 
 function rowsGrid(data) {
