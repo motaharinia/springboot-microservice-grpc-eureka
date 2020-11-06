@@ -24,7 +24,7 @@ function CloseButton() {
 }
 
 
-export default function AdminUpdate() {
+export default function AdminUserUpdate() {
     //تعریف متغیر استایل
     const classes = useStyles();
 

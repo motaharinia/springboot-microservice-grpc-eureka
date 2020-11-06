@@ -13,7 +13,7 @@ import { ApolloProvider } from 'react-apollo';
 
 import AdminUserList  from "./page/adminUser/AdminUserList";
 import AdminUserCreate from "./page/adminUser/AdminUserCreate"
-import AdminUpdate from "./page/adminUser/AdminUpdate"
+import AdminUserUpdate from "./page/adminUser/AdminUserUpdate"
 import AdminUserDelete from "./page/adminUser/AdminUserDelete"
 
 //لینک ارتباط وب سوکت برای سابسکریپشن
@@ -57,7 +57,7 @@ class App extends Component {
                             <AdminUserDelete />
                         </Route>
                         <Route path="/adminUpdate/:Id">
-                            <AdminUpdate />
+                            <AdminUserUpdate />
                         </Route>
                         <Route path="/adminCreate">
                             <AdminUserCreate />
