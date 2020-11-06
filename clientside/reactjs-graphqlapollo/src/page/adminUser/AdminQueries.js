@@ -59,6 +59,7 @@ query  common_adminUser_readById($id:Int!){
               fullName
               size
               key
+              extension
               lastModifiedDate{
                         year
                         month
