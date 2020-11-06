@@ -260,9 +260,6 @@ export default function File(props) {
         } else {
             return (
                 <React.Fragment>
-                    <Button onClick={onModalOpen} type="submit" variant="outlined">
-                        {"بارگذاری فایل"}
-                    </Button>
                     <FileView key={Math.random()}
                               objectList={fileData.objectList} urlBase={fileData.urlBase}
                               hasDownload={fileData.hasDownload} hasView={fileData.hasView}
