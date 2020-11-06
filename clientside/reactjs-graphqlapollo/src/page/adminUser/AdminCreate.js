@@ -13,8 +13,8 @@ import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
 import FormLabel from "@material-ui/core/FormLabel";
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
-import Uploader from "../../common/uploader/Uploader"
-import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/uploader/UploaderData"
+import File from "../../common/file/File"
+import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/file/FileInit"
 
 function CloseButton() {
     window.location.href = "/"
@@ -80,7 +80,7 @@ export default function AdminCreate() {
 
 
 
-    let urlBase = "http://localhost:8082/fso/download/common/member/";
+    let urlBase = "http://localhost:8082/fso/download/COMMON/member/";
 
 
     //نمایش اطلاعات state در فرم
@@ -207,7 +207,7 @@ export default function AdminCreate() {
                             <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <Uploader
+                            <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
                                 hasDownload={true}
