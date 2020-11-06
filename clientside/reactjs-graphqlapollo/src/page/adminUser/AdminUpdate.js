@@ -15,8 +15,8 @@ import {useStyles} from './AdminStyles'
 import {ADMIN_USER_READ_GRID_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminQueries";
 import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
-import Uploader from "../../common/uploader/Uploader";
-import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/uploader/UploaderData";
+import File from "../../common/file/File";
+import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/file/FileInit";
 
 // کلید انصراف
 function CloseButton() {
@@ -99,7 +99,7 @@ export default function AdminUpdate() {
     }, [loading, error, data]);
 
 
-    let urlBase = "http://localhost:8082/fso/download/common/adminuser/";
+    let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
 
     //در صورت عدم لود داده لودینگ نمایش داده شود
@@ -238,7 +238,7 @@ export default function AdminUpdate() {
                             <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <Uploader
+                            <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
                                 hasDownload={true}

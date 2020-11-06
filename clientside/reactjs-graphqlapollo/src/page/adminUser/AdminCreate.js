@@ -80,7 +80,7 @@ export default function AdminCreate() {
 
 
 
-    let urlBase = "http://localhost:8082/fso/download/COMMON/member/";
+    let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
 
     //نمایش اطلاعات state در فرم
