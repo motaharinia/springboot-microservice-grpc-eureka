@@ -15,6 +15,14 @@ import {Header} from "../../common/header/Header";
 import {ResultHandling} from "../../common/ResultHandling";
 
 
+const columns =  [
+    { field: 'id', hide: true },
+    { field: 'firstName', headerName: 'نام', width: 200 },
+    { field: 'lastName', headerName: 'نام خانوادگی', width: 250 },
+    { field: 'date', headerName: 'تاریخ', width: 150 },
+    { field: 'address', headerName: 'نشانی', width: 250 },
+];
+
 
 function rowsGrid(data) {
     if (data !== undefined) {
