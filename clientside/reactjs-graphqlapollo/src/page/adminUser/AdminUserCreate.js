@@ -21,7 +21,7 @@ function CloseButton() {
 }
 
 
-export default function AdminCreate() {
+export default function AdminUserCreate() {
 
 
     //تعریف متغیر state فرم
