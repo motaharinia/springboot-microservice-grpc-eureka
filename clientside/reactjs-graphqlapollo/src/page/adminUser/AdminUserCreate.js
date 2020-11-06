@@ -210,6 +210,7 @@ export default function AdminUserCreate() {
                             <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
+                                hasUploader={true}
                                 hasDownload={true}
                                 hasView={true}
                                 hasDelete={true}

@@ -30,6 +30,7 @@ export default function File(props) {
         "subSystem": props.subSystem,
         "entity": props.entity,
         "fileKindFolder": props.fileKindFolder,
+        "hasUploader": props.hasUploader,
         "hasDownload": props.hasDownload,
         "hasView": props.hasView,
         "hasDelete": props.hasDelete,
@@ -119,8 +120,8 @@ export default function File(props) {
         if (props.validationItemLimit > uploadedCount) {
             setFileData({
                 ...fileData,
-                "objectSelectedList":[],
-                    "modalIsOpened": true
+                "objectSelectedList": [],
+                "modalIsOpened": true
             });
         } else {
             alert("خطا", " شما فقط " + props.validationItemLimit + " فایل می توانید آپلود نمائید ")
@@ -233,7 +234,30 @@ export default function File(props) {
         );
 
     } else {
-        if (fileData.objectList !== undefined && Object.keys(fileData.objectList).length !== 0) {
+        if (fileData.hasUploader === true) {
+            if (fileData.objectList !== undefined && Object.keys(fileData.objectList).length !== 0) {
+                return (
+                    <React.Fragment>
+                        <Button onClick={onModalOpen} type="submit" variant="outlined">
+                            {"بارگذاری فایل"}
+                        </Button>
+                        <FileView key={Math.random()}
+                                  objectList={fileData.objectList} urlBase={fileData.urlBase}
+                                  hasDownload={fileData.hasDownload} hasView={fileData.hasView}
+                                  hasDelete={fileData.hasDelete}
+                                  onChange={onDelete}/>
+                    </React.Fragment>
+                )
+            } else {
+                return (
+                    <React.Fragment>
+                        <Button onClick={onModalOpen} type="submit" variant="outlined">
+                            {"بارگذاری فایل"}
+                        </Button>
+                    </React.Fragment>
+                )
+            }
+        } else {
             return (
                 <React.Fragment>
                     <Button onClick={onModalOpen} type="submit" variant="outlined">
@@ -244,14 +268,6 @@ export default function File(props) {
                               hasDownload={fileData.hasDownload} hasView={fileData.hasView}
                               hasDelete={fileData.hasDelete}
                               onChange={onDelete}/>
-                </React.Fragment>
-            )
-        } else {
-            return (
-                <React.Fragment>
-                    <Button onClick={onModalOpen} type="submit" variant="outlined">
-                        {"بارگذاری فایل"}
-                    </Button>
                 </React.Fragment>
             )
         }
