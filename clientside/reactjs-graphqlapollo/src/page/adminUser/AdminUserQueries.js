@@ -2,9 +2,11 @@ import gql from "graphql-tag";
 
 // کوئری درخواست نمایش اطلاعات گرید
 const ADMIN_USER_READ_GRID = gql`
-    query {
+    query ReadGridByModel (
+    $searchFilterModel:SearchFilterModelInput!
+    ){
   readGridByModel(
-    searchFilterModel: {}
+    searchFilterModel: $searchFilterModel
   ) {
     page
     records
@@ -49,7 +51,7 @@ const ADMIN_USER_CREATE_MUTATION = gql`
 
 // کوئری درخواست اطلاعات ادمین با ایدی مورد نظر
 const ADMIN_USER_READ_BY_ID = gql`
-query  common_adminUser_readById($id:Int!){
+query  Common_adminUser_readById($id:Int!){
     common_adminUser_readById(id: $id) {
         username,
         firstName,
