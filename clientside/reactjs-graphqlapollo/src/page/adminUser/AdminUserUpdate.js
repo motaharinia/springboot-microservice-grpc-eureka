@@ -30,9 +30,9 @@ export default function AdminUserUpdate() {
 
     //تعریف متغیر state نتیجه درخواست فرم
     const [formResult, setFormResult] = useState({
-        crudType:"UPDATE",
-        data:"",
-        error:""
+        crudType: "UPDATE",
+        data: "",
+        error: ""
     });
 
     let initialState = {};
@@ -72,20 +72,19 @@ export default function AdminUserUpdate() {
     const submitUpdate = (event) => {
         adminUpdate({variables: formData})
             .then(({data}) => {
-                setFormResult({...formResult,"data":data});
+                setFormResult({...formResult, "data": data});
             })
             .catch(error => {
-                setFormResult({...formResult,"error":error});
+                setFormResult({...formResult, "error": error});
             });
         setFormData(formData);
     };
 
 
-
     //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
     let rowNewId = window.location.pathname.split("/")[2];
-    const {loading, error, data} = useQuery(ADMIN_USER_READ_BY_ID,{
-        variables:{id:rowNewId}
+    const {loading, error, data} = useQuery(ADMIN_USER_READ_BY_ID, {
+        variables: {id: rowNewId}
     });
 
     //فراخوانی داده از سرور فقط برای یک بار و جلوگیری از رفرش تو در توی صفحه و ذخیره داده سرور در متغیر  state
@@ -104,22 +103,21 @@ export default function AdminUserUpdate() {
 
     //در صورت عدم لود داده لودینگ نمایش داده شود
     if (loading === undefined || loading) {
-        return (<div><CircularProgress /></div>)
+        return (<div><CircularProgress/></div>)
     }
     //در صورت بروز خطا ، پیام آن نمایش داده شود
     if (error) {
-        error["crudType"]= "UPDATE";
-        return (<div>  <ResultHandling result={error}  open={true} key={Math.random()} /></div>)
+        error["crudType"] = "UPDATE";
+        return (<div><ResultHandling result={error} open={true} key={Math.random()}/></div>)
     }
 
 
-    if(formData !== undefined && Object.keys(formData).length !== 0){
-    //نمایش اطلاعات state در فرم
-    return (
-        <div>
-            <Header viewCloseButton={true}   pageTitle="ویرایش اطلاعات ادمین" />
-            <div className={classes.root}>
-                <div>
+    if (formData !== undefined && Object.keys(formData).length !== 0) {
+        //نمایش اطلاعات state در فرم
+        return (
+            <div>
+                <Header viewCloseButton={true} pageTitle="ویرایش اطلاعات ادمین"/>
+                <div className={classes.root}>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>کلمه کاربری :</FormLabel>
@@ -139,8 +137,6 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نام :</FormLabel>
@@ -160,8 +156,6 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نام خانوادگی :</FormLabel>
@@ -181,8 +175,6 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>جنسیت :</FormLabel>
@@ -209,8 +201,6 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نشانی :</FormLabel>
@@ -231,11 +221,10 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
-                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
+                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده
+                                :</FormLabel>
                         </Grid>
                         <Grid item xs={4}>
                             <File
@@ -257,8 +246,6 @@ export default function AdminUserUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                         </Grid>
@@ -275,12 +262,11 @@ export default function AdminUserUpdate() {
                         </Grid>
                     </Grid>
                 </div>
+                <ResultHandling result={formResult} open={true} key={Math.random()}/>
             </div>
-            <ResultHandling result={formResult}  open={true} key={Math.random()} />
-        </div>
-    );
-    }else{
-        return (<div><CircularProgress /></div>)
+        );
+    } else {
+        return (<div><CircularProgress/></div>)
     }
 }
 
