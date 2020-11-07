@@ -145,6 +145,10 @@ export default function File(props) {
             fileData.objectSelectedList.map(object => {
                 if (object.status === statusEnum.UPLOAD_SUCCESSFUL) {
                     let fileViewModel = {
+                        extension: object.originalName.split(".")[1],
+                        fullName: object.originalName,
+                        name: object.originalName.split(".")[0],
+                        size: object.size,
                         key: object.uuid,
                         statusEnum: statusEnum.ADDED
                     };

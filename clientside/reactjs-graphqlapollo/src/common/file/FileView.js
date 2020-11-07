@@ -98,7 +98,6 @@ function FileView(props) {
     } = fileData;
 
     var fileViewHtmlList = [];
-    console.log("objectList", objectList)
     fileViewHtmlList = objectList.map((fileViewModel, index) => {
         if (fileViewModel.statusEnum !== statusEnum.DELETED) {
             let isImage = false;
@@ -125,8 +124,6 @@ function FileView(props) {
                             <Visibility className={classes.VisibilityIcon} />
                         </div>
                 }
-                console.log("fileViewModel", fileViewModel)
-                console.log("title", title)
                 switch (fileViewModel.extension) {
                     case "png":
                     case "jpg":
@@ -140,7 +137,7 @@ function FileView(props) {
                         isImage = false;
                 }
             } else {
-
+                console.log("fileViewModel",fileViewModel);
                 title += "آخرین تغییر:  تازه بارگذاری شده است";
             }
             if (hasDelete) {
@@ -150,7 +147,7 @@ function FileView(props) {
                         <Delete className={classes.deleteIcon} />
                     </div>
             }
-            ;
+
 
 
             if (isImage) {
@@ -230,7 +227,7 @@ function FileView(props) {
                 }
             }
         }
-    }, this);
+    });
     return (<React.Fragment>
         <Grid container spacing={1}>
             {fileViewHtmlList}
