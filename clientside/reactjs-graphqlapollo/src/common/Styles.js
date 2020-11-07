@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         margin: "0",
         borderRadius: "0 0 5px 5px",
+        paddingRight: "5%",
         width: "100%"
     },
     deleteIcon: {
