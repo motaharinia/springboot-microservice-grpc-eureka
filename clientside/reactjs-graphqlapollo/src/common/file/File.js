@@ -11,6 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {typeEnum, statusEnum, getNewUploader} from './FileInit'
 import {FileView} from './FileView'
 import {useStyles} from "../Styles";
+import Grid from "@material-ui/core/Grid";
 
 
 export default function File(props) {
@@ -238,33 +239,41 @@ export default function File(props) {
             if (fileData.objectList !== undefined && Object.keys(fileData.objectList).length !== 0) {
                 return (
                     <React.Fragment>
-                        <Button onClick={onModalOpen} type="submit" variant="outlined">
-                            {"بارگذاری فایل"}
-                        </Button>
-                        <FileView key={Math.random()}
-                                  objectList={fileData.objectList} urlBase={fileData.urlBase}
-                                  hasDownload={fileData.hasDownload} hasView={fileData.hasView}
-                                  hasDelete={fileData.hasDelete}
-                                  onChange={onDelete}/>
+                        <Grid container spacing={1}>
+                            <Button onClick={onModalOpen} type="submit" variant="outlined">
+                                {"بارگذاری فایل"}
+                            </Button>
+                        </Grid>
+                        <Grid container spacing={1}>
+                            <FileView key={Math.random()}
+                                      objectList={fileData.objectList} urlBase={fileData.urlBase}
+                                      hasDownload={fileData.hasDownload} hasView={fileData.hasView}
+                                      hasDelete={fileData.hasDelete}
+                                      onChange={onDelete}/>
+                        </Grid>
                     </React.Fragment>
                 )
             } else {
                 return (
                     <React.Fragment>
-                        <Button onClick={onModalOpen} type="submit" variant="outlined">
-                            {"بارگذاری فایل"}
-                        </Button>
+                        <Grid container spacing={1}>
+                            <Button onClick={onModalOpen} type="submit" variant="outlined">
+                                {"بارگذاری فایل"}
+                            </Button>
+                        </Grid>
                     </React.Fragment>
                 )
             }
         } else {
             return (
                 <React.Fragment>
-                    <FileView key={Math.random()}
-                              objectList={fileData.objectList} urlBase={fileData.urlBase}
-                              hasDownload={fileData.hasDownload} hasView={fileData.hasView}
-                              hasDelete={fileData.hasDelete}
-                              onChange={onDelete}/>
+                    <Grid container spacing={1}>
+                        <FileView key={Math.random()}
+                                  objectList={fileData.objectList} urlBase={fileData.urlBase}
+                                  hasDownload={fileData.hasDownload} hasView={fileData.hasView}
+                                  hasDelete={fileData.hasDelete}
+                                  onChange={onDelete}/>
+                    </Grid>
                 </React.Fragment>
             )
         }

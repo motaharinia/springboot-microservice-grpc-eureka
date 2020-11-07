@@ -71,13 +71,10 @@ const useStyles = makeStyles((theme) => ({
         float: "left",
     },
     divParentImg: {
-        height: "100px"
+        height: "116px"
     },
     boxImgFileView: {
-        border: "1px solid #c4c4c4",
-        marginTop: "2%",
-        marginLeft: "2%",
-        padding:"0 !important"
+        marginTop: "2%"
     },
     imgFileView: {
         cursor: "pointer",
@@ -86,12 +83,24 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
         width: "50%"
     },
+    boxTitleFileview: {
+        backgroundColor: "#3f51b5",
+        color: "white",
+        overflow: "hidden",
+        height: "41px",
+        width: "100%",
+        textOverflow: "clip",
+        padding: "2%",
+        textAlign: "center",
+        borderRadius: "5px 5px 0 0"
+    },
 
     boxButtonFileview: {
         backgroundColor: "#3f51b5",
         color: "white",
-        margin:"0",
-        width:"100%"
+        margin: "0",
+        borderRadius: "0 0 5px 5px",
+        width: "100%"
     },
     deleteIcon: {
         fontSize: "30px",

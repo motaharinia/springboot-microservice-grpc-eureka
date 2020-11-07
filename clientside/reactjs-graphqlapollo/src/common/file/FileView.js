@@ -156,23 +156,22 @@ function FileView(props) {
             if (isImage) {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <Grid container spacing={1} item xs={3} className={classes.boxImgFileView}>
+                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                                <span>{title}</span>
+                            </Grid>
                             <Grid  item xs={12}  className={classes.divParentImg}>
                                 <img alt="" index={index} onClick={onClick} src={url}
                                      className={classes.imgFileView} title={title}/>
                             </Grid>
                             <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
@@ -192,27 +191,26 @@ function FileView(props) {
             } else {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <div className={classes.divParentImg}>
+                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                                <span>{title}</span>
+                            </Grid>
+                            <Grid  item xs={12}  className={classes.divParentImg}>
                                 <Grid container spacing={1}>
                                     <div title={title} index={index} onClick={onClick}
                                          className={"fi fi-" + fileViewModel.extension}>
                                         <div className="fi-content">{fileViewModel.extension}</div>
                                     </div>
                                 </Grid>
-                            </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileview}>
-                                <Grid item xs={3}>
+                            </Grid>
+                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                                <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
