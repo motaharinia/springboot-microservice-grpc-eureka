@@ -115,14 +115,14 @@ function FileView(props) {
                     hasAction = true;
                     htmlDownload =
                         <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
-                            <CloudDownload/>
+                            <CloudDownload className={classes.downloadIcon} />
                         </div>
                 }
                 if (hasView) {
                     hasAction = true;
                     htmlView =
                         <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
-                            <Visibility/>
+                            <Visibility className={classes.VisibilityIcon} />
                         </div>
                 }
                 console.log("fileViewModel", fileViewModel)
@@ -147,7 +147,7 @@ function FileView(props) {
                 hasAction = true;
                 htmlDelete =
                     <div index={index} onClick={onDelete}  aria-label="حذف"  >
-                        <Delete/>
+                        <Delete className={classes.deleteIcon} />
                     </div>
             }
             ;
@@ -160,7 +160,7 @@ function FileView(props) {
                             <Grid item xs={12} sm={3}  className={classes.boxImgFileView} >
                                     <img alt="" index={index} onClick={onClick} src={url}
                                          className={classes.imgFileView} title={title}/>
-                                    <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
+                                    <Grid container spacing={1} item xs={12} className={classes.boxButtonFileView}>
                                         <Grid item xs={12}>
                                             {htmlDownload}
                                         </Grid>
@@ -220,7 +220,7 @@ function FileView(props) {
                                     </div>
                                 </Grid>
                             </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileview}>
+                            <Grid container spacing={1} className={classes.boxButtonFileView}>
                                 <Grid item xs={3}>
                                     {htmlDownload}
                                 </Grid>

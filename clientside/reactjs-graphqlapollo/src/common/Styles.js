@@ -76,9 +76,10 @@ const useStyles = makeStyles((theme) => ({
     boxImgFileView: {
         position: "relative",
         width: "100%",
+        cursor: "pointer",
 
         '&:hover': {
-            '& $boxButtonFileview': {
+            '& $boxButtonFileView': {
                 height: "100%"
             }
         }
@@ -96,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: "nowrap"
     },
 
-    boxButtonFileview: {
+    boxButtonFileView: {
         position: "absolute",
         bottom: "0",
         left: "0",
@@ -110,6 +111,27 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         borderRadius: "5px"
     },
+    deleteIcon: {
+        fontSize: "40px",
+        '&:hover': {
+            color: "#ff3b3b",
+            transition: ".5s ease"
+        }
+    },
+    downloadIcon: {
+        fontSize: "40px",
+        '&:hover': {
+            color: "#17bb77",
+            transition: ".5s ease"
+        }
+    },
+    VisibilityIcon: {
+        fontSize: "40px",
+        '&:hover': {
+            color: "#17bb77",
+            transition: ".5s ease"
+        }
+    }
 
 }));
 
