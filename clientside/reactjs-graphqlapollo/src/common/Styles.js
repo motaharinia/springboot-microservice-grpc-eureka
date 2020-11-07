@@ -76,7 +76,6 @@ const useStyles = makeStyles((theme) => ({
     boxImgFileView: {
         position: "relative",
         width: "100%",
-        height: "100px",
 
         '&:hover': {
             '& $boxButtonFileview': {
@@ -86,8 +85,7 @@ const useStyles = makeStyles((theme) => ({
     },
     imgFileView: {
         display: "block",
-        width: "100%",
-        height: "auto"
+        width: "100%"
     },
     boxTitleImg: {
         fontSize: "12px",
@@ -109,7 +107,8 @@ const useStyles = makeStyles((theme) => ({
         height: "0",
         transition: ".5s ease",
         color: "white",
-        textAlign: "center"
+        textAlign: "center",
+        borderRadius: "5px"
     },
 
 }));

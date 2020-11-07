@@ -146,7 +146,7 @@ function FileView(props) {
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
-                    <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
+                    <div index={index} onClick={onDelete}  aria-label="حذف"  >
                         <Delete/>
                     </div>
             }
@@ -157,8 +157,7 @@ function FileView(props) {
                 if (hasAction) {
                     return (
                         <React.Fragment key={Math.random()}>
-                            <Grid item xs={2}>
-                                <div className={classes.boxImgFileView}>
+                            <Grid item xs={12} sm={3}  className={classes.boxImgFileView} >
                                     <img alt="" index={index} onClick={onClick} src={url}
                                          className={classes.imgFileView} title={title}/>
                                     <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
@@ -172,7 +171,6 @@ function FileView(props) {
                                             {htmlDelete}
                                         </Grid>
                                     </Grid>
-                                </div>
                             </Grid>
 
 

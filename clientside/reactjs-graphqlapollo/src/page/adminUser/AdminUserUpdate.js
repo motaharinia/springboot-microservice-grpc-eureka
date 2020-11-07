@@ -241,7 +241,7 @@ export default function AdminUserUpdate() {
                             <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
-                                hasUploader={false}
+                                hasUploader={true}
                                 hasDownload={true}
                                 hasView={true}
                                 hasDelete={true}
