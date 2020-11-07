@@ -10,10 +10,6 @@ import Delete from '@material-ui/icons/Delete';
 import {statusEnum} from './FileInit'
 import {useStyles} from "../Styles";
 
-const margin1px = {
-    margin: "1px",
-};
-
 
 function FileView(props) {
 
@@ -23,8 +19,6 @@ function FileView(props) {
     let initialState = {
         "objectList": props.objectList,
         "urlBase": props.urlBase,
-        "thumbnailWidth": "80px",
-        "thumbnailHeight": "auto",
         "hasDownload": props.hasDownload,
         "hasView": props.hasView,
         "hasDelete": props.hasDelete,
@@ -98,22 +92,20 @@ function FileView(props) {
     const {
         objectList,
         urlBase,
-        thumbnailWidth,
-        thumbnailHeight,
         hasDownload,
         hasView,
         hasDelete,
     } = fileData;
 
     var fileViewHtmlList = [];
-    console.log("objectList",objectList)
+    console.log("objectList", objectList)
     fileViewHtmlList = objectList.map((fileViewModel, index) => {
         if (fileViewModel.statusEnum !== statusEnum.DELETED) {
             let isImage = false;
             let hasAction = false;
-            let htmlDownload = <div> </div>;
-            let htmlView = <div>  </div>;
-            let htmlDelete = <div> </div>;
+            let htmlDownload = <div></div>;
+            let htmlView = <div></div>;
+            let htmlDelete = <div></div>;
             let url = "";
             let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + getSizeTitle(fileViewModel.size);
             if (fileViewModel.hashedPath !== undefined && fileViewModel.hashedPath !== null && fileViewModel.hashedPath !== "") {
@@ -133,7 +125,8 @@ function FileView(props) {
                             <Visibility/>
                         </div>
                 }
-console.log("fileViewModel",fileViewModel)
+                console.log("fileViewModel", fileViewModel)
+                console.log("title", title)
                 switch (fileViewModel.extension) {
                     case "png":
                     case "jpg":
@@ -156,44 +149,63 @@ console.log("fileViewModel",fileViewModel)
                     <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
                         <Delete/>
                     </div>
-            };
+            }
+            ;
 
 
             if (isImage) {
                 if (hasAction) {
-                    return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <div className="divParentImg">
-                                <Grid container spacing={1} style={margin1px}>
-                                    <img alt="" title={title} index={index} onClick={onClick} src={url}
-                                         width={thumbnailWidth} height={thumbnailHeight}
-                                         style={{"cursor": "pointer"}}/>
-                                </Grid>
-                            </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileview}>
-                                <Grid item xs={3}>
-                                    {htmlDownload}
-                                </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    {htmlView}
-                                </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    {htmlDelete}
-                                </Grid>
+                    return (
+                        <React.Fragment key={Math.random()}>
+                            <Grid item xs={2}>
+                                <div className={classes.boxImgFileView}>
+                                    <img alt="" index={index} onClick={onClick} src={url}
+                                         className={classes.imgFileView} title={title}/>
+                                    <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
+                                        <Grid item xs={12}>
+                                            {htmlDownload}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {htmlView}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {htmlDelete}
+                                        </Grid>
+                                    </Grid>
+                                </div>
                             </Grid>
-                        </Grid>
-                    </React.Fragment>);
+
+
+                            {/*<Grid container spacing={1} item xs={3} className={classes.boxImgFileView}>*/}
+                            {/*        <Grid  item xs={12}  className={classes.divParentImg}>*/}
+                            {/*            <img alt="" index={index} onClick={onClick} src={url}*/}
+                            {/*                 className={classes.imgFileView} title={title}/>*/}
+                            {/*            <span className={classes.boxTitleImg}>{title}</span>*/}
+                            {/*        </Grid>*/}
+                            {/*        <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>*/}
+                            {/*            <Grid item xs={3}>*/}
+                            {/*                {htmlDownload}*/}
+                            {/*            </Grid>*/}
+                            {/*            <Grid item xs={1}>*/}
+                            {/*            </Grid>*/}
+                            {/*            <Grid item xs={3}>*/}
+                            {/*                {htmlView}*/}
+                            {/*            </Grid>*/}
+                            {/*            <Grid item xs={1}>*/}
+                            {/*            </Grid>*/}
+                            {/*            <Grid item xs={3}>*/}
+                            {/*                {htmlDelete}*/}
+                            {/*            </Grid>*/}
+                            {/*        </Grid>*/}
+                            {/*</Grid>*/}
+                        </React.Fragment>);
                 } else {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1} style={margin1px}>
-                                <img alt="" title={title} index={index} onClick={onClick} src={url}
-                                     width={thumbnailWidth} height={thumbnailHeight}
-                                     style={{"cursor": "pointer"}}/>
+                            <Grid container spacing={1}>
+                                <span className={classes.boxTitleImg}>{title}</span>
+                                <img alt="" index={index} onClick={onClick} src={url} className={classes.imgFileView}
+                                     title={title}/>
                             </Grid>
                         </Grid>
                     </React.Fragment>);
@@ -202,17 +214,11 @@ console.log("fileViewModel",fileViewModel)
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
-                            <div className="divParentImg">
-                                <Grid container spacing={1} style={margin1px}>
+                            <div className={classes.divParentImg}>
+                                <Grid container spacing={1}>
                                     <div title={title} index={index} onClick={onClick}
-                                         className={"fi fi-" + fileViewModel.extension} style={{
-                                        "width": thumbnailWidth,
-                                        "height": "88px",
-                                    }}>
-                                        <div className="fi-content" style={{
-                                            "textAlign": "center",
-                                            "fontSize": "25px",
-                                        }}>{fileViewModel.extension}</div>
+                                         className={"fi fi-" + fileViewModel.extension}>
+                                        <div className="fi-content">{fileViewModel.extension}</div>
                                     </div>
                                 </Grid>
                             </div>
@@ -236,16 +242,10 @@ console.log("fileViewModel",fileViewModel)
                 } else {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1} style={margin1px}>
+                            <Grid container spacing={1}>
                                 <div title={title} index={index} onClick={onClick}
-                                     className={"fi fi-" + fileViewModel.extension} style={{
-                                    "width": thumbnailWidth,
-                                    "height": "88px",
-                                }}>
-                                    <div className="fi-content" style={{
-                                        "textAlign": "center",
-                                        "fontSize": "25px",
-                                    }}>{fileViewModel.extension.toUpperCase()}</div>
+                                     className={"fi fi-" + fileViewModel.extension}>
+                                    <div className="fi-content">{fileViewModel.extension.toUpperCase()}</div>
                                 </div>
                             </Grid>
                         </Grid>

@@ -70,15 +70,47 @@ const useStyles = makeStyles((theme) => ({
     closeButtonError: {
         float: "left",
     },
+    divParentImg: {
+        height: "100px"
+    },
     boxImgFileView: {
-        border: "1px solid #c4c4c4",
-        marginTop: "2%"
+        position: "relative",
+        width: "100%",
+        height: "100px",
+
+        '&:hover': {
+            '& $boxButtonFileview': {
+                height: "100%"
+            }
+        }
+    },
+    imgFileView: {
+        display: "block",
+        width: "100%",
+        height: "auto"
+    },
+    boxTitleImg: {
+        fontSize: "12px",
+        margin: "1%",
+        color: "#182c9c",
+        textOverflow: "ellipsis",
+        overflow: "hidden",
+        whiteSpace: "nowrap"
     },
 
     boxButtonFileview: {
+        position: "absolute",
+        bottom: "0",
+        left: "0",
+        right: "0",
         backgroundColor: "#3f51b5",
-        color: "white"
-    }
+        overflow: "hidden",
+        width: "100%",
+        height: "0",
+        transition: ".5s ease",
+        color: "white",
+        textAlign: "center"
+    },
 
 }));
 
