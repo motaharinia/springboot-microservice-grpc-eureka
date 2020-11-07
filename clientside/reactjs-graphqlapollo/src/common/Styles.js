@@ -74,59 +74,44 @@ const useStyles = makeStyles((theme) => ({
         height: "100px"
     },
     boxImgFileView: {
-        position: "relative",
-        width: "100%",
-        cursor: "pointer",
-
-        '&:hover': {
-            '& $boxButtonFileView': {
-                height: "100%"
-            }
-        }
+        border: "1px solid #c4c4c4",
+        marginTop: "2%",
+        marginLeft: "2%",
+        padding:"0 !important"
     },
     imgFileView: {
+        cursor: "pointer",
         display: "block",
-        width: "100%"
-    },
-    boxTitleImg: {
-        fontSize: "12px",
-        margin: "1%",
-        color: "#182c9c",
-        textOverflow: "ellipsis",
-        overflow: "hidden",
-        whiteSpace: "nowrap"
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "50%"
     },
 
-    boxButtonFileView: {
-        position: "absolute",
-        bottom: "0",
-        left: "0",
-        right: "0",
+    boxButtonFileview: {
         backgroundColor: "#3f51b5",
-        overflow: "hidden",
-        width: "100%",
-        height: "0",
-        transition: ".5s ease",
         color: "white",
-        textAlign: "center",
-        borderRadius: "5px"
+        margin:"0",
+        width:"100%"
     },
     deleteIcon: {
-        fontSize: "40px",
+        fontSize: "30px",
+        cursor: "pointer",
         '&:hover': {
             color: "#ff3b3b",
             transition: ".5s ease"
         }
     },
     downloadIcon: {
-        fontSize: "40px",
+        fontSize: "30px",
+        cursor: "pointer",
         '&:hover': {
             color: "#17bb77",
             transition: ".5s ease"
         }
     },
     VisibilityIcon: {
-        fontSize: "40px",
+        fontSize: "30px",
+        cursor: "pointer",
         '&:hover': {
             color: "#17bb77",
             transition: ".5s ease"

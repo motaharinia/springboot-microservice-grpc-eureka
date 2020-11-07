@@ -146,7 +146,7 @@ function FileView(props) {
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
-                    <div index={index} onClick={onDelete}  aria-label="حذف"  >
+                    <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
                         <Delete className={classes.deleteIcon} />
                     </div>
             }
@@ -155,48 +155,29 @@ function FileView(props) {
 
             if (isImage) {
                 if (hasAction) {
-                    return (
-                        <React.Fragment key={Math.random()}>
-                            <Grid item xs={12} sm={3}  className={classes.boxImgFileView} >
-                                    <img alt="" index={index} onClick={onClick} src={url}
-                                         className={classes.imgFileView} title={title}/>
-                                    <Grid container spacing={1} item xs={12} className={classes.boxButtonFileView}>
-                                        <Grid item xs={12}>
-                                            {htmlDownload}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            {htmlView}
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            {htmlDelete}
-                                        </Grid>
-                                    </Grid>
+                    return (<React.Fragment key={Math.random()}>
+                        <Grid container spacing={1} item xs={3} className={classes.boxImgFileView}>
+                            <Grid  item xs={12}  className={classes.divParentImg}>
+                                <img alt="" index={index} onClick={onClick} src={url}
+                                     className={classes.imgFileView} title={title}/>
                             </Grid>
-
-
-                            {/*<Grid container spacing={1} item xs={3} className={classes.boxImgFileView}>*/}
-                            {/*        <Grid  item xs={12}  className={classes.divParentImg}>*/}
-                            {/*            <img alt="" index={index} onClick={onClick} src={url}*/}
-                            {/*                 className={classes.imgFileView} title={title}/>*/}
-                            {/*            <span className={classes.boxTitleImg}>{title}</span>*/}
-                            {/*        </Grid>*/}
-                            {/*        <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>*/}
-                            {/*            <Grid item xs={3}>*/}
-                            {/*                {htmlDownload}*/}
-                            {/*            </Grid>*/}
-                            {/*            <Grid item xs={1}>*/}
-                            {/*            </Grid>*/}
-                            {/*            <Grid item xs={3}>*/}
-                            {/*                {htmlView}*/}
-                            {/*            </Grid>*/}
-                            {/*            <Grid item xs={1}>*/}
-                            {/*            </Grid>*/}
-                            {/*            <Grid item xs={3}>*/}
-                            {/*                {htmlDelete}*/}
-                            {/*            </Grid>*/}
-                            {/*        </Grid>*/}
-                            {/*</Grid>*/}
-                        </React.Fragment>);
+                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                                <Grid item xs={3}>
+                                    {htmlDownload}
+                                </Grid>
+                                <Grid item xs={1}>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    {htmlView}
+                                </Grid>
+                                <Grid item xs={1}>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    {htmlDelete}
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </React.Fragment>);
                 } else {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
@@ -220,7 +201,7 @@ function FileView(props) {
                                     </div>
                                 </Grid>
                             </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileView}>
+                            <Grid container spacing={1} className={classes.boxButtonFileview}>
                                 <Grid item xs={3}>
                                     {htmlDownload}
                                 </Grid>
