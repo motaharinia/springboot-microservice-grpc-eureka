@@ -82,7 +82,7 @@ ali masoomzadeh
 ##### fine-uploader-wrappers:  [https://github.com/FineUploader/fine-uploader-wrappers]()
 ##### js-file-downloader:   [https://www.npmjs.com/package/js-file-downloader]()
 
-## Acknowledgments
+## Teammate
 
 Mostafa Motahari Nia    
  ##### github:  [https://github.com/motaharinia]()     
