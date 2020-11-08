@@ -67,7 +67,7 @@ Download the Node.js source code or a pre-built installer for your platform
 * View admin information on the form
 
 ## Authors
-ali masoomzadeh     
+Ali Masoomzadeh     
  ##### github:  [https://github.com/alimasoomzadeh]()     
  ##### linkdin: [www.linkedin.com/in/alimasoomzadeh/]()
     
