@@ -1,7 +1,7 @@
 # ReactJS, GraphQL and  Apollo
 
-An experimental project ( MaterialUI, GraphQL with Apollo, Fine Uploader )
-to work with CRUD RestAPI and Upload File
+An experimental project (MaterialUI, GraphQL with Apollo, Fine Uploader)
+to work with CRUD RestAPI and File Management
 ## Getting Started  
 `yarn install`     
 `yarn start`    
@@ -43,28 +43,25 @@ Download the Node.js source code or a pre-built installer for your platform
 `yarn add js-file-downloader`   
 
 
-## Running the tests
-`yarn start`
+## Business Page and functionalites
 
 #### AdminUserList Page
-* View admin list.
-* Select rows.
-* Test table Buttons.
+* View Admin List.
+* Select Rows.
+* Table Buttons.
 
 #### AdminUserCreate Page
-* Avoid duplicate username.
-* Test form fields.
-* Test the registration of files and delete files with the uploader.
-* Test the confirmation and cancel button.
+* Avoid Duplicate Username.
+* Upload and Delete Files with the Uploader.
+* Form Confirmation and Cancel Buttons.
 
 #### AdminUserUpdate Page
-* Test form fields.
-* Test the registration of files and delete files with the uploader.
-* Test the confirmation and cancel button.
+* Upload and Delete Files with the Uploader.
+* Form Confirmation and Cancel Buttons.
 
 #### AdminUserDelete Page
-* View admin information on the form
-* Test the confirmation and cancel button.
+* View Admin Information on the Form
+* Form Confirmation and Cancel Buttons.
 
 #### AdminUserView Page
 * View admin information on the form
