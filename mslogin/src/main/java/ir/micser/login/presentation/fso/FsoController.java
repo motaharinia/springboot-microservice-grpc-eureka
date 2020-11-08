@@ -115,10 +115,10 @@ public class FsoController {
     /**
      * این متد بر اساس زیرسیستم و انتیتی و مسیر هش شده و اینکه آیا برای مشاهده یا دانلود و با چه اندازه ای نیاز است داده فایل را دانلود و در اختیار کلاینت قرار میدهد
      *
-     * @param response    شیی پاسخ به سرور
+     * @param response    شیی پاسخ به کلاینت
      * @param subSystem   زیرسیستم انتیتی
      * @param entity      انتیتی
-     * @param hashedPath       مسیر هش شده فایل
+     * @param hashedPath  مسیر هش شده فایل
      * @param forDownload آیا پنجره دانلود نمایش داده شود؟
      * @param thumbSize   اندازه تصویر بندانگشتی
      * @throws Exception خطا
@@ -164,7 +164,7 @@ public class FsoController {
      * این متد بر اساس زیرسیستم و نوع تصویر مورد نیاز در انتیتی با شناسه مورد نظر و اینکه آیا برای مشاهده یا دانلود و با چه اندازه ای نیاز است داده فایل را دانلود و در اختیار کلاینت قرار میدهد<br>
      * این متد فقط برای نوع فایلهایی در انتیتی ها استفاده میشود که از ابتدا قرار بوده تک فایل باشند مثل تصویر پروفایل یک کاربر
      *
-     * @param response       شیی پاسخ به سرور
+     * @param response       شیی پاسخ به کلاینت
      * @param subSystem      زیرسیستم انتیتی
      * @param entity         انتیتی
      * @param entityId       شناسه انتیتی
@@ -210,8 +210,25 @@ public class FsoController {
     }
 
 
-    private String removeNonAlphabetic(String str) {
-        str = str.replaceAll("[^a-zA-Z]", "");
-        return str;
+    /**
+     * این متد یک کلید فایل آپلود شده را از ورودی دریافت کرده و آن را از مسیر فایلهای آپلود شده حذف میکند
+     *
+     * @param fileKey کلید فایل
+     * @throws Exception خطا
+     */
+    @RequestMapping(value = "/deleteUploadedFile/{filekey}", method = RequestMethod.GET)
+    public void deleteUploadedFile(@PathVariable("filekey") String fileKey) throws Exception {
+        fsoUploadedFileService.delete(fileKey);
+    }
+
+    /**
+     * این متد یک رشته از ورودی دریافت میکند و کارکترهای غیرالفبایی انگلیسی آن را حذف کرده و خروجی میدهد
+     *
+     * @param input رشته ورودی
+     * @return خروجی: رشته ای که فقط حروف انگلیسی دارد
+     */
+    private String removeNonAlphabetic(String input) {
+        input = input.replaceAll("[^a-zA-Z]", "");
+        return input;
     }
 }
