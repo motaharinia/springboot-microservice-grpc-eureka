@@ -216,8 +216,8 @@ public class FsoController {
      * @param fileKey کلید فایل
      * @throws Exception خطا
      */
-    @RequestMapping(value = "/deleteUploadedFile/{filekey}", method = RequestMethod.DELETE)
-    public void deleteUploadedFile(@PathVariable("filekey") String fileKey) throws Exception {
+    @RequestMapping(value = "/deleteUploadedFile/{fileKey}", method = RequestMethod.DELETE)
+    public void deleteUploadedFile(@PathVariable("fileKey") String fileKey) throws Exception {
         fsoUploadedFileService.delete(fileKey);
     }
 
