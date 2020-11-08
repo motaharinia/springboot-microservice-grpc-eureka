@@ -249,13 +249,13 @@ public class FsoService {
     }
 
     /**
-     * این متد یک مسیر دایرکتوری و نام کامل فایل و آرایه بایت داده را از ورودی دریافت میکند و بعد از ثبت آرایه بایت در مسیر مورد نظر ، مسیر رمزگذاری شده فایل ثبت شده را خروجی میدهد
+     * این متد یک مدل فایل آپلود شده در مسیر آپلود را از ورودی دریافت میکند و بعد از انتقال آن در مسیر ماژول نظر ، مسیر رمزگذاری شده فایل جابجا شده را خروجی میدهد
      *
-     * @param fileUploadedModel مدل آپلود فایل
+     * @param fileUploadedModel مدل فایل آپلود شده
      * @return خروجی: مسیر رمزگذاری شده فایل ثبت شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
-    public String upload(FileUploadedModel fileUploadedModel) throws Exception {
+    public String uploadedFileHandleToModule(FileUploadedModel fileUploadedModel) throws Exception {
         FsoMimeTypeModel fsoMimeTypeModel = FsoTools.getMimeTypeModel(FSO_PATH_MODULE + fileUploadedModel.getDirectoryRealPath() + fileUploadedModel.getFullName());
         if (fsoMimeTypeModel.getType().equals(FsoMimeTypeEnum.IMAGE)) {
             return FsoTools.uploadWriteToPath(FSO_PATH_MODULE + fileUploadedModel.getDirectoryRealPath(), fileUploadedModel.getFullName(), fileUploadedModel.getDataByteArray(), true, FSO_CONFIG_MODEL);
