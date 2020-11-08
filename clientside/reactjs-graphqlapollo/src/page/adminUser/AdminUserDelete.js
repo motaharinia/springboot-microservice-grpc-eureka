@@ -13,7 +13,7 @@ import ResultHandling from "../../common/ResultHandling";
 
 
 function CloseButton() {
-    window.location.href="/"
+    window.location.href="/adminUserList"
 }
 
 function AdminUserDelete() {

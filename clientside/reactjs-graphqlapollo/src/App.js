@@ -53,16 +53,16 @@ class App extends Component {
                 <Router>
                 <div>
                     <Switch>
-                        <Route path="/adminDelete/:Id">
+                        <Route path="/adminUserDelete/:Id">
                             <AdminUserDelete />
                         </Route>
-                        <Route path="/adminUpdate/:Id">
+                        <Route path="/adminUserUpdate/:Id">
                             <AdminUserUpdate />
                         </Route>
-                        <Route path="/adminCreate">
+                        <Route path="/adminUserCreate">
                             <AdminUserCreate />
                         </Route>
-                        <Route path="/">
+                        <Route path="/adminUserList">
                             <AdminUserList />
                         </Route>
                     </Switch>

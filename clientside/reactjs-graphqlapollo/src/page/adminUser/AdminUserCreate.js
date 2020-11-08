@@ -17,7 +17,7 @@ import File from "../../common/file/File"
 import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/file/FileInit"
 
 function CloseButton() {
-    window.location.href = "/"
+    window.location.href = "/adminUserList"
 }
 
 

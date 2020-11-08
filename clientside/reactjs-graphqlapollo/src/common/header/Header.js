@@ -10,7 +10,7 @@ import BriefMesseages from "./BriefMesseages";
 
 
 function CloseButton() {
-    window.location.href = "/"
+    window.location.href = "/adminUserList"
 }
 
 

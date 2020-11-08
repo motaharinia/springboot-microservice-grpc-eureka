@@ -52,7 +52,7 @@ function OnSelectRowGrid(dataRow) {
 
 function OnClickButtonUpdate() {
     if (rowId !== "") {
-        window.location.href = "/adminUpdate/" + rowId;
+        window.location.href = "/adminUserUpdate/" + rowId;
     } else {
         alert(" سطری انتخاب نشده است")
     }
@@ -60,7 +60,7 @@ function OnClickButtonUpdate() {
 
 function OnClickButtonDelete() {
     if (rowId !== "") {
-        window.location.href = "/adminDelete/" + rowId;
+        window.location.href = "/adminUserDelete/" + rowId;
     } else {
         alert(" سطری انتخاب نشده است")
     }
@@ -112,7 +112,7 @@ function AdminUserList() {
                 <Grid item xs={12}>
                     <div className={classes.root}>
                         <Fab onClick={() => {
-                            window.location.href = "/adminCreate"
+                            window.location.href = "/adminUserCreate"
                         }} color="primary" aria-label="ثبت ادمین" className={classes.marginButton}>
                             <AddIcon/>
                         </Fab>

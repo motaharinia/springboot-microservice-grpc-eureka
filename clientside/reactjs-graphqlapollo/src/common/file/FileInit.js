@@ -107,9 +107,8 @@ const getNewUploader = (subSystem,entity,type,validationExtensionList,validation
                 partSize: 2 * 1024 * 1024  //2mb
             },
             deleteFile: {
-                method: "post",
                 enabled: true,
-                endpoint: "/fso/deleteUploadedFile"
+                endpoint: "http://localhost:8082/fso/deleteUploadedFile"
             },
             request: {
                 customHeaders: {

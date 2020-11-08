@@ -20,7 +20,7 @@ import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../com
 
 // کلید انصراف
 function CloseButton() {
-    window.location.href = "/"
+    window.location.href = "/adminUserList"
 }
 
 
