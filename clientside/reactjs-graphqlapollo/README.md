@@ -71,7 +71,7 @@ ali masoomzadeh
  ##### github:  [https://github.com/alimasoomzadeh]()     
  ##### linkdin: [www.linkedin.com/in/alimasoomzadeh/]()
     
-## link
+## Links
 
  ##### node: [https://nodejs.org/en/]()
  ##### yarn: [https://yarnpkg.com/]()
@@ -82,7 +82,7 @@ ali masoomzadeh
 ##### fine-uploader-wrappers:  [https://github.com/FineUploader/fine-uploader-wrappers]()
 ##### js-file-downloader:   [https://www.npmjs.com/package/js-file-downloader]()
 
-## Teammate
+## Teammates
 
 Mostafa Motahari Nia    
  ##### github:  [https://github.com/motaharinia]()     
