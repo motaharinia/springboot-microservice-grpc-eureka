@@ -1,7 +1,7 @@
 # ReactJS, GraphQL and  Apollo
 
-An experimental project (MaterialUI, GraphQL with Apollo, Fine Uploader)
-to work with CRUD RestAPI and File Management
+An Experimental Project (MaterialUI, GraphQL with Apollo, Fine Uploader)
+to Work with CRUD RestAPI and File Management
 ## Getting Started  
 `yarn install`     
 `yarn start`    
