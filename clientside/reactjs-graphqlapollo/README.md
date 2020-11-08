@@ -1,10 +1,10 @@
 # ReactJS, GraphQL and  Apollo
 
-An experimental project for Material UI  and GraphQL with Apollo  and save files with RestAPI
-
+An experimental project ( MaterialUI, GraphQL with Apollo, Fine Uploader )
+to work with CRUD RestAPI and Upload File
 ## Getting Started  
 `yarn install`     
-`yarn start`
+`yarn start`    
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
      
@@ -16,16 +16,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Installing
 
-#### Node
+#### Node.js
 Download the Node.js source code or a pre-built installer for your platform
 
 #### yarn
 `yarn install`  
 
-#### Material UI
+#### MaterialUI
 `yarn add @material-ui/core` 
 
-#### GraphQL (Apollo) 
+#### GraphQL with Apollo 
 `yarn add apollo-boost`     
 `yarn add apollo-client`    
 `yarn add apollo-link-ws`   
@@ -36,7 +36,7 @@ Download the Node.js source code or a pre-built installer for your platform
 `yarn add react-apollo`     
 `yarn add graphql`      
 
-#### RestAPI     
+#### Uploader     
 `yarn add fine-uploader`    
 `yarn add react-fine-uploader`  
 `yarn add fine-uploader-wrappers`   
