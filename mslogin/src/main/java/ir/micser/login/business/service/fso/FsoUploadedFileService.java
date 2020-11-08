@@ -24,7 +24,7 @@ public interface FsoUploadedFileService {
      * @param multipartFile        آرایه داده ارسالی از کلاینت
      * @param fileUploadChunkModel مدل داده ارسالی از کلاینت
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FileUploadChunkModel fileUploadChunkModel) throws Exception;
 
@@ -34,7 +34,7 @@ public interface FsoUploadedFileService {
      * @param multipartFile          آرایه داده ارسالی از کلاینت
      * @param fineUploaderChunkModel مدل داده ارسالی از کلاینت
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FineUploaderChunkModel fineUploaderChunkModel) throws Exception;
 
@@ -43,7 +43,7 @@ public interface FsoUploadedFileService {
      * این متد یک لاگ دیتابیس از اطلاعات فایل آپلود شده در دیتابیس ذخیره مینماید
      * @param fsoUploadedFileModel مدل فایل آپلود شده
      * @return خروجی: مدل فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel)throws Exception;
 
@@ -52,7 +52,7 @@ public interface FsoUploadedFileService {
      *
      * @param fileKey کلید فایل آپلود شده مورد نظر
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     FsoUploadedFileModel readByFileKey(String fileKey) throws Exception;
 
@@ -60,7 +60,7 @@ public interface FsoUploadedFileService {
      * این متد کلید فایل آپلود شده مورد نظر را از ورودی دریافت کرده و آن را حذف مینماید
      *
      * @param fileKey کلید فایل آپلود شده مورد نظر
-     * @throws Exception
+     * @throws Exception خطا
      */
     void delete(String fileKey) throws Exception;
 

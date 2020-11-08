@@ -75,7 +75,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      * @param multipartFile        آرایه داده ارسالی از کلاینت
      * @param fileUploadChunkModel مدل داده ارسالی از کلاینت
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     @Override
     public FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FileUploadChunkModel fileUploadChunkModel) throws Exception {
@@ -93,7 +93,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
         if (fileUploadChunkModel.getChunks() - 1 == fileUploadChunkModel.getChunk()) {
             fsoUploadedFileModel.setFileKey(fileUploadChunkModel.getFileKey());
             fsoUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            fsoUploadedFileModel.setFileSize(Long.valueOf(fsoUploadedFileModel.getFileByteArray().length));
+            fsoUploadedFileModel.setFileSize((long) fsoUploadedFileModel.getFileByteArray().length);
             fsoUploadedFileModel.setFileUploadDateTime(new Date());
             fileUploadChunkModel.setName(this.fixFailedFileNameCharacter(fileUploadChunkModel.getName()));
             fsoUploadedFileModel.setFileFullName(fileUploadChunkModel.getName());
@@ -104,15 +104,16 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
             String mainPath = "/" + removeNonAlphabetic(fileUploadChunkModel.getSubSystem().getValue()) + "/" + removeNonAlphabetic(fileUploadChunkModel.getEntity());
             fsoUploadedFileModel.setDirectoryRealPath(checkLastCharOfPath(mainPath + fileUploadChunkModel.getFilePath()));
 
-            //ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده
-            fsoUploadedFileModel = this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey());
-            //ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
-            this.create(fsoUploadedFileModel);
+            // ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده و ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
+            this.create(this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey()));
 
             //حذف فایل موقت در حال آپلود
-            uploadingFile.delete();
+            if (uploadingFile.delete()){
+                return fsoUploadedFileModel;
+            }else{
+                return null;
+            }
 
-            return fsoUploadedFileModel;
         } else {
             return null;
         }
@@ -124,7 +125,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      * @param multipartFile          آرایه داده ارسالی از کلاینت
      * @param fineUploaderChunkModel مدل داده ارسالی از کلاینت
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     @Override
     public FsoUploadedFileModel uploadToFileModel(MultipartFile multipartFile, FineUploaderChunkModel fineUploaderChunkModel) throws Exception {
@@ -142,7 +143,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
         if (fineUploaderChunkModel.getChunks() - 1 == fineUploaderChunkModel.getChunk()) {
             fsoUploadedFileModel.setFileKey(fineUploaderChunkModel.getFileKey());
             fsoUploadedFileModel.setFileByteArray(FileUtils.readFileToByteArray(uploadingFile));
-            fsoUploadedFileModel.setFileSize(Long.valueOf(fsoUploadedFileModel.getFileByteArray().length));
+            fsoUploadedFileModel.setFileSize((long) fsoUploadedFileModel.getFileByteArray().length);
             fsoUploadedFileModel.setFileUploadDateTime(new Date());
             fineUploaderChunkModel.setName(this.fixFailedFileNameCharacter(fineUploaderChunkModel.getName()));
             fsoUploadedFileModel.setFileFullName(fineUploaderChunkModel.getName());
@@ -153,10 +154,8 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
             String mainPath = "/" + removeNonAlphabetic(fineUploaderChunkModel.getSubSystem().getValue()) + "/" + removeNonAlphabetic(fineUploaderChunkModel.getEntity());
 //            logUploadedFileModel.setDirectoryRealPath(checkLastCharOfPath(mainPath + fineUploaderChunkModel.getFilePath()));
 
-            //ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده
-            fsoUploadedFileModel = this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey());
-            //ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
-            this.create(fsoUploadedFileModel);
+            //ذخیره فایل بر روی فایل سیستم از روی مدل دیتابیسی فایل آپلود شده و ذخیره اطلاعات در دیتابیس از روی مدل دیتابیسی فایل آپلود شده
+            this.create(this.saveUploadedFile(fsoUploadedFileModel, fsoUploadedFileModel.getFileKey()));
 
             return fsoUploadedFileModel;
         } else {
@@ -164,8 +163,13 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
         }
     }
 
+    /**
+     * این متد یک لاگ دیتابیس از اطلاعات فایل آپلود شده در دیتابیس ذخیره مینماید
+     * @param fsoUploadedFileModel مدل فایل آپلود شده
+     * @return خروجی: مدل فایل آپلود شده
+     */
     @Override
-    public FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel) throws Exception {
+    public FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel) {
         //ساخت انتیتی فایل آپلود شده از مدل فایل آپلود شده
         FsoUploadedFile fsoUploadedFile = new FsoUploadedFile();
         fsoUploadedFile.setFileExtension(fsoUploadedFileModel.getFileExtension());
@@ -187,7 +191,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      *
      * @param fileKey کلید فایل آپلود شده مورد نظر
      * @return خروجی: مدل اطلاعات فایل آپلود شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     @Override
     public FsoUploadedFileModel readByFileKey(String fileKey) throws Exception {
@@ -202,9 +206,8 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
             fsoUploadedFileModel = (FsoUploadedFileModel) EntityTools.convertToModel(fsoUploadedFileModel, fsoUploadedFile);
             //خواندن اطلاعات فایل در مدل
             File uploadedFile = new File(fsoUploadedFileModel.getFileUploadedPath());
-            FileInputStream fileInputStream = null;
-            fileInputStream = new FileInputStream(uploadedFile);
-            byte fileContent[] = new byte[(int) uploadedFile.length()];
+            FileInputStream fileInputStream = new FileInputStream(uploadedFile);
+            byte[] fileContent = new byte[(int) uploadedFile.length()];
             fileInputStream.read(fileContent);
             fsoUploadedFileModel.setFileByteArray(fileContent);
         } else {
@@ -218,10 +221,9 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      * این متد کلید فایل آپلود شده مورد نظر را از ورودی دریافت کرده و آن را حذف مینماید
      *
      * @param fileKey کلید فایل آپلود شده مورد نظر
-     * @throws Exception
      */
     @Override
-    public void delete(String fileKey) throws Exception {
+    public void delete(String fileKey)  {
         FsoUploadedFile fsoUploadedFile = fsoUploadedFileRepository.findByFileKey(fileKey);
         if (fsoUploadedFile != null) {
             fsoUploadedFileRepository.delete(fsoUploadedFile);
@@ -241,7 +243,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      * @param fsoUploadedFileModel مدل فایل آپلود شده
      * @param fileKey              کلید فایل آپلود شده
      * @return خروجی: مدل فایل آپلود شده کامل شده
-     * @throws Exception
+     * @throws Exception خطا
      */
     private FsoUploadedFileModel saveUploadedFile(FsoUploadedFileModel fsoUploadedFileModel, String fileKey) throws Exception {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
@@ -290,7 +292,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
      * @param fileName نام فایل ورودی
      * @return خروجی: نام فایل اصلاح شده و بدون کارکترهای عربی
      */
-    private static String fixFailedFileNameCharacter(String fileName) {
+    private String fixFailedFileNameCharacter(String fileName) {
         if (ObjectUtils.isEmpty(fileName)) {
             return "";
         }
@@ -363,13 +365,13 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
                                 //اگر فایل مورد نظر تصویر باشد و در ورودی خواسته شده باشد که آن فایل تغییر اندازه بشود
                                 byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), fsoUploadedFileHandleDetailModel.getWidth(), fsoUploadedFileHandleDetailModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
-                                fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
+                                fileUploadedModel.setSize((long) fileUploadedModel.getDataByteArray().length);
                             } else {
                                 //اگر فایل مورد نظر تصویر نباشد و یا نیاز به تغییر اندازه نداشته باشد
                                 fileUploadedModel.setName(dateTime + "_" + fileUploadedModel.getName());
                                 fileUploadedModel.setFullName(dateTime + "_" + fileUploadedModel.getFullName());
                             }
-                            fsoService.upload(fileUploadedModel);
+                            fsoService.uploadedFileHandleToModule(fileUploadedModel);
                         }
                         this.delete(fileViewModel.getKey());
                     }
@@ -404,13 +406,13 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
                                 //logUploadedFileModel.setFileFullName(dateTime + "_" + logUploadedFileModel.getFileFullName());
                                 byte[] resizedFileByteArray = ImageTools.imageResize(fileUploadedModel.getDataByteArray(), fileUploadedModel.getExtension(), fsoUploadedFileHandleDetailModel.getWidth(), fsoUploadedFileHandleDetailModel.getHeight(), true);
                                 fileUploadedModel.setDataByteArray(resizedFileByteArray);
-                                fileUploadedModel.setSize(Long.valueOf(fileUploadedModel.getDataByteArray().length));
+                                fileUploadedModel.setSize((long) fileUploadedModel.getDataByteArray().length);
                             } else {
                                 //اگر فایل مورد نظر تصویر نباشد و یا نیاز به تغییر اندازه نداشته باشد
                                 fsoUploadedFileModel.setFileName(dateTime + "_" + fsoUploadedFileModel.getFileName());
                                 fsoUploadedFileModel.setFileFullName(dateTime + "_" + fsoUploadedFileModel.getFileFullName());
                             }
-                            fsoService.upload(fileUploadedModel);
+                            fsoService.uploadedFileHandleToModule(fileUploadedModel);
                         }
                         this.delete(fileViewModel.getKey());
                     }
@@ -431,7 +433,7 @@ public class FsoUploadedFileServiceImpl implements FsoUploadedFileService {
                 break;
             case ENTITY_DELETE:
                 List<String> deleteDirectoryList = new ArrayList<>();
-                String entityDirectoryPath = "";
+                String entityDirectoryPath;
                 for (FsoUploadedFileHandleDetailModel fsoUploadedFileHandleDetailModel : fsoUploadedFileHandleModel.getFsoUploadedFileHandleDetailModelList()) {
                     Integer entityIdIndex = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().indexOf("%ENTITYID%");
                     entityDirectoryPath = fsoUploadedFileHandleDetailModel.getFsoModuleEnum().getValue().substring(0, entityIdIndex);
