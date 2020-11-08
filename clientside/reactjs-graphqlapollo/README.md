@@ -1,15 +1,15 @@
-# ReactJS, GraphQL and  Apollo
+# ReactJS, GraphQL and Apollo
 
-An Experimental Project (MaterialUI, GraphQL with Apollo, Fine Uploader)
-to Work with CRUD RestAPI and File Management
+An experimental project (materialUI, graphQL with apollo, fine uploader)
+to work with CRUD restAPI and file management
 ## Getting Started  
 `yarn install`     
 `yarn start`    
-Open [http://localhost:3000](http://localhost:3000) to View it in the Browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
      
 ## Prerequisites    
-- MsLogin Project(Back-End)
+- MsLogin project(Back-End)
 - Node.js
 - yarn
 
@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) to View it in the Browser.
 ## Installing
 
 #### Node.js
-Download the Node.js Source Code or a Pre-Built Installer for Your Platform
+Download the node.js source code or a pre-Built installer for Your platform
 
 #### yarn
 `yarn install`  
@@ -46,22 +46,22 @@ Download the Node.js Source Code or a Pre-Built Installer for Your Platform
 ## Business Page and Functionalites
 
 #### AdminUserList Page
-* View Admin List.
-* Select Rows.
-* Table Buttons.
+* View admin list.
+* Select rows.
+* Table buttons.
 
 #### AdminUserCreate Page
-* Avoid Duplicate Username.
-* Upload and Delete Files with the Uploader.
-* Form Confirmation and Cancel Buttons.
+* Avoid duplicate username.
+* Upload and delete files with the uploader.
+* Form confirmation and cancel buttons.
 
 #### AdminUserUpdate Page
-* Upload and Delete Files with the Uploader.
-* Form Confirmation and Cancel Buttons.
+* Upload and delete files with the uploader.
+* Form confirmation and cancel buttons.
 
 #### AdminUserDelete Page
-* View Admin Information on the Form
-* Form Confirmation and Cancel Buttons.
+* View admin information on the form
+* Form confirmation and cancel buttons.
 
 #### AdminUserView Page
 * View admin information on the form
