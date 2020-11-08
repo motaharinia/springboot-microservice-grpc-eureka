@@ -114,14 +114,14 @@ function FileView(props) {
                     hasAction = true;
                     htmlDownload =
                         <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
-                            <CloudDownload className={classes.downloadIcon} />
+                            <CloudDownload className={classes.downloadIcon}/>
                         </div>
                 }
                 if (hasView) {
                     hasAction = true;
                     htmlView =
                         <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
-                            <Visibility className={classes.VisibilityIcon} />
+                            <Visibility className={classes.VisibilityIcon}/>
                         </div>
                 }
                 switch (fileViewModel.extension) {
@@ -137,31 +137,28 @@ function FileView(props) {
                         isImage = false;
                 }
             } else {
-                console.log("fileViewModel",fileViewModel);
                 title += "آخرین تغییر:  تازه بارگذاری شده است";
             }
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
                     <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
-                        <Delete className={classes.deleteIcon} />
+                        <Delete className={classes.deleteIcon}/>
                     </div>
             }
-
-
 
             if (isImage) {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={12} md={4} className={classes.boxImgFileView}>
-                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                            <Grid item xs={12} className={classes.boxTitleFileview}>
                                 <span>{title}</span>
                             </Grid>
-                            <Grid  item xs={12}  className={classes.divParentImg}>
+                            <Grid item xs={12} className={classes.divParentImg}>
                                 <img alt="" index={index} onClick={onClick} src={url}
                                      className={classes.imgFileView} title={title}/>
                             </Grid>
-                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                            <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
                                 <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
@@ -187,20 +184,22 @@ function FileView(props) {
                 }
             } else {
                 if (hasAction) {
+
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={12} md={4} className={classes.boxImgFileView}>
-                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                            <Grid item xs={12} className={classes.boxTitleFileview}>
                                 <span>{title}</span>
                             </Grid>
-                            <Grid  item xs={12}  className={classes.divParentImg}>
+                            <Grid item xs={12} className={classes.divParentImg}>
                                 <Grid container spacing={1}>
                                     <div title={title} index={index} onClick={onClick}
-                                         className={"fi fi-" + fileViewModel.extension}>
-                                        <div className="fi-content">{fileViewModel.extension}</div>
+                                         className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize} >
+
+                                        <div className={"fi-content" +" "+ classes.iconContentSize} >{fileViewModel.extension.toUpperCase()}</div>
                                     </div>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                            <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
                                 <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
@@ -218,8 +217,8 @@ function FileView(props) {
                         <Grid item xs={3} className={classes.boxImgFileView}>
                             <Grid container spacing={1}>
                                 <div title={title} index={index} onClick={onClick}
-                                     className={"fi fi-" + fileViewModel.extension}>
-                                    <div className="fi-content">{fileViewModel.extension.toUpperCase()}</div>
+                                     className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize} >
+                                    <div className={"fi-content" +" "+ classes.iconContentSize} >{fileViewModel.extension.toUpperCase()}</div>
                                 </div>
                             </Grid>
                         </Grid>
