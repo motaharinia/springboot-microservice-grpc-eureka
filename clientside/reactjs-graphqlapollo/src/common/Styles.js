@@ -126,6 +126,16 @@ const useStyles = makeStyles((theme) => ({
             color: "#17bb77",
             transition: ".5s ease"
         }
+    },
+
+    devParentIconContentSize: {
+        width: "79%",
+        height: "94px",
+        top: "12px"
+    },
+    iconContentSize: {
+        fontSize: "30px",
+        textAlign: "center"
     }
 
 }));

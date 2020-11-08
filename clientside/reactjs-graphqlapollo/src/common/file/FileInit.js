@@ -107,7 +107,7 @@ const getNewUploader = (subSystem,entity,type,validationExtensionList,validation
                 partSize: 2 * 1024 * 1024  //2mb
             },
             deleteFile: {
-                method: "POST",
+                method: "post",
                 enabled: true,
                 endpoint: "/fso/deleteUploadedFile"
             },
