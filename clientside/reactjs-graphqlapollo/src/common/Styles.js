@@ -70,14 +70,62 @@ const useStyles = makeStyles((theme) => ({
     closeButtonError: {
         float: "left",
     },
+    divParentImg: {
+        height: "116px"
+    },
     boxImgFileView: {
-        border: "1px solid #c4c4c4",
         marginTop: "2%"
+    },
+    imgFileView: {
+        cursor: "pointer",
+        display: "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "50%"
+    },
+    boxTitleFileview: {
+        backgroundColor: "#3f51b5",
+        color: "white",
+        overflow: "hidden",
+        height: "41px",
+        width: "100%",
+        textOverflow: "clip",
+        padding: "2%",
+        textAlign: "center",
+        borderRadius: "5px 5px 0 0"
     },
 
     boxButtonFileview: {
         backgroundColor: "#3f51b5",
-        color: "white"
+        color: "white",
+        margin: "0",
+        borderRadius: "0 0 5px 5px",
+        paddingRight: "5%",
+        width: "100%"
+    },
+    deleteIcon: {
+        fontSize: "30px",
+        cursor: "pointer",
+        '&:hover': {
+            color: "#ff3b3b",
+            transition: ".5s ease"
+        }
+    },
+    downloadIcon: {
+        fontSize: "30px",
+        cursor: "pointer",
+        '&:hover': {
+            color: "#17bb77",
+            transition: ".5s ease"
+        }
+    },
+    VisibilityIcon: {
+        fontSize: "30px",
+        cursor: "pointer",
+        '&:hover': {
+            color: "#17bb77",
+            transition: ".5s ease"
+        }
     }
 
 }));

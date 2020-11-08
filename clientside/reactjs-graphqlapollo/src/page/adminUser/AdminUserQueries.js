@@ -2,9 +2,11 @@ import gql from "graphql-tag";
 
 // کوئری درخواست نمایش اطلاعات گرید
 const ADMIN_USER_READ_GRID = gql`
-    query {
+    query ReadGridByModel (
+    $searchFilterModel:SearchFilterModelInput!
+    ){
   readGridByModel(
-    searchFilterModel: {}
+    searchFilterModel: $searchFilterModel
   ) {
     page
     records
@@ -48,17 +50,26 @@ const ADMIN_USER_CREATE_MUTATION = gql`
 `;
 
 // کوئری درخواست اطلاعات ادمین با ایدی مورد نظر
-const ADMIN_USER_READ_GRID_BY_ID = gql`
-query  common_adminUser_readById($id:Int!){
+const ADMIN_USER_READ_BY_ID = gql`
+query  Common_adminUser_readById($id:Int!){
     common_adminUser_readById(id: $id) {
         username,
         firstName,
         lastName,
         gender_id,
-         imageFileList{
-      hashedPath,
-      statusEnum
-    },
+        imageFileList{
+              fullName
+              size
+              key
+              extension
+              lastModifiedDate{
+                        year
+                        month
+                        day
+              }
+              hashedPath
+              statusEnum
+         },
         defaultAdminUserContact_city_id,
         defaultAdminUserContact_address,
         id
@@ -113,7 +124,7 @@ const ADMIN_USER_DELETE_MUTATION = gql`
 
 export {
     ADMIN_USER_READ_GRID,
-    ADMIN_USER_READ_GRID_BY_ID,
+    ADMIN_USER_READ_BY_ID,
     ADMIN_USER_CREATE_MUTATION,
     ADMIN_USER_UPDATE_MUTATION,
     ADMIN_USER_DELETE_MUTATION

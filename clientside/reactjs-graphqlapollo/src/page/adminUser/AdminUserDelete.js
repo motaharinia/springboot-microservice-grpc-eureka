@@ -6,17 +6,17 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
-import { useStyles } from './AdminStyles'
-import {ADMIN_USER_READ_GRID_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminQueries";
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
+import { useStyles } from './AdminUserStyles'
+import {ADMIN_USER_READ_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminUserQueries";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
 
 
 function CloseButton() {
     window.location.href="/"
 }
 
-function AdminDelete() {
+function AdminUserDelete() {
 
     //تعریف متغیر استایل
     const classes = useStyles();
@@ -58,7 +58,7 @@ function AdminDelete() {
 
     //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
     let rowNewId = window.location.pathname.split("/")[2];
-    const {loading, error, data} = useQuery(ADMIN_USER_READ_GRID_BY_ID,{
+    const {loading, error, data} = useQuery(ADMIN_USER_READ_BY_ID,{
         variables:{id:rowNewId}
     });
 
@@ -171,4 +171,4 @@ function AdminDelete() {
 
 }
 
-export default AdminDelete;
+export default AdminUserDelete;

@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {useMutation} from '@apollo/react-hooks';
+import React, {useState, useEffect} from 'react';
+
+import {useMutation, useQuery} from '@apollo/react-hooks';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -7,50 +8,37 @@ import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
-import {useStyles} from './AdminStyles'
-import {ADMIN_USER_CREATE_MUTATION} from "./AdminQueries";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
-import Uploader from "../../common/uploader/Uploader"
-import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/uploader/UploaderData"
 
+import {useStyles} from './AdminUserStyles'
+import {ADMIN_USER_READ_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminUserQueries";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
+import File from "../../common/file/File";
+import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/file/FileInit";
+
+// کلید انصراف
 function CloseButton() {
     window.location.href = "/"
 }
 
 
-export default function AdminCreate() {
+export default function AdminUserUpdate() {
+    //تعریف متغیر استایل
+    const classes = useStyles();
 
-
-    //تعریف متغیر state فرم
+    //تعریف متغیر state نتیجه درخواست فرم
     const [formResult, setFormResult] = useState({
-        crudType: "CREATE",
+        crudType: "UPDATE",
         data: "",
         error: ""
     });
 
-
-    //تعریف متغیر استایل
-    const classes = useStyles();
-
-    let initialState = {
-        username: "",
-        firstName: "",
-        lastName: "",
-        defaultAdminUserContact_address: "",
-        defaultAdminUserContact_city_id: 1,
-        gender_id: "",
-        imageFileList: []
-    };
+    let initialState = {};
 
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
-
-    //تعریف متغیر ثبت کننده
-    const [adminCreate] = useMutation(ADMIN_USER_CREATE_MUTATION);
-
 
     //تغییرات فرم را در متغیر state ذخیره میکنیم
     const handleChange = (event) => {
@@ -66,9 +54,23 @@ export default function AdminCreate() {
         });
     };
 
-    //متد ثبت کننده اطلاعات طبق داده فرم
-    const submitCreate = (event) => {
-        adminCreate({variables: formData})
+
+    // آپلودر تصاویر
+    const onChangeUploader = (objectList) => {
+        let imageFileList = objectList;
+        formData["imageFileList"] = imageFileList;
+        setFormData({
+            ...formData
+        });
+    };
+
+
+    //تعریف متغیر ویرایش کننده
+    const [adminUpdate] = useMutation(ADMIN_USER_UPDATE_MUTATION);
+
+    //متد ویرایش کننده اطلاعات طبق داده فرم
+    const submitUpdate = (event) => {
+        adminUpdate({variables: formData})
             .then(({data}) => {
                 setFormResult({...formResult, "data": data});
             })
@@ -79,25 +81,43 @@ export default function AdminCreate() {
     };
 
 
-    // آپلودر تصاویر
-    const onChangeUploader = (state) => {
-        let imageFileList = state.objectList;
-        formData["imageFileList"] = imageFileList;
-        setFormData({
-            ...formData
-        });
-    };
+    //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
+    let rowNewId = window.location.pathname.split("/")[2];
+    const {loading, error, data} = useQuery(ADMIN_USER_READ_BY_ID, {
+        variables: {id: rowNewId}
+    });
+
+    //فراخوانی داده از سرور فقط برای یک بار و جلوگیری از رفرش تو در توی صفحه و ذخیره داده سرور در متغیر  state
+    useEffect(() => {
+        if (!loading && !error) {
+            let readQueryData = data.common_adminUser_readById;
+            readQueryData["defaultAdminUserContact_city_id"] = 1;
+            readQueryData["gender_id"] = 1;
+            setFormData(readQueryData);
+        }
+    }, [loading, error, data]);
 
 
-    let urlBase = "http://localhost:8082/fso/download/common/member/";
+    let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
 
-    //نمایش اطلاعات state در فرم
-    return (
-        <div>
-            <Header viewCloseButton={true} pageTitle="ثبت ادمین جدید"/>
-            <div className={classes.root}>
-                <div>
+    //در صورت عدم لود داده لودینگ نمایش داده شود
+    if (loading === undefined || loading) {
+        return (<div><CircularProgress/></div>)
+    }
+    //در صورت بروز خطا ، پیام آن نمایش داده شود
+    if (error) {
+        error["crudType"] = "UPDATE";
+        return (<div><ResultHandling result={error} open={true} key={Math.random()}/></div>)
+    }
+
+
+    if (formData !== undefined && Object.keys(formData).length !== 0) {
+        //نمایش اطلاعات state در فرم
+        return (
+            <div>
+                <Header viewCloseButton={true} pageTitle="ویرایش اطلاعات ادمین"/>
+                <div className={classes.root}>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>کلمه کاربری :</FormLabel>
@@ -117,8 +137,6 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نام :</FormLabel>
@@ -138,8 +156,6 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نام خانوادگی :</FormLabel>
@@ -159,8 +175,6 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>جنسیت :</FormLabel>
@@ -187,8 +201,6 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                             <FormLabel component="legend" className={classes.labelRTLStyle}>نشانی :</FormLabel>
@@ -209,16 +221,16 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
-                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
+                            <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده
+                                :</FormLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <Uploader
+                            <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
+                                hasUploader={true}
                                 hasDownload={true}
                                 hasView={true}
                                 hasDelete={true}
@@ -234,27 +246,27 @@ export default function AdminCreate() {
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
-                </div>
-                <div>
                     <Grid container spacing={1}>
                         <Grid item xs={4}>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button onClick={submitCreate} type="submit" variant="contained" color="primary">
-                                {"تایید"}
+                            <Button onClick={submitUpdate} type="submit" variant="contained" color="primary">
+                                تایید
                             </Button>
                             <Button onClick={CloseButton} variant="contained" color="secondary"
                                     className={classes.marginButton}>
-                                {"انصراف"}
+                                انصراف
                             </Button>
                         </Grid>
                         <Grid item xs={4}>
                         </Grid>
                     </Grid>
                 </div>
+                <ResultHandling result={formResult} open={true} key={Math.random()}/>
             </div>
-            <ResultHandling result={formResult} open={true} key={Math.random()}/>
-        </div>
-    );
+        );
+    } else {
+        return (<div><CircularProgress/></div>)
+    }
 }
 

@@ -6,7 +6,7 @@ import Fab from "@material-ui/core/Fab";
 import CloseIcon from "@material-ui/icons/Close";
 
 import {useStyles} from '../Styles'
-import {BriefMesseages} from "./BriefMesseages";
+import BriefMesseages from "./BriefMesseages";
 
 
 function CloseButton() {
@@ -14,7 +14,7 @@ function CloseButton() {
 }
 
 
-function Header(props) {
+export default function Header(props) {
    const classes = useStyles();
    let  viewButton = classes.closeButton;
    if(props.viewCloseButton === false){
@@ -46,5 +46,3 @@ function Header(props) {
     );
 
 }
-
-export {Header}

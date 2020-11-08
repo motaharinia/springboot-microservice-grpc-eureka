@@ -6,10 +6,10 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 
 import {useStyles} from '../Styles';
-import {BRIEF_MESSEAGES_SUBSCRIPTION } from '../Queries';
+import {BRIEF_MESSEAGES_SUBSCRIPTION} from '../Queries';
 
 
-function BriefMesseages(props) {
+export default function BriefMesseages(props) {
     //تعریف متغیر استایل
     const classes = useStyles();
     //تعریف متغیر state فرم
@@ -20,8 +20,10 @@ function BriefMesseages(props) {
         BRIEF_MESSEAGES_SUBSCRIPTION,
         {
             variables: {"userId": 2},
-            onSubscriptionData: ({ subscriptionData: { data } }) => {
-                setNotifyCounter(data.briefMesseages.notifyCounter);
+            onSubscriptionData: ({subscriptionData: {data}}) => {
+                if (data) {
+                    setNotifyCounter(data.briefMesseages.notifyCounter);
+                }
             }
         }
     );
@@ -29,11 +31,9 @@ function BriefMesseages(props) {
     return (
         <div className={classes.divBadge}>
             <Badge badgeContent={notifyCounter} color="secondary">
-                <MailIcon />
+                <MailIcon/>
             </Badge>
         </div>
     );
 
 }
-
-export {BriefMesseages}

@@ -11,10 +11,10 @@ import ApolloClient from "apollo-client";
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
-import AdminList  from "./page/adminUser/AdminList";
-import AdminCreate from "./page/adminUser/AdminCreate"
-import AdminUpdate from "./page/adminUser/AdminUpdate"
-import AdminDelete from "./page/adminUser/AdminDelete"
+import AdminUserList  from "./page/adminUser/AdminUserList";
+import AdminUserCreate from "./page/adminUser/AdminUserCreate"
+import AdminUserUpdate from "./page/adminUser/AdminUserUpdate"
+import AdminUserDelete from "./page/adminUser/AdminUserDelete"
 
 //لینک ارتباط وب سوکت برای سابسکریپشن
 const wsLink = new WebSocketLink({
@@ -54,16 +54,16 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route path="/adminDelete/:Id">
-                            <AdminDelete />
+                            <AdminUserDelete />
                         </Route>
                         <Route path="/adminUpdate/:Id">
-                            <AdminUpdate />
+                            <AdminUserUpdate />
                         </Route>
                         <Route path="/adminCreate">
-                            <AdminCreate />
+                            <AdminUserCreate />
                         </Route>
                         <Route path="/">
-                            <AdminList />
+                            <AdminUserList />
                         </Route>
                     </Switch>
                 </div>

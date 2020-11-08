@@ -1,22 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import Downloader from "js-file-downloader";
 
 import Grid from "@material-ui/core/Grid";
-import Fab from "@material-ui/core/Fab";
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Visibility from '@material-ui/icons/Visibility';
 import Delete from '@material-ui/icons/Delete';
 
-import {statusEnum} from './UploaderData'
+import {statusEnum} from './FileInit'
 import {useStyles} from "../Styles";
 
-const margin1px = {
-    margin: "1px",
-};
 
-
-function UploaderFileView(props) {
+function FileView(props) {
 
     //تعریف متغیر استایل
     const classes = useStyles();
@@ -24,8 +19,6 @@ function UploaderFileView(props) {
     let initialState = {
         "objectList": props.objectList,
         "urlBase": props.urlBase,
-        "thumbnailWidth": "80px",
-        "thumbnailHeight": "auto",
         "hasDownload": props.hasDownload,
         "hasView": props.hasView,
         "hasDelete": props.hasDelete,
@@ -36,37 +29,28 @@ function UploaderFileView(props) {
     const [fileData, setFileData] = useState(initialState);
 
 
-    const onChange = e => {
-        let objectList = fileData.objectList;
+    const onDelete = e => {
         let index = e.currentTarget.getAttribute("index");
+        let objectList = JSON.parse(JSON.stringify(fileData["objectList"]));
         if (objectList[index] !== undefined) {
             objectList[index]["statusEnum"] = statusEnum.DELETED;
-            fileData["objectList"] = objectList;
-            fileData["objectListIndex"] = index;
-
             setFileData({
-                ...fileData
+                ...fileData,
+                "objectList": objectList,
+                "objectListIndex": index
             });
         }
     };
 
     useEffect(() => {
         if (fileData.objectListIndex !== "") {
-            props.onChange(fileData, fileData.objectList[fileData.objectListIndex]);
+            props.onChange(JSON.parse(JSON.stringify(fileData.objectList)), fileData.objectList[fileData.objectListIndex]);
         }
-    }, [fileData]);
+    }, [fileData.objectList]);
 
-    const onClick=(e)=> {
-        const { objectList } = fileData;
-        // var index = e.currentTarget.getAttribute("index");
-        // var fileViewModel = objectList[index];
-        // if (fileViewModel !== undefined) {
-        //     if (this.props.onClick) {
-        //         this.props.onClick(fileViewModel);
-        //     }
-        // }
+    const onClick = () => {
+
     };
-
 
 
     const onView = e => {
@@ -106,27 +90,15 @@ function UploaderFileView(props) {
         return sizeTitle;
     };
     const {
-        customClass,
         objectList,
         urlBase,
-        thumbnailWidth,
-        thumbnailHeight,
         hasDownload,
         hasView,
         hasDelete,
     } = fileData;
 
-    let className = "form-control";
-    if (customClass !== undefined) {
-        className += " " + customClass;
-    }
-
-    // const widthMy = {
-    // 	width: thumbnailWidth - 14
-    // };
-
     var fileViewHtmlList = [];
-    fileViewHtmlList = objectList.map(function (fileViewModel, index) {
+    fileViewHtmlList = objectList.map((fileViewModel, index) => {
         if (fileViewModel.statusEnum !== statusEnum.DELETED) {
             let isImage = false;
             let hasAction = false;
@@ -142,17 +114,16 @@ function UploaderFileView(props) {
                     hasAction = true;
                     htmlDownload =
                         <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
-                            <CloudDownload/>
+                            <CloudDownload className={classes.downloadIcon} />
                         </div>
                 }
                 if (hasView) {
                     hasAction = true;
                     htmlView =
                         <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
-                            <Visibility/>
+                            <Visibility className={classes.VisibilityIcon} />
                         </div>
                 }
-
                 switch (fileViewModel.extension) {
                     case "png":
                     case "jpg":
@@ -166,40 +137,38 @@ function UploaderFileView(props) {
                         isImage = false;
                 }
             } else {
-                title += "\n آخرین تغییر:" + " تازه بارگذاری شده است";
+                console.log("fileViewModel",fileViewModel);
+                title += "آخرین تغییر:  تازه بارگذاری شده است";
             }
             if (hasDelete) {
                 hasAction = true;
                 htmlDelete =
-                    <div index={index} onClick={onChange} color="primary" aria-label="مشاهده">
-                        <Delete/>
+                    <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
+                        <Delete className={classes.deleteIcon} />
                     </div>
             }
+
 
 
             if (isImage) {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <div className="divParentImg">
-                                <Grid container spacing={1} style={margin1px}>
-                                    <img title={title} index={index} onClick={onClick} src={url}
-                                         width={thumbnailWidth} height={thumbnailHeight}
-                                         style={{"cursor": "pointer"}}/>
-                                </Grid>
-                            </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileview}>
-                                <Grid item xs={3}>
+                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                                <span>{title}</span>
+                            </Grid>
+                            <Grid  item xs={12}  className={classes.divParentImg}>
+                                <img alt="" index={index} onClick={onClick} src={url}
+                                     className={classes.imgFileView} title={title}/>
+                            </Grid>
+                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                                <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
@@ -208,10 +177,10 @@ function UploaderFileView(props) {
                 } else {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1} style={margin1px}>
-                                <img title={title} index={index} onClick={onClick} src={url}
-                                     width={thumbnailWidth} height={thumbnailHeight}
-                                     style={{"cursor": "pointer"}}/>
+                            <Grid container spacing={1}>
+                                <span className={classes.boxTitleImg}>{title}</span>
+                                <img alt="" index={index} onClick={onClick} src={url} className={classes.imgFileView}
+                                     title={title}/>
                             </Grid>
                         </Grid>
                     </React.Fragment>);
@@ -219,33 +188,26 @@ function UploaderFileView(props) {
             } else {
                 if (hasAction) {
                     return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <div className="divParentImg">
-                                <Grid container spacing={1} style={margin1px}>
+                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                            <Grid  item xs={12} className={classes.boxTitleFileview}>
+                                <span>{title}</span>
+                            </Grid>
+                            <Grid  item xs={12}  className={classes.divParentImg}>
+                                <Grid container spacing={1}>
                                     <div title={title} index={index} onClick={onClick}
-                                         className={"fi fi-" + fileViewModel.extension} style={{
-                                        "width": thumbnailWidth,
-                                        "height": "88px",
-                                    }}>
-                                        <div className="fi-content" style={{
-                                            "textAlign": "center",
-                                            "fontSize": "25px",
-                                        }}>{fileViewModel.extension}</div>
+                                         className={"fi fi-" + fileViewModel.extension}>
+                                        <div className="fi-content">{fileViewModel.extension}</div>
                                     </div>
                                 </Grid>
-                            </div>
-                            <Grid container spacing={1} className={classes.boxButtonFileview}>
-                                <Grid item xs={3}>
+                            </Grid>
+                            <Grid container spacing={1}  item xs={12} className={classes.boxButtonFileview}>
+                                <Grid item xs={4}>
                                     {htmlDownload}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlView}
                                 </Grid>
-                                <Grid item xs={1}>
-                                </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={4}>
                                     {htmlDelete}
                                 </Grid>
                             </Grid>
@@ -254,16 +216,10 @@ function UploaderFileView(props) {
                 } else {
                     return (<React.Fragment key={Math.random()}>
                         <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1} style={margin1px}>
+                            <Grid container spacing={1}>
                                 <div title={title} index={index} onClick={onClick}
-                                     className={"fi fi-" + fileViewModel.extension} style={{
-                                    "width": thumbnailWidth,
-                                    "height": "88px",
-                                }}>
-                                    <div className="fi-content" style={{
-                                        "textAlign": "center",
-                                        "fontSize": "25px",
-                                    }}>{fileViewModel.extension.toUpperCase()}</div>
+                                     className={"fi fi-" + fileViewModel.extension}>
+                                    <div className="fi-content">{fileViewModel.extension.toUpperCase()}</div>
                                 </div>
                             </Grid>
                         </Grid>
@@ -271,16 +227,16 @@ function UploaderFileView(props) {
                 }
             }
         }
-    }, this);
+    });
     return (<React.Fragment>
-            <Grid container spacing={1}>
-                {fileViewHtmlList}
-            </Grid>
+        <Grid container spacing={1}>
+            {fileViewHtmlList}
+        </Grid>
     </React.Fragment>);
 
 
 }
 
 export {
-    UploaderFileView
+    FileView
 };

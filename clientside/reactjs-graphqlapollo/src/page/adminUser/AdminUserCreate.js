@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
-
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import React, {useState} from 'react';
+import {useMutation} from '@apollo/react-hooks';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -8,37 +7,50 @@ import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import {useStyles} from './AdminUserStyles'
+import {ADMIN_USER_CREATE_MUTATION} from "./AdminUserQueries";
 import FormLabel from "@material-ui/core/FormLabel";
+import Header from "../../common/header/Header";
+import ResultHandling from "../../common/ResultHandling";
+import File from "../../common/file/File"
+import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/file/FileInit"
 
-import {useStyles} from './AdminStyles'
-import {ADMIN_USER_READ_GRID_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminQueries";
-import {Header} from "../../common/header/Header";
-import {ResultHandling} from "../../common/ResultHandling";
-import Uploader from "../../common/uploader/Uploader";
-import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/uploader/UploaderData";
-
-// کلید انصراف
 function CloseButton() {
     window.location.href = "/"
 }
 
 
-export default function AdminUpdate() {
+export default function AdminUserCreate() {
+
+
+    //تعریف متغیر state فرم
+    const [formResult, setFormResult] = useState({
+        crudType: "CREATE",
+        data: "",
+        error: ""
+    });
+
+
     //تعریف متغیر استایل
     const classes = useStyles();
 
-    //تعریف متغیر state نتیجه درخواست فرم
-    const [formResult, setFormResult] = useState({
-        crudType:"UPDATE",
-        data:"",
-        error:""
-    });
-
-    let initialState = {};
+    let initialState = {
+        username: "",
+        firstName: "",
+        lastName: "",
+        defaultAdminUserContact_address: "",
+        defaultAdminUserContact_city_id: 1,
+        gender_id: "",
+        imageFileList: []
+    };
 
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
+
+    //تعریف متغیر ثبت کننده
+    const [adminCreate] = useMutation(ADMIN_USER_CREATE_MUTATION);
+
 
     //تغییرات فرم را در متغیر state ذخیره میکنیم
     const handleChange = (event) => {
@@ -54,70 +66,27 @@ export default function AdminUpdate() {
         });
     };
 
-
-    // آپلودر تصاویر
-    const onChangeUploader = (state) => {
-        let imageFileList = state.objectList;
-        formData["imageFileList"] = imageFileList;
-        setFormData({
-            ...formData
-        });
-    };
-
-
-    //تعریف متغیر ویرایش کننده
-    const [adminUpdate] = useMutation(ADMIN_USER_UPDATE_MUTATION);
-
-    //متد ویرایش کننده اطلاعات طبق داده فرم
-    const submitUpdate = (event) => {
-        adminUpdate({variables: formData})
+    //متد ثبت کننده اطلاعات طبق داده فرم
+    const submitCreate = (event) => {
+        adminCreate({variables: formData})
             .then(({data}) => {
-                setFormResult({...formResult,"data":data});
+                setFormResult({...formResult, "data": data});
             })
             .catch(error => {
-                setFormResult({...formResult,"error":error});
+                setFormResult({...formResult, "error": error});
             });
         setFormData(formData);
     };
 
 
 
-    //تعریف کوئری خوانش با شناسه و قراردادن مقدار آن در متغیر داده فرم
-    let rowNewId = window.location.pathname.split("/")[2];
-    const {loading, error, data} = useQuery(ADMIN_USER_READ_GRID_BY_ID,{
-        variables:{id:rowNewId}
-    });
-
-    //فراخوانی داده از سرور فقط برای یک بار و جلوگیری از رفرش تو در توی صفحه و ذخیره داده سرور در متغیر  state
-    useEffect(() => {
-        if (!loading && !error) {
-            let readQueryData = data.common_adminUser_readById;
-            readQueryData["defaultAdminUserContact_city_id"] = 1;
-            readQueryData["gender_id"] = 1;
-            setFormData(readQueryData);
-        }
-    }, [loading, error, data]);
+    let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
 
-    let urlBase = "http://localhost:8082/fso/download/common/adminuser/";
-
-
-    //در صورت عدم لود داده لودینگ نمایش داده شود
-    if (loading === undefined || loading) {
-        return (<div><CircularProgress /></div>)
-    }
-    //در صورت بروز خطا ، پیام آن نمایش داده شود
-    if (error) {
-        error["crudType"]= "UPDATE";
-        return (<div>  <ResultHandling result={error}  open={true} key={Math.random()} /></div>)
-    }
-
-
-    if(formData !== undefined && Object.keys(formData).length !== 0){
     //نمایش اطلاعات state در فرم
     return (
         <div>
-            <Header viewCloseButton={true}   pageTitle="ویرایش اطلاعات ادمین" />
+            <Header viewCloseButton={true} pageTitle="ثبت ادمین جدید"/>
             <div className={classes.root}>
                 <div>
                     <Grid container spacing={1}>
@@ -238,9 +207,10 @@ export default function AdminUpdate() {
                             <FormLabel component="legend" className={classes.labelRTLStyle}>فایل های آپلود شده :</FormLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <Uploader
+                            <File
                                 urlBase={urlBase}
                                 objectList={formData.imageFileList}
+                                hasUploader={true}
                                 hasDownload={true}
                                 hasView={true}
                                 hasDelete={true}
@@ -250,7 +220,6 @@ export default function AdminUpdate() {
                                 fileKindFolder={fileKindFolderEnum.ATTACHMENT}
                                 validationSizeLimit={5 * 1024 * 1024}
                                 validationItemLimit={50}
-                                onChange={onChangeUploader}
                             />
                         </Grid>
                         <Grid item xs={4}>
@@ -262,12 +231,12 @@ export default function AdminUpdate() {
                         <Grid item xs={4}>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button onClick={submitUpdate} type="submit" variant="contained" color="primary">
-                                تایید
+                            <Button onClick={submitCreate} type="submit" variant="contained" color="primary">
+                                {"تایید"}
                             </Button>
                             <Button onClick={CloseButton} variant="contained" color="secondary"
                                     className={classes.marginButton}>
-                                انصراف
+                                {"انصراف"}
                             </Button>
                         </Grid>
                         <Grid item xs={4}>
@@ -275,11 +244,8 @@ export default function AdminUpdate() {
                     </Grid>
                 </div>
             </div>
-            <ResultHandling result={formResult}  open={true} key={Math.random()} />
+            <ResultHandling result={formResult} open={true} key={Math.random()}/>
         </div>
     );
-    }else{
-        return (<div><CircularProgress /></div>)
-    }
 }
 
