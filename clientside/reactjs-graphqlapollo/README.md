@@ -5,11 +5,11 @@ to Work with CRUD RestAPI and File Management
 ## Getting Started  
 `yarn install`     
 `yarn start`    
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to View it in the Browser.
 
      
 ## Prerequisites    
-- MsLogin project  (Back-End)
+- MsLogin Project(Back-End)
 - Node.js
 - yarn
 
@@ -17,7 +17,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## Installing
 
 #### Node.js
-Download the Node.js source code or a pre-built installer for your platform
+Download the Node.js Source Code or a Pre-Built Installer for Your Platform
 
 #### yarn
 `yarn install`  
@@ -43,7 +43,7 @@ Download the Node.js source code or a pre-built installer for your platform
 `yarn add js-file-downloader`   
 
 
-## Business Page and functionalites
+## Business Page and Functionalites
 
 #### AdminUserList Page
 * View Admin List.
