@@ -1,23 +1,23 @@
-# Project Title 
+# ReactJS, GraphQL and  Apollo
 
-`An experimental project for Material UI  and GraphQL with Apollo  and save files with RestAPI`
+An experimental project for Material UI  and GraphQL with Apollo  and save files with RestAPI
 
 ## Getting Started  
-yarn istall     
-yarn start  
+`yarn install`     
+`yarn start`
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
      
 ## Prerequisites    
-`MsLogin project  (Back-End)`  
-`Node.js`   
-`yarn`
+- MsLogin project  (Back-End)
+- Node.js
+- yarn
 
 
 ## Installing
 
 #### Node
-`Download the Node.js source code or a pre-built installer for your platform` 
+Download the Node.js source code or a pre-built installer for your platform
 
 #### yarn
 `yarn install`  
@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 #### Material UI
 `yarn add @material-ui/core` 
 
-#### GraphQL ---- Apollo 
+#### GraphQL (Apollo) 
 `yarn add apollo-boost`     
 `yarn add apollo-client`    
 `yarn add apollo-link-ws`   
@@ -44,7 +44,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 ## Running the tests
-yarn start
+`yarn start`
 
 #### AdminUserList Page
 * View admin list.
