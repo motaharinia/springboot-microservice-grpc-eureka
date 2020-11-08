@@ -14,7 +14,7 @@ export default function ResultHandling(props) {
     let flagOpen = false;
     const handleClose = () => {
         if(flagOpen){
-            window.location.href = "/"
+            window.location.href = "/adminUserList"
         }else{
             setOpen(flagOpen);
         }
@@ -85,7 +85,7 @@ export default function ResultHandling(props) {
         <h3 id="simple-modal-title">{titleModal}</h3>
         <p id="simple-modal-description">
             {message}
-            <textarea rows="10" cols="65" style={{'direction': 'ltr'}}>{messageDetail}</textarea>
+            <textarea rows="10" cols="65"  defaultValue={messageDetail}  style={{'direction': 'ltr','pointerEvents': 'none'}}></textarea>
 
         </p>
     </div>);
