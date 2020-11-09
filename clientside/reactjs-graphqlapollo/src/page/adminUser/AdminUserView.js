@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useQuery} from '@apollo/react-hooks';
 
+// material-ui
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
+// custom js
 import {useStyles} from './AdminUserStyles'
 import {ADMIN_USER_READ_BY_ID} from "./AdminUserQueries";
 import Header from "../../common/header/Header";
@@ -13,10 +15,10 @@ import ResultHandling from "../../common/ResultHandling";
 import File from "../../common/file/File";
 import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/file/FileInit";
 
-
-function CloseButton() {
+// کلید انصراف
+const CloseButton = () => {
     window.location.href = "/adminUserList"
-}
+};
 
 export default function AdminUserView() {
 
@@ -30,7 +32,7 @@ export default function AdminUserView() {
         error: ""
     });
 
-
+    // مقداردهی اولیه state
     let initialState = {};
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
