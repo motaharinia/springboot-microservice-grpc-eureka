@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-
 import {useMutation, useQuery} from '@apollo/react-hooks';
 
+// material-ui
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
+// custom js
 import {useStyles} from './AdminUserStyles'
 import {ADMIN_USER_READ_BY_ID, ADMIN_USER_UPDATE_MUTATION} from "./AdminUserQueries";
 import Header from "../../common/header/Header";
@@ -19,9 +20,9 @@ import File from "../../common/file/File";
 import {entityEnum, fileKindFolderEnum, subSystemEnum, typeEnum} from "../../common/file/FileInit";
 
 // کلید انصراف
-function CloseButton() {
+const CloseButton = () => {
     window.location.href = "/adminUserList"
-}
+};
 
 
 export default function AdminUserUpdate() {
@@ -35,6 +36,7 @@ export default function AdminUserUpdate() {
         error: ""
     });
 
+    // مقداردهی اولیه state
     let initialState = {};
 
     //تعریف متغیر state فرم

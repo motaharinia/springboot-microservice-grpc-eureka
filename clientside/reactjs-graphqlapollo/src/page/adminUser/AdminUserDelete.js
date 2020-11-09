@@ -16,7 +16,7 @@ import ResultHandling from "../../common/ResultHandling";
 // کلید انصراف
 const CloseButton = () => {
     window.location.href="/adminUserList"
-}
+};
 
 export default function AdminUserDelete() {
 

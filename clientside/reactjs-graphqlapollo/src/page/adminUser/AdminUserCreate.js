@@ -22,7 +22,7 @@ import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../com
 // کلید انصراف
 const CloseButton = () => {
     window.location.href = "/adminUserList"
-}
+};
 
 
 export default function AdminUserCreate() {
