@@ -72,9 +72,9 @@ export default function FileView(props) {
             new Downloader({
                 url: url,
                 filename: fileViewModel.fullName
-            }).then(function () {
+            }).then(() => {
                 // Called when download ended
-            }).catch(function (error) {
+            }).catch((error) => {
                 // Called when an error occurred
             });
         }
@@ -99,7 +99,7 @@ export default function FileView(props) {
         hasDelete,
     } = fileData;
 
-    var fileViewHtmlList = [];
+    let fileViewHtmlList = [];
     // انواع نمایش فایل های آپلود شده در فرم ها
     if (objectList !== undefined && objectList.length !== 0) {
         fileViewHtmlList = objectList.map((fileViewModel, index) => {
@@ -159,7 +159,7 @@ export default function FileView(props) {
                                     <span>{title}</span>
                                 </Grid>
                                 <Grid item xs={12} className={classes.divParentImg}>
-                                    <img alt="" index={index}  src={url}
+                                    <img alt="" index={index} src={url}
                                          className={classes.imgFileView} title={title}/>
                                 </Grid>
                                 <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
@@ -180,7 +180,7 @@ export default function FileView(props) {
                             <Grid item xs={3} className={classes.boxImgFileView}>
                                 <Grid container spacing={1}>
                                     <span className={classes.boxTitleImg}>{title}</span>
-                                    <img alt="" index={index}  src={url}
+                                    <img alt="" index={index} src={url}
                                          className={classes.imgFileView}
                                          title={title}/>
                                 </Grid>
@@ -244,9 +244,9 @@ export default function FileView(props) {
     } else {
         return (
             <React.Fragment>
-            <Grid container spacing={1}>
-            </Grid>
-        </React.Fragment>);
+                <Grid container spacing={1}>
+                </Grid>
+            </React.Fragment>);
     }
 
 }
