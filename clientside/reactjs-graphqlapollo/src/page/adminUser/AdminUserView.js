@@ -66,6 +66,9 @@ export default function AdminUserView() {
         }
     }, [loading, error, data]);
 
+
+    let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
+
     //در صورت عدم لود داده لودینگ نمایش داده شود
     if (loading === undefined || loading) {
         return (<div><CircularProgress /></div>)
@@ -150,7 +153,6 @@ export default function AdminUserView() {
                                 fileKindFolder={fileKindFolderEnum.ATTACHMENT}
                                 validationSizeLimit={5 * 1024 * 1024}
                                 validationItemLimit={50}
-                                onChange={onChangeUploader}
                             />
                         </Grid>
                         <Grid item xs={4}>
