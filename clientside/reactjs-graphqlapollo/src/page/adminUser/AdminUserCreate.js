@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useMutation} from '@apollo/react-hooks';
 
+// material-ui
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+// custom js
 import {useStyles} from './AdminUserStyles'
 import {ADMIN_USER_CREATE_MUTATION} from "./AdminUserQueries";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -16,12 +18,16 @@ import ResultHandling from "../../common/ResultHandling";
 import File from "../../common/file/File"
 import {typeEnum, subSystemEnum, entityEnum, fileKindFolderEnum} from "../../common/file/FileInit"
 
+
+// کلید انصراف
 function CloseButton() {
     window.location.href = "/adminUserList"
 }
 
 
 export default function AdminUserCreate() {
+    //تعریف متغیر استایل
+    const classes = useStyles();
 
 
     //تعریف متغیر state فرم
@@ -31,10 +37,7 @@ export default function AdminUserCreate() {
         error: ""
     });
 
-
-    //تعریف متغیر استایل
-    const classes = useStyles();
-
+    // مقداردهی اولیه state
     let initialState = {
         username: "",
         firstName: "",
@@ -44,13 +47,11 @@ export default function AdminUserCreate() {
         gender_id: "",
         imageFileList: []
     };
-
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
 
     //تعریف متغیر ثبت کننده
     const [adminCreate] = useMutation(ADMIN_USER_CREATE_MUTATION);
-
 
     //تغییرات فرم را در متغیر state ذخیره میکنیم
     const handleChange = (event) => {
@@ -79,7 +80,7 @@ export default function AdminUserCreate() {
     };
 
 
-
+   // آدرس فایل های آپلود شده
     let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
 
