@@ -12,15 +12,15 @@ import BriefMesseages from "./BriefMesseages";
 
 
 // کلید ضربدر
-function CloseButton() {
-    window.location.href = "/adminUserList"
+const CloseButton = () => {
+    window.location.hrf = "/adminUserList"
 }
 
 
 export default function Header(props) {
-   const classes = useStyles();
-   let  viewButton = classes.closeButton;
-   if(props.viewCloseButton === false){
+    const classes = useStyles();
+    let viewButton = classes.closeButton;
+    if (props.viewCloseButton === false) {
         viewButton = classes.hideClass;
     }
 
@@ -28,17 +28,17 @@ export default function Header(props) {
         <div>
             <AppBar position="fixed" className={classes.appBar}>
                 <Grid container spacing={1}>
-                    <Grid item xs={1} >
+                    <Grid item xs={1}>
                     </Grid>
-                    <Grid item xs={2} >
+                    <Grid item xs={2}>
                         <h2>{props.pageTitle}</h2>
                     </Grid>
-                    <Grid item xs={7} >
+                    <Grid item xs={7}>
                     </Grid>
-                    <Grid item xs={1} >
-                    <BriefMesseages/>
+                    <Grid item xs={1}>
+                        <BriefMesseages/>
                     </Grid>
-                    <Grid item xs={1}  className={viewButton}>
+                    <Grid item xs={1} className={viewButton}>
                         <Fab size="medium" color="secondary" aria-label="بازگشت">
                             <CloseIcon onClick={CloseButton}/>
                         </Fab>
