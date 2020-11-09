@@ -151,13 +151,13 @@ const getNewUploader = (subSystem,entity,type,validationExtensionList,validation
                 unsupportedBrowserIos8Safari: "خطا در آپلود. لطفا به جای مرورگر ios8safari از ios8chrome استفاده نمایید"
             },
             callbacks: {
-                onUploadChunk: function (id, name, chunkData) {
+                onUploadChunk:  (id, name, chunkData) =>{
 
                 },
-                onValidate: function (fileData) {
+                onValidate:  (fileData) => {
                     return fileNameList.indexOf(fileData.name) < 0;
                 },
-                onError: function (id, name, errorReason, xhr) {
+                onError:  (id, name, errorReason, xhr) => {
                     // UtilModal.open("خطا", errorReason, "", true, "");
                 },
                 onStatusChange: onStatusChange,
