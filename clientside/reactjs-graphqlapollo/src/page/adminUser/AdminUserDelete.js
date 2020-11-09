@@ -1,22 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 
+// material-ui
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormLabel from "@material-ui/core/FormLabel";
 
+// custom js
 import { useStyles } from './AdminUserStyles'
 import {ADMIN_USER_READ_BY_ID,ADMIN_USER_DELETE_MUTATION} from "./AdminUserQueries";
 import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 
-
+// کلید انصراف
 function CloseButton() {
     window.location.href="/adminUserList"
 }
 
-function AdminUserDelete() {
+export default function AdminUserDelete() {
 
     //تعریف متغیر استایل
     const classes = useStyles();
@@ -28,6 +30,7 @@ function AdminUserDelete() {
         error:""
     });
 
+    // مقداردهی اولیه state
     let initialState = {
         username: "",
         firstName: "",
@@ -39,7 +42,7 @@ function AdminUserDelete() {
     //تعریف متغیر state فرم
     const [formData, setFormData] = useState(initialState);
 
-
+    //تعریف متغیر حذف کننده
     const [adminDelete ] = useMutation(ADMIN_USER_DELETE_MUTATION);
 
 
@@ -168,7 +171,4 @@ function AdminUserDelete() {
                 <ResultHandling result={formResult}  open={true} key={Math.random()} />
             </div>
         );
-
 }
-
-export default AdminUserDelete;
