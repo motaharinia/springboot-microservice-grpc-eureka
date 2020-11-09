@@ -78,7 +78,7 @@ const actionEnum = {
 };
 
 
-
+// ایجاد و مقداردهی اولیه آپلودر
 const getNewUploader = (subSystem,entity,type,validationExtensionList,validationSizeLimit,validationItemLimit,fileNameList,onStatusChange) => {
 
     let validationObject = {};

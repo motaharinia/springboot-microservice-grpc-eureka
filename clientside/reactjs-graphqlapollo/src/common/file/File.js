@@ -52,7 +52,7 @@ export default function File(props) {
         fileDataRef.current = data;
         _setFileData(data);
     };
-    
+
     // ایجاد انجین آپلودر در اولین باز شدن فرم
     useEffect(() => {
         //انجین آپلودر اولیه
