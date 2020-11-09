@@ -14,7 +14,7 @@ import Header from "../../common/header/Header";
 import ResultHandling from "../../common/ResultHandling";
 
 // کلید انصراف
-function CloseButton() {
+const CloseButton = () => {
     window.location.href="/adminUserList"
 }
 
