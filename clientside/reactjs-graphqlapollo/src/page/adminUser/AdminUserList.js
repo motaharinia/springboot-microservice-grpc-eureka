@@ -6,6 +6,7 @@ import {DataGrid} from '@material-ui/data-grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import Visibility from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete'
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -46,11 +47,11 @@ function rowsGrid(data) {
 
 let rowId = "";
 
-function OnSelectRowGrid(dataRow) {
+function onSelectRowGrid(dataRow) {
     rowId = dataRow.data.id;
 }
 
-function OnClickButtonUpdate() {
+function onClickButtonUpdate() {
     if (rowId !== "") {
         window.location.href = "/adminUserUpdate/" + rowId;
     } else {
@@ -58,7 +59,16 @@ function OnClickButtonUpdate() {
     }
 }
 
-function OnClickButtonDelete() {
+function onClickButtonView() {
+    if (rowId !== "") {
+        window.location.href = "/adminUserView/" + rowId;
+    } else {
+        alert(" سطری انتخاب نشده است")
+    }
+}
+
+
+function onClickButtonDelete() {
     if (rowId !== "") {
         window.location.href = "/adminUserDelete/" + rowId;
     } else {
@@ -104,7 +114,7 @@ function AdminUserList() {
             <Header viewCloseButton={false} pageTitle="لیست ادمین ها"/>
             <Grid>
                 <Grid item xs={12} className={classes.gridHeight}>
-                    <DataGrid onRowSelected={OnSelectRowGrid} rows={gridData} columns={columns}
+                    <DataGrid onRowSelected={onSelectRowGrid} rows={gridData} columns={columns}
                               loading={gridData.length === 0}/>
                 </Grid>
             </Grid>
@@ -116,10 +126,13 @@ function AdminUserList() {
                         }} color="primary" aria-label="ثبت ادمین" className={classes.marginButton}>
                             <AddIcon/>
                         </Fab>
-                        <Fab onClick={OnClickButtonUpdate} color="primary" aria-label="ویرایش اطلاعات ادمین">
+                        <Fab onClick={onClickButtonUpdate} color="primary" aria-label="ویرایش اطلاعات ادمین">
                             <EditIcon/>
                         </Fab>
-                        <Fab onClick={OnClickButtonDelete} color="secondary" aria-label="حذف ادمین">
+                        <Fab onClick={onClickButtonView} color="primary" aria-label="مشاهده اطلاعات ادمین">
+                            <Visibility/>
+                        </Fab>
+                        <Fab onClick={onClickButtonDelete} color="secondary" aria-label="حذف ادمین">
                             <DeleteIcon/>
                         </Fab>
                     </div>
