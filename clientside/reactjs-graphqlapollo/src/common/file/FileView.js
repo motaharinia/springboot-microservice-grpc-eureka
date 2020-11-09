@@ -1,21 +1,23 @@
 import React, {useState, useEffect} from "react";
-
 import Downloader from "js-file-downloader";
 
+// material-ui
 import Grid from "@material-ui/core/Grid";
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Visibility from '@material-ui/icons/Visibility';
 import Delete from '@material-ui/icons/Delete';
 
+// custom js
 import {statusEnum} from './FileInit'
 import {useStyles} from "../Styles";
 
 
 export default function FileView(props) {
 
-    //تعریف متغیر استایل
+    // تعریف متغیر style
     const classes = useStyles();
 
+    // مقداردهی اولیه state
     let initialState = {
         "objectList": props.objectList,
         "urlBase": props.urlBase,
@@ -24,11 +26,11 @@ export default function FileView(props) {
         "hasDelete": props.hasDelete,
         "objectListIndex": ""
     };
-
     //تعریف متغیر state آپلودر
     const [fileData, setFileData] = useState(initialState);
 
 
+    // حذف فایل  آپلود شده
     const onDelete = e => {
         let index = e.currentTarget.getAttribute("index");
         let objectList = JSON.parse(JSON.stringify(fileData["objectList"]));
@@ -42,17 +44,15 @@ export default function FileView(props) {
         }
     };
 
+    // اعمال تغییرات بعد از هر تغییر در fileData.objectList
     useEffect(() => {
         if (fileData.objectListIndex !== "") {
             props.onChange(JSON.parse(JSON.stringify(fileData.objectList)), fileData.objectList[fileData.objectListIndex]);
         }
     }, [fileData.objectList]);
 
-    const onClick = () => {
 
-    };
-
-
+    // نمایش فایل آپلود شده در تب جدید
     const onView = e => {
         const {objectList, urlBase} = fileData;
         let index = e.currentTarget.getAttribute("index");
@@ -62,7 +62,7 @@ export default function FileView(props) {
         }
     };
 
-
+    // دانلود فایل آپلود شده
     const onDownload = e => {
         const {objectList, urlBase} = fileData;
         let index = e.currentTarget.getAttribute("index");
@@ -80,6 +80,8 @@ export default function FileView(props) {
         }
     };
 
+
+    // برای لیبل سایز فایل آپلود شده
     const getSizeTitle = sizeInByte => {
         let sizeTitle = "";
         if (sizeInByte < 1000000) {
@@ -98,6 +100,7 @@ export default function FileView(props) {
     } = fileData;
 
     var fileViewHtmlList = [];
+    // انواع نمایش فایل های آپلود شده در فرم ها
     if (objectList !== undefined && objectList.length !== 0) {
         fileViewHtmlList = objectList.map((fileViewModel, index) => {
             if (fileViewModel.statusEnum !== statusEnum.DELETED) {
@@ -156,7 +159,7 @@ export default function FileView(props) {
                                     <span>{title}</span>
                                 </Grid>
                                 <Grid item xs={12} className={classes.divParentImg}>
-                                    <img alt="" index={index} onClick={onClick} src={url}
+                                    <img alt="" index={index}  src={url}
                                          className={classes.imgFileView} title={title}/>
                                 </Grid>
                                 <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
@@ -177,7 +180,7 @@ export default function FileView(props) {
                             <Grid item xs={3} className={classes.boxImgFileView}>
                                 <Grid container spacing={1}>
                                     <span className={classes.boxTitleImg}>{title}</span>
-                                    <img alt="" index={index} onClick={onClick} src={url}
+                                    <img alt="" index={index}  src={url}
                                          className={classes.imgFileView}
                                          title={title}/>
                                 </Grid>
@@ -194,11 +197,11 @@ export default function FileView(props) {
                                 </Grid>
                                 <Grid item xs={12} className={classes.divParentImg}>
                                     <Grid container spacing={1}>
-                                        <div title={title} index={index} onClick={onClick}
+                                        <div title={title} index={index}
                                              className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize}>
 
                                             <div
-                                                className={"fi-content" + " " + classes.iconContentSize}>{fileViewModel.extension.toUpperCase()}</div>
+                                                className={`fi-content  ${classes.iconContentSize}`}>{fileViewModel.extension.toUpperCase()}</div>
                                         </div>
                                     </Grid>
                                 </Grid>
@@ -219,10 +222,10 @@ export default function FileView(props) {
                         return (<React.Fragment key={Math.random()}>
                             <Grid item xs={3} className={classes.boxImgFileView}>
                                 <Grid container spacing={1}>
-                                    <div title={title} index={index} onClick={onClick}
-                                         className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize}>
+                                    <div title={title} index={index}
+                                         className={`fi fi-${fileViewModel.extension} ${classes.devParentIconContentSize}`}>
                                         <div
-                                            className={"fi-content" + " " + classes.iconContentSize}>{fileViewModel.extension.toUpperCase()}</div>
+                                            className={`fi-content  ${classes.iconContentSize} `}>{fileViewModel.extension.toUpperCase()}</div>
                                     </div>
                                 </Grid>
                             </Grid>

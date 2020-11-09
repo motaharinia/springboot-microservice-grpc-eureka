@@ -15,10 +15,10 @@ import {useStyles} from "../Styles";
 
 
 export default function File(props) {
-    //تعریف متغیر استایل
+    //تعریف متغیر  style
     const classes = useStyles();
 
-    //مقداردهی اولیه استیت
+    // مقداردهی اولیه state
     let initialStateFileData = {
         "modalIsOpened": false,
         "urlBase": props.urlBase,
@@ -45,7 +45,7 @@ export default function File(props) {
         "submitFileDataObject": {}
     };
 
-    // مقداردهی اولیه استیت فرم
+    // مقداردهی اولیه state فرم
     const [fileData, _setFileData] = useState(initialStateFileData);
     const fileDataRef = useRef(fileData);
     const setFileData = (data) => {
