@@ -9,7 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 
 import {typeEnum, statusEnum, getNewUploader} from './FileInit'
-import {FileView} from './FileView'
+import FileView from './FileView'
 import {useStyles} from "../Styles";
 import Grid from "@material-ui/core/Grid";
 
