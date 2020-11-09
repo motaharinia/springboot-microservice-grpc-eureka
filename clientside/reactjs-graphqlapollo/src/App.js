@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 // import ApolloClient from 'apollo-boost';
 
-import { WebSocketLink } from 'apollo-link-ws';
-import { HttpLink } from 'apollo-link-http';
-import { split } from 'apollo-link';
-import { getMainDefinition } from 'apollo-utilities';
+import {WebSocketLink} from 'apollo-link-ws';
+import {HttpLink} from 'apollo-link-http';
+import {split} from 'apollo-link';
+import {getMainDefinition} from 'apollo-utilities';
 import ApolloClient from "apollo-client";
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloProvider} from 'react-apollo';
 
-import AdminUserList  from "./page/adminUser/AdminUserList";
+import AdminUserList from "./page/adminUser/AdminUserList";
 import AdminUserCreate from "./page/adminUser/AdminUserCreate"
 import AdminUserUpdate from "./page/adminUser/AdminUserUpdate"
 import AdminUserView from "./page/adminUser/AdminUserView"
@@ -30,9 +30,9 @@ const httpLink = new HttpLink({
 });
 
 // تشخیص نوع عملیات کوئری ها
-const splitLink =split(
-    ({ query }) => {
-        const { kind, operation } = getMainDefinition(query);
+const splitLink = split(
+    ({query}) => {
+        const {kind, operation} = getMainDefinition(query);
         return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,
@@ -41,40 +41,36 @@ const splitLink =split(
 
 // ساخت کلاینت برای ارسال به سرور
 const client = new ApolloClient({
-    link:splitLink,
+    link: splitLink,
     cache: new InMemoryCache({
-		addTypename: false
-	})
+        addTypename: false
+    })
 });
 
-class App extends Component {
-    render() {
-        return (
-            <ApolloProvider client={client } >
-                <Router>
+export default function App() {
+    return (
+        <ApolloProvider client={client}>
+            <Router>
                 <div>
                     <Switch>
                         <Route path="/adminUserDelete/:Id">
-                            <AdminUserDelete />
+                            <AdminUserDelete/>
                         </Route>
                         <Route path="/adminUserView/:Id">
-                            <AdminUserView />
+                            <AdminUserView/>
                         </Route>
                         <Route path="/adminUserUpdate/:Id">
-                            <AdminUserUpdate />
+                            <AdminUserUpdate/>
                         </Route>
                         <Route path="/adminUserCreate">
-                            <AdminUserCreate />
+                            <AdminUserCreate/>
                         </Route>
                         <Route path="/adminUserList">
-                            <AdminUserList />
+                            <AdminUserList/>
                         </Route>
                     </Switch>
                 </div>
-                </Router>
-            </ApolloProvider>
-        );
-    }
+            </Router>
+        </ApolloProvider>
+    );
 }
-
-export default App;
