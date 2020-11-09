@@ -82,7 +82,7 @@ export default function File(props) {
                 return;
             }
             let uploadComplete = false;
-            uploader.methods.getUploads().map(function (obj) {
+            uploader.methods.getUploads().map((obj) => {
                     if ((obj.id === id) && (obj.status === statusEnum.UPLOAD_SUCCESSFUL)) {
                         let fileObject = JSON.parse(JSON.stringify(obj));
                         fileObject["fileData"] = uploader.methods.getFile(id);
