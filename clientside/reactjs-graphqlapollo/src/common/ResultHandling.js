@@ -1,8 +1,10 @@
 import React from 'react';
 
+// material-ui
 import Modal from '@material-ui/core/Modal';
 import CloseIcon from "@material-ui/icons/Close";
 
+// custom js
 import {useStyles} from './Styles'
 
 
