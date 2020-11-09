@@ -1,10 +1,11 @@
 import React from 'react';
-
 import {useSubscription} from '@apollo/react-hooks';
 
+// material-ui
 import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 
+// custom js
 import {useStyles} from '../Styles';
 import {BRIEF_MESSEAGES_SUBSCRIPTION} from '../Queries';
 
