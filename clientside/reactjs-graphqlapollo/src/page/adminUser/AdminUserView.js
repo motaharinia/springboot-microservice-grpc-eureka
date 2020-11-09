@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useMutation, useQuery} from '@apollo/react-hooks';
+import {useQuery} from '@apollo/react-hooks';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -24,7 +24,7 @@ export default function AdminUserView() {
     const classes = useStyles();
 
     //تعریف متغیر state فرم
-    const [formResult, setFormResult] = useState({
+    const [formResult] = useState({
         crudType: "VIEW",
         data: "",
         error: ""

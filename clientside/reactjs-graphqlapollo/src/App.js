@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-
-// import ApolloClient from 'apollo-boost';
 
 import {WebSocketLink} from 'apollo-link-ws';
 import {HttpLink} from 'apollo-link-http';
