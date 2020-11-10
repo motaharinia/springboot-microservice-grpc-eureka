@@ -6,7 +6,7 @@ import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import io.leangen.graphql.GraphQLRuntime;
 import ir.micser.login.business.service.adminuser.AdminUserService;
-import ir.micser.login.business.service.fso.FsoUploadedFileService;
+import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.presentation.adminuser.AdminUserController;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class AdminUserControllerTest {
    AdminUserService adminUserService;
 
     @Autowired
-    FsoUploadedFileService fsoUploadedFileService;
+    FsoService fsoService;
 
     GraphQLSchema schema =null;
     GraphQL exe = null;
@@ -32,7 +32,7 @@ public class AdminUserControllerTest {
     public void beforeEach(){
         //AdminUserControllerایجاد اسکیما برای تولید دستورات گراف کیوال در کنترلر
         schema = new TestSchemaGenerator()
-                .withOperationsFromSingleton(new AdminUserController(adminUserService, fsoUploadedFileService))
+                .withOperationsFromSingleton(new AdminUserController(adminUserService, fsoService))
                 .generate();
         exe = GraphQLRuntime.newGraphQL(schema).build();
     }
