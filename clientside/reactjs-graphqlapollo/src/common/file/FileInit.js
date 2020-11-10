@@ -80,7 +80,6 @@ const actionEnum = {
 
 // ایجاد و مقداردهی اولیه آپلودر
 const getNewUploader = (subSystem,entity,type,validationExtensionList,validationSizeLimit,validationItemLimit,fileNameList,onStatusChange) => {
-
     let validationObject = {};
     if (validationExtensionList !== undefined) {
         validationObject["allowedExtensions"] = validationExtensionList;
@@ -158,7 +157,7 @@ const getNewUploader = (subSystem,entity,type,validationExtensionList,validation
                     return fileNameList.indexOf(fileData.name) < 0;
                 },
                 onError:  (id, name, errorReason, xhr) => {
-                    // UtilModal.open("خطا", errorReason, "", true, "");
+                    alert(errorReason);
                 },
                 onStatusChange: onStatusChange,
             }

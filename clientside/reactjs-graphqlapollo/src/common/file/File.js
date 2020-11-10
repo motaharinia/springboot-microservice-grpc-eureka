@@ -132,7 +132,7 @@ export default function File(props) {
                 "modalIsOpened": true
             });
         } else {
-            alert("خطا", " شما فقط " + fileData.validationItemLimit + " فایل می توانید آپلود نمائید ")
+            alert(" شما فقط " + fileData.validationItemLimit + " فایل می توانید آپلود نمائید ")
         }
     };
 
