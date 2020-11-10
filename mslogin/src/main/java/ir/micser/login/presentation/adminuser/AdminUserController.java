@@ -13,7 +13,7 @@ import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import ir.micser.login.business.service.fso.CrudFileHandleActionEnum;
-import ir.micser.login.business.service.fso.FsoUploadedFileService;
+import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.business.service.fso.FsoModuleEnum;
 import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleDetailModel;
 import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleModel;
@@ -41,12 +41,12 @@ public class AdminUserController {
 
     private final AdminUserService adminUserService;
 
-    private final FsoUploadedFileService fsoUploadedFileService;
+    private final FsoService fsoService;
 
     @Autowired
-    public AdminUserController(AdminUserService adminUserService, FsoUploadedFileService fsoUploadedFileService) {
+    public AdminUserController(AdminUserService adminUserService, FsoService fsoService) {
         this.adminUserService = adminUserService;
-        this.fsoUploadedFileService = fsoUploadedFileService;
+        this.fsoService = fsoService;
     }
 
     /**
@@ -62,7 +62,7 @@ public class AdminUserController {
 
         //ثبت فایلها بعد از اطمینان از ثبت انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        fsoUploadedFileService.crudHandle(crudFileHandleModel);
+        fsoService.crudHandle(crudFileHandleModel);
 
         return adminUserModel;
     }
@@ -154,7 +154,7 @@ public class AdminUserController {
 
         //ویرایش فایلها بعد از اطمینان از ویرایش انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        fsoUploadedFileService.crudHandle(crudFileHandleModel);
+        fsoService.crudHandle(crudFileHandleModel);
 
         return adminUserModel;
     }
@@ -173,7 +173,7 @@ public class AdminUserController {
 
         //حذف فایلها بعد از اطمینان از حذف انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_DELETE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        fsoUploadedFileService.crudHandle(crudFileHandleModel);
+        fsoService.crudHandle(crudFileHandleModel);
 
         return adminUserModel;
     }
