@@ -10,19 +10,17 @@ import CloseIcon from "@material-ui/icons/Close";
 import {useStyles} from '../Styles'
 import BriefMesseages from "./BriefMesseages";
 
-
-// کلید ضربدر
-const CloseButton = () => {
-    window.location.hrf = "/adminUserList"
-}
-
-
 export default function Header(props) {
     const classes = useStyles();
     let viewButton = classes.closeButton;
     if (props.viewCloseButton === false) {
         viewButton = classes.hideClass;
     }
+
+    // کلید ضربدر
+    const CloseButton = () => {
+        window.location.href = "/adminUserList"
+    };
 
     return (
         <div>
