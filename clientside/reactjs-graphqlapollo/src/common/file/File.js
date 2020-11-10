@@ -88,10 +88,20 @@ export default function File(props) {
                         fileObject["fileData"] = uploader.methods.getFile(id);
                         selectedList.push(fileObject);
                         uploadComplete = true;
+                    } else {
+                        if (obj.status === statusEnum.DELETING) {
+                            if (selectedList !== undefined && selectedList.length !== 0) {
+                                if (id >= 0) {
+                                    selectedList.splice( id, 1 );
+                                    uploadComplete = true;
+                                }
+                            }
+                        }
                     }
                     return true;
                 }
             );
+
             if (uploadComplete) {
                 setFileData({
                     ...fileData,
