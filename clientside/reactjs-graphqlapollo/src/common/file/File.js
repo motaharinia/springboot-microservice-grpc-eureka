@@ -2,26 +2,23 @@ import React, {useEffect, useRef, useState} from "react";
 import Gallery from "react-fine-uploader";
 import "react-fine-uploader/gallery/gallery.css";
 
-
+// material-ui
+import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import CloseIcon from "@material-ui/icons/Close";
 
-
+// custom js
 import {typeEnum, statusEnum, getNewUploader} from './FileInit'
-import {FileView} from './FileView'
+import FileView from './FileView'
 import {useStyles} from "../Styles";
-import Grid from "@material-ui/core/Grid";
 
 
 export default function File(props) {
-
-
-    //تعریف متغیر استایل
+    //تعریف متغیر  style
     const classes = useStyles();
 
-
-    //مقداردهی اولیه استیت
+    // مقداردهی اولیه state
     let initialStateFileData = {
         "modalIsOpened": false,
         "urlBase": props.urlBase,
@@ -48,7 +45,7 @@ export default function File(props) {
         "submitFileDataObject": {}
     };
 
-    //event listener callback cannot access the latest state. we use useRef to do it.
+    // مقداردهی اولیه state فرم
     const [fileData, _setFileData] = useState(initialStateFileData);
     const fileDataRef = useRef(fileData);
     const setFileData = (data) => {
@@ -56,11 +53,10 @@ export default function File(props) {
         _setFileData(data);
     };
 
-
     // ایجاد انجین آپلودر در اولین باز شدن فرم
     useEffect(() => {
         //انجین آپلودر اولیه
-        let uploader = getNewUploader(props.subSystem, props.entity, props.type, props.validationExtensionList, props.validationSizeLimit, props.validationItemLimit, [], onStatusChange)
+        let uploader = getNewUploader(fileData.subSystem, fileData.entity, fileData.type, fileData.validationExtensionList, fileData.validationSizeLimit, fileData.validationItemLimit, [], onStatusChange);
         //تعریف متغیر state آپلودر
         fileData["uploader"] = uploader;
         setFileData({
@@ -82,31 +78,42 @@ export default function File(props) {
             let fileData = fileDataRef.current;
             const {uploader} = fileData;
             let selectedList = JSON.parse(JSON.stringify(fileData.objectSelectedList));
-            if (uploader !== null) {
-                let uploadComplete = false;
-                console.log("uploader.methods.getUploads():", uploader.methods.getUploads())
-                uploader.methods.getUploads().map(function (obj, index) {
-                        if ((obj.id === id) && (obj.status === statusEnum.UPLOAD_SUCCESSFUL)) {
-                            let fileObject = JSON.parse(JSON.stringify(obj));
-                            fileObject["fileData"] = uploader.methods.getFile(id);
-                            selectedList.push(fileObject);
-                            uploadComplete = true;
+            if (uploader === null) {
+                return;
+            }
+            let uploadComplete = false;
+            uploader.methods.getUploads().map((obj) => {
+                    if ((obj.id === id) && (obj.status === statusEnum.UPLOAD_SUCCESSFUL)) {
+                        let fileObject = JSON.parse(JSON.stringify(obj));
+                        fileObject["fileData"] = uploader.methods.getFile(id);
+                        selectedList.push(fileObject);
+                        uploadComplete = true;
+                    } else {
+                        if (obj.status === statusEnum.DELETING) {
+                            if (selectedList !== undefined && selectedList.length !== 0) {
+                                if (id >= 0) {
+                                    selectedList.splice( id, 1 );
+                                    uploadComplete = true;
+                                }
+                            }
                         }
                     }
-                );
-                if (uploadComplete) {
-                    setFileData({
-                        ...fileData,
-                        "objectSelectedList": selectedList,
-                        "modalIsOpened": true
-                    });
+                    return true;
                 }
+            );
+
+            if (uploadComplete) {
+                setFileData({
+                    ...fileData,
+                    "objectSelectedList": selectedList,
+                    "modalIsOpened": true
+                });
             }
         }
     ;
 
 
-//متد باز کننده مدال انتخاب فایل جدید
+    //متد باز کننده مدال انتخاب فایل جدید
     const onModalOpen = () => {
         //به دست آوردن تعداد فایلهای آپلود شده فعلی
         let uploadedCount = 0;
@@ -115,20 +122,21 @@ export default function File(props) {
                 if (i.statusEnum !== "DELETED") {
                     uploadedCount++
                 }
+                return true;
             });
         }
-
-        if (props.validationItemLimit > uploadedCount) {
+        if (fileData.validationItemLimit > uploadedCount) {
             setFileData({
                 ...fileData,
                 "objectSelectedList": [],
                 "modalIsOpened": true
             });
         } else {
-            alert("خطا", " شما فقط " + props.validationItemLimit + " فایل می توانید آپلود نمائید ")
+            alert("خطا", " شما فقط " + fileData.validationItemLimit + " فایل می توانید آپلود نمائید ")
         }
     };
 
+    //متد بستن  مدال انتخاب فایل جدید
     const onModalClose = () => {
         setFileData({
             ...fileData,
@@ -138,7 +146,6 @@ export default function File(props) {
 
 //متد بسته شدن مدال و اضافه کننده فایلهای انتخاب شده به لیست انتخابی
     const onModalAddButton = () => {
-        console.log("fileData.objectSelectedList", fileData.objectSelectedList)
         let uploadComplete = false;
         let objectList = JSON.parse(JSON.stringify(fileData["objectList"]));
         if (fileData.objectSelectedList !== undefined && fileData.objectSelectedList.length !== 0) {
@@ -155,6 +162,7 @@ export default function File(props) {
                     objectList.push(fileViewModel);
                     uploadComplete = true;
                 }
+                return true;
             });
         }
         if (uploadComplete) {
@@ -174,14 +182,10 @@ export default function File(props) {
             }
         }
     }, [fileData.objectList]);
-//******************************
 
 
-// uploader.setCustomHeaders({ Authorization: "Basic 999jaGFkbWluOkNieWxjZTY3" })
-
-
+    // حذف فایل های آپلود شده
     const onDelete = (objectList, deletedObject) => {
-        console.log("onDelete objectList", objectList)
         setFileData({
             ...fileData,
             "objectList": objectList
@@ -192,6 +196,7 @@ export default function File(props) {
     const dropZoneContent = <span>میتوانید فایل مورد نظر خود را در اینجا drag نمایید</span>;
     const dropZoneStyle = {border: "1px dotted", height: "200px", width: "100%"};
 
+    // کلید نمایش فایل آپلود شده در تب جدید
     const viewUploader = () => {
         if (fileData.uploader !== null) {
             switch (fileData.type) {
@@ -209,7 +214,7 @@ export default function File(props) {
         }
     };
 
-
+    // بدنه مدال آپلود جدید
     let body = (
         <div className={classes.modalBodyUploader}>
             <CloseIcon onClick={onModalClose} className={classes.closeButtonError}/>
@@ -221,7 +226,7 @@ export default function File(props) {
         </div>
     );
 
-
+    // نمایش مدال
     if (fileData.modalIsOpened) {
         return (
             <div>
@@ -237,8 +242,8 @@ export default function File(props) {
                 </Modal>
             </div>
         );
-
     } else {
+        // نمایش فایل های آپلود شده با کلید بارگذاری یا بدون آن
         if (fileData.hasUploader === true) {
             if (fileData.objectList !== undefined && Object.keys(fileData.objectList).length !== 0) {
                 return (

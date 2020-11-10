@@ -1,21 +1,23 @@
 import React, {useState, useEffect} from "react";
-
 import Downloader from "js-file-downloader";
 
+// material-ui
 import Grid from "@material-ui/core/Grid";
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import Visibility from '@material-ui/icons/Visibility';
 import Delete from '@material-ui/icons/Delete';
 
+// custom js
 import {statusEnum} from './FileInit'
 import {useStyles} from "../Styles";
 
 
-function FileView(props) {
+export default function FileView(props) {
 
-    //تعریف متغیر استایل
+    // تعریف متغیر style
     const classes = useStyles();
 
+    // مقداردهی اولیه state
     let initialState = {
         "objectList": props.objectList,
         "urlBase": props.urlBase,
@@ -24,11 +26,11 @@ function FileView(props) {
         "hasDelete": props.hasDelete,
         "objectListIndex": ""
     };
-
     //تعریف متغیر state آپلودر
     const [fileData, setFileData] = useState(initialState);
 
 
+    // حذف فایل  آپلود شده
     const onDelete = e => {
         let index = e.currentTarget.getAttribute("index");
         let objectList = JSON.parse(JSON.stringify(fileData["objectList"]));
@@ -42,17 +44,15 @@ function FileView(props) {
         }
     };
 
+    // اعمال تغییرات بعد از هر تغییر در fileData.objectList
     useEffect(() => {
         if (fileData.objectListIndex !== "") {
             props.onChange(JSON.parse(JSON.stringify(fileData.objectList)), fileData.objectList[fileData.objectListIndex]);
         }
     }, [fileData.objectList]);
 
-    const onClick = () => {
 
-    };
-
-
+    // نمایش فایل آپلود شده در تب جدید
     const onView = e => {
         const {objectList, urlBase} = fileData;
         let index = e.currentTarget.getAttribute("index");
@@ -62,7 +62,7 @@ function FileView(props) {
         }
     };
 
-
+    // دانلود فایل آپلود شده
     const onDownload = e => {
         const {objectList, urlBase} = fileData;
         let index = e.currentTarget.getAttribute("index");
@@ -72,14 +72,16 @@ function FileView(props) {
             new Downloader({
                 url: url,
                 filename: fileViewModel.fullName
-            }).then(function () {
+            }).then(() => {
                 // Called when download ended
-            }).catch(function (error) {
+            }).catch((error) => {
                 // Called when an error occurred
             });
         }
     };
 
+
+    // برای لیبل سایز فایل آپلود شده
     const getSizeTitle = sizeInByte => {
         let sizeTitle = "";
         if (sizeInByte < 1000000) {
@@ -97,145 +99,154 @@ function FileView(props) {
         hasDelete,
     } = fileData;
 
-    var fileViewHtmlList = [];
-    fileViewHtmlList = objectList.map((fileViewModel, index) => {
-        if (fileViewModel.statusEnum !== statusEnum.DELETED) {
-            let isImage = false;
-            let hasAction = false;
-            let htmlDownload = <div></div>;
-            let htmlView = <div></div>;
-            let htmlDelete = <div></div>;
-            let url = "";
-            let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + getSizeTitle(fileViewModel.size);
-            if (fileViewModel.hashedPath !== undefined && fileViewModel.hashedPath !== null && fileViewModel.hashedPath !== "") {
-                url = urlBase + fileViewModel.hashedPath + "/";
-                // title += "\n آخرین تغییر:" + fileViewModel.lastModifiedDate.year + "/" + fileViewModel.lastModifiedDate.month + "/" + fileViewModel.lastModifiedDate.day;
-                if (hasDownload) {
-                    hasAction = true;
-                    htmlDownload =
-                        <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
-                            <CloudDownload className={classes.downloadIcon}/>
-                        </div>
-                }
-                if (hasView) {
-                    hasAction = true;
-                    htmlView =
-                        <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
-                            <Visibility className={classes.VisibilityIcon}/>
-                        </div>
-                }
-                switch (fileViewModel.extension) {
-                    case "png":
-                    case "jpg":
-                    case "JPG":
-                    case "bmp":
-                    case "jpeg":
-                    case "gif":
-                        isImage = true;
-                        break;
-                    default:
-                        isImage = false;
-                }
-            } else {
-                title += "آخرین تغییر:  تازه بارگذاری شده است";
-            }
-            if (hasDelete) {
-                hasAction = true;
-                htmlDelete =
-                    <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
-                        <Delete className={classes.deleteIcon}/>
-                    </div>
-            }
-
-            if (isImage) {
-                if (hasAction) {
-                    return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
-                            <Grid item xs={12} className={classes.boxTitleFileview}>
-                                <span>{title}</span>
-                            </Grid>
-                            <Grid item xs={12} className={classes.divParentImg}>
-                                <img alt="" index={index} onClick={onClick} src={url}
-                                     className={classes.imgFileView} title={title}/>
-                            </Grid>
-                            <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
-                                <Grid item xs={4}>
-                                    {htmlDownload}
-                                </Grid>
-                                <Grid item xs={4}>
-                                    {htmlView}
-                                </Grid>
-                                <Grid item xs={4}>
-                                    {htmlDelete}
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </React.Fragment>);
+    let fileViewHtmlList = [];
+    // انواع نمایش فایل های آپلود شده در فرم ها
+    if (objectList !== undefined && objectList.length !== 0) {
+        fileViewHtmlList = objectList.map((fileViewModel, index) => {
+            if (fileViewModel.statusEnum !== statusEnum.DELETED) {
+                let isImage = false;
+                let hasAction = false;
+                let htmlDownload = <div></div>;
+                let htmlView = <div></div>;
+                let htmlDelete = <div></div>;
+                let url = "";
+                let title = "نام فایل : " + fileViewModel.fullName + "\n حجم فایل:" + getSizeTitle(fileViewModel.size);
+                if (fileViewModel.hashedPath !== undefined && fileViewModel.hashedPath !== null && fileViewModel.hashedPath !== "") {
+                    url = urlBase + fileViewModel.hashedPath + "/";
+                    // title += "\n آخرین تغییر:" + fileViewModel.lastModifiedDate.year + "/" + fileViewModel.lastModifiedDate.month + "/" + fileViewModel.lastModifiedDate.day;
+                    if (hasDownload) {
+                        hasAction = true;
+                        htmlDownload =
+                            <div index={index} onClick={onDownload} color="primary" aria-label="دانلود">
+                                <CloudDownload className={classes.downloadIcon}/>
+                            </div>
+                    }
+                    if (hasView) {
+                        hasAction = true;
+                        htmlView =
+                            <div index={index} onClick={onView} color="primary" aria-label="مشاهده">
+                                <Visibility className={classes.VisibilityIcon}/>
+                            </div>
+                    }
+                    switch (fileViewModel.extension) {
+                        case "png":
+                        case "jpg":
+                        case "JPG":
+                        case "bmp":
+                        case "jpeg":
+                        case "gif":
+                            isImage = true;
+                            break;
+                        default:
+                            isImage = false;
+                    }
                 } else {
-                    return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1}>
-                                <span className={classes.boxTitleImg}>{title}</span>
-                                <img alt="" index={index} onClick={onClick} src={url} className={classes.imgFileView}
-                                     title={title}/>
-                            </Grid>
-                        </Grid>
-                    </React.Fragment>);
+                    title += "آخرین تغییر:  تازه بارگذاری شده است";
                 }
-            } else {
-                if (hasAction) {
+                if (hasDelete) {
+                    hasAction = true;
+                    htmlDelete =
+                        <div index={index} onClick={onDelete} color="primary" aria-label="حذف">
+                            <Delete className={classes.deleteIcon}/>
+                        </div>
+                }
 
-                    return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={12} md={4} className={classes.boxImgFileView}>
-                            <Grid item xs={12} className={classes.boxTitleFileview}>
-                                <span>{title}</span>
+                if (isImage) {
+                    if (hasAction) {
+                        return (<React.Fragment key={Math.random()}>
+                            <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                                <Grid item xs={12} className={classes.boxTitleFileview}>
+                                    <span>{title}</span>
+                                </Grid>
+                                <Grid item xs={12} className={classes.divParentImg}>
+                                    <img alt="" index={index} src={url}
+                                         className={classes.imgFileView} title={title}/>
+                                </Grid>
+                                <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
+                                    <Grid item xs={4}>
+                                        {htmlDownload}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        {htmlView}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        {htmlDelete}
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} className={classes.divParentImg}>
+                        </React.Fragment>);
+                    } else {
+                        return (<React.Fragment key={Math.random()}>
+                            <Grid item xs={3} className={classes.boxImgFileView}>
                                 <Grid container spacing={1}>
-                                    <div title={title} index={index} onClick={onClick}
-                                         className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize} >
+                                    <span className={classes.boxTitleImg}>{title}</span>
+                                    <img alt="" index={index} src={url}
+                                         className={classes.imgFileView}
+                                         title={title}/>
+                                </Grid>
+                            </Grid>
+                        </React.Fragment>);
+                    }
+                } else {
+                    if (hasAction) {
 
-                                        <div className={"fi-content" +" "+ classes.iconContentSize} >{fileViewModel.extension.toUpperCase()}</div>
+                        return (<React.Fragment key={Math.random()}>
+                            <Grid item xs={12} md={4} className={classes.boxImgFileView}>
+                                <Grid item xs={12} className={classes.boxTitleFileview}>
+                                    <span>{title}</span>
+                                </Grid>
+                                <Grid item xs={12} className={classes.divParentImg}>
+                                    <Grid container spacing={1}>
+                                        <div title={title} index={index}
+                                             className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize}>
+
+                                            <div
+                                                className={`fi-content  ${classes.iconContentSize}`}>{fileViewModel.extension.toUpperCase()}</div>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
+                                    <Grid item xs={4}>
+                                        {htmlDownload}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        {htmlView}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        {htmlDelete}
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </React.Fragment>);
+                    } else {
+                        return (<React.Fragment key={Math.random()}>
+                            <Grid item xs={3} className={classes.boxImgFileView}>
+                                <Grid container spacing={1}>
+                                    <div title={title} index={index}
+                                         className={`fi fi-${fileViewModel.extension} ${classes.devParentIconContentSize}`}>
+                                        <div
+                                            className={`fi-content  ${classes.iconContentSize} `}>{fileViewModel.extension.toUpperCase()}</div>
                                     </div>
                                 </Grid>
                             </Grid>
-                            <Grid container spacing={1} item xs={12} className={classes.boxButtonFileview}>
-                                <Grid item xs={4}>
-                                    {htmlDownload}
-                                </Grid>
-                                <Grid item xs={4}>
-                                    {htmlView}
-                                </Grid>
-                                <Grid item xs={4}>
-                                    {htmlDelete}
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </React.Fragment>);
-                } else {
-                    return (<React.Fragment key={Math.random()}>
-                        <Grid item xs={3} className={classes.boxImgFileView}>
-                            <Grid container spacing={1}>
-                                <div title={title} index={index} onClick={onClick}
-                                     className={"fi fi-" + fileViewModel.extension + " " + classes.devParentIconContentSize} >
-                                    <div className={"fi-content" +" "+ classes.iconContentSize} >{fileViewModel.extension.toUpperCase()}</div>
-                                </div>
-                            </Grid>
-                        </Grid>
-                    </React.Fragment>);
+                        </React.Fragment>);
+                    }
                 }
             }
-        }
-    });
-    return (<React.Fragment>
-        <Grid container spacing={1}>
-            {fileViewHtmlList}
-        </Grid>
-    </React.Fragment>);
+        });
 
+        return (<React.Fragment>
+            <Grid container spacing={1}>
+                {fileViewHtmlList}
+            </Grid>
+        </React.Fragment>);
+
+    } else {
+        return (
+            <React.Fragment>
+                <Grid container spacing={1}>
+                </Grid>
+            </React.Fragment>);
+    }
 
 }
-
-export {
-    FileView
-};
