@@ -79,6 +79,14 @@ export default function AdminUserCreate() {
         setFormData(formData);
     };
 
+    // آپلودر تصاویر
+    const onChangeUploader = (objectList) => {
+        let imageFileList = objectList;
+        formData["imageFileList"] = imageFileList;
+        setFormData({
+            ...formData
+        });
+    };
 
    // آدرس فایل های آپلود شده
     let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
@@ -221,6 +229,7 @@ export default function AdminUserCreate() {
                                 fileKindFolder={fileKindFolderEnum.ATTACHMENT}
                                 validationSizeLimit={5 * 1024 * 1024}
                                 validationItemLimit={50}
+                                onChange={onChangeUploader}
                             />
                         </Grid>
                         <Grid item xs={4}>

@@ -56,17 +56,6 @@ export default function AdminUserUpdate() {
         });
     };
 
-
-    // آپلودر تصاویر
-    const onChangeUploader = (objectList) => {
-        let imageFileList = objectList;
-        formData["imageFileList"] = imageFileList;
-        setFormData({
-            ...formData
-        });
-    };
-
-
     //تعریف متغیر ویرایش کننده
     const [adminUpdate] = useMutation(ADMIN_USER_UPDATE_MUTATION);
 
@@ -99,6 +88,15 @@ export default function AdminUserUpdate() {
         }
     }, [loading, error, data]);
 
+
+    // آپلودر تصاویر
+    const onChangeUploader = (objectList) => {
+        let imageFileList = objectList;
+        formData["imageFileList"] = imageFileList;
+        setFormData({
+            ...formData
+        });
+    };
 
     let urlBase = "http://localhost:8082/fso/download/COMMON/adminuser/";
 
