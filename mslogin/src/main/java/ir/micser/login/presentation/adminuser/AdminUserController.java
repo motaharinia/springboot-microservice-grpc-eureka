@@ -1,9 +1,6 @@
 package ir.micser.login.presentation.adminuser;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.motaharinia.msutility.customexception.BusinessException;
-import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msjpautility.search.data.SearchDataModel;
 import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
@@ -15,17 +12,16 @@ import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
-import ir.micser.login.business.service.fso.FsoUploadedFileHandleActionEnum;
+import ir.micser.login.business.service.fso.CrudFileHandleActionEnum;
 import ir.micser.login.business.service.fso.FsoUploadedFileService;
 import ir.micser.login.business.service.fso.FsoModuleEnum;
-import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleDetailModel;
-import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleModel;
+import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleDetailModel;
+import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,11 +57,12 @@ public class AdminUserController {
      */
     @GraphQLMutation(name = "create")
     //@PostMapping("/v1/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws  Exception {
         adminUserModel=  adminUserService.create(adminUserModel);
 
-        FsoUploadedFileHandleModel fsoUploadedFileHandleModel = new FsoUploadedFileHandleModel(adminUserModel.getId(), FsoUploadedFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new FsoUploadedFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        fsoUploadedFileService.logUploadedFileHandle(fsoUploadedFileHandleModel);
+        //ثبت فایلها بعد از اطمینان از ثبت انتیتی در دیتابیس
+        CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        fsoUploadedFileService.crudHandle(crudFileHandleModel);
 
         return adminUserModel;
     }
@@ -95,11 +92,11 @@ public class AdminUserController {
      * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
      * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
-     * @throws UtilityException خطا
+     * @throws Exception خطا
      */
     @GraphQLQuery(name = "readGrid")
     //@GetMapping("/v1/adminUser")
-    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws Exception {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
         //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
@@ -123,13 +120,12 @@ public class AdminUserController {
      * @param searchViewTypeEnum نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
      * @param searchValueList    لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
-     * @throws JsonProcessingException
-     * @throws UtilityException
+     * @throws Exception خطا
      */
     @GraphQLQuery(name = "readGridByModel")
     public SearchDataModel readGridByModel(@Validated @RequestParam(name = "searchFilterModel") SearchFilterModel searchFilterModel,
                                            @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum,
-                                           @RequestParam(name = "searchValueList", defaultValue = "", required = false) List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+                                           @RequestParam(name = "searchValueList", defaultValue = "", required = false) List<Object> searchValueList) throws Exception {
         //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
         Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
         if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
@@ -149,14 +145,16 @@ public class AdminUserController {
      *
      * @param adminUserModel مدل ویرایش
      * @return خروجی: مدل ویرایش شده
+     * @throws Exception خطا
      */
     @GraphQLMutation(name = "update")
     //@PutMapping("/v1/adminUser")
-    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
         adminUserModel= adminUserService.update(adminUserModel);
 
-        FsoUploadedFileHandleModel fsoUploadedFileHandleModel = new FsoUploadedFileHandleModel(adminUserModel.getId(), FsoUploadedFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new FsoUploadedFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
-        fsoUploadedFileService.logUploadedFileHandle(fsoUploadedFileHandleModel);
+        //ویرایش فایلها بعد از اطمینان از ویرایش انتیتی در دیتابیس
+        CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        fsoUploadedFileService.crudHandle(crudFileHandleModel);
 
         return adminUserModel;
     }
@@ -166,11 +164,18 @@ public class AdminUserController {
      *
      * @param id شناسه
      * @return خروجی: مدل حذف شده
+     * @throws Exception خطا
      */
     @GraphQLMutation(name = "delete")
     //@DeleteMapping("/v1/adminUser/{id}")
     public AdminUserModel delete(@PathVariable Integer id) throws Exception {
-        return adminUserService.delete(id);
+        AdminUserModel adminUserModel=  adminUserService.delete(id);
+
+        //حذف فایلها بعد از اطمینان از حذف انتیتی در دیتابیس
+        CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_DELETE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
+        fsoUploadedFileService.crudHandle(crudFileHandleModel);
+
+        return adminUserModel;
     }
 
     /**

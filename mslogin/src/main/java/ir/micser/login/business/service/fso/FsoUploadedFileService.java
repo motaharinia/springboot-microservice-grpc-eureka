@@ -1,6 +1,6 @@
 package ir.micser.login.business.service.fso;
 
-import ir.micser.login.presentation.fso.fsouploadedhandle.FsoUploadedFileHandleModel;
+import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleModel;
 import ir.micser.login.presentation.fso.FsoUploadedFileModel;
 import ir.micser.login.presentation.fso.backuploader.FileUploadChunkModel;
 import ir.micser.login.presentation.fso.frontuploader.FineUploaderChunkModel;
@@ -41,11 +41,12 @@ public interface FsoUploadedFileService {
 
     /**
      * این متد یک لاگ دیتابیس از اطلاعات فایل آپلود شده در دیتابیس ذخیره مینماید
+     *
      * @param fsoUploadedFileModel مدل فایل آپلود شده
      * @return خروجی: مدل فایل آپلود شده
      * @throws Exception خطا
      */
-    FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel)throws Exception;
+    FsoUploadedFileModel create(FsoUploadedFileModel fsoUploadedFileModel) throws Exception;
 
     /**
      * این متد کلید فایل مورد نظر فایل آپلود شده را از ورودی دریافت کرده و مدل آن را خروجی میدهد
@@ -64,10 +65,4 @@ public interface FsoUploadedFileService {
      */
     void delete(String fileKey) throws Exception;
 
-    /**
-     * این متد مدل یک فایل آپلود شده را میگیرد و فایل را نسبت به فعل ثبت یا ویرایش یا حذف در فایل سیستم سامانه مدیریت میکند
-     * @param fsoUploadedFileHandleModel مدل فایل آپلود شده
-     * @throws Exception خطا
-     */
-    void logUploadedFileHandle(FsoUploadedFileHandleModel fsoUploadedFileHandleModel) throws Exception;
 }

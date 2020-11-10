@@ -7,7 +7,7 @@ package ir.micser.login.business.service.fso;
  * Description:<br>
  * مقادیر ثابت فعالیت ماژول که روی فایل بعد از آپلود اتفاق می افتد<br>
  */
-public enum FsoUploadedFileHandleActionEnum {
+public enum CrudFileHandleActionEnum {
     /**
      * ثبت فایل جدید برای ثبت انتیتی جدید
      */
@@ -23,7 +23,7 @@ public enum FsoUploadedFileHandleActionEnum {
 
     private final String value;
 
-    private FsoUploadedFileHandleActionEnum(String value) {
+    private CrudFileHandleActionEnum(String value) {
         this.value = value;
     }
 

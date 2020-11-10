@@ -5,6 +5,7 @@ import com.motaharinia.msutility.fso.download.FileDownloadModel;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.json.PrimitiveResponse;
 import ir.micser.login.business.service.fso.FsoService;
+import ir.micser.login.business.service.fso.FsoServiceImpl;
 import ir.micser.login.business.service.fso.FsoThumbSizeEnum;
 import ir.micser.login.business.service.fso.FsoUploadedFileService;
 import ir.micser.login.business.service.SubSystemEnum;
@@ -12,17 +13,14 @@ import ir.micser.login.presentation.fso.backuploader.FileUploadChunkModel;
 import ir.micser.login.presentation.fso.frontuploader.FineUploaderChunkModel;
 import ir.micser.login.presentation.fso.frontuploader.FineUploaderResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Locale;
 
 @RestController
 @RequestMapping({"/fso"})

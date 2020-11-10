@@ -106,14 +106,14 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification,HibernateSearchService hibernateSearchService,FsoService fsoService) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService, EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, HibernateSearchService hibernateSearchService, FsoService fsoService) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
         this.etcItemService=etcItemService;
         this.adminUserSpecification = adminUserSpecification;
         this.hibernateSearchService=hibernateSearchService;
-        this.fsoService=fsoService;
+        this.fsoService = fsoService;
     }
 
     /**

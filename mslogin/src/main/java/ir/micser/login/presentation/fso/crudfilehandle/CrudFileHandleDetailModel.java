@@ -1,13 +1,30 @@
-package ir.micser.login.presentation.fso.fsouploadedhandle;
+package ir.micser.login.presentation.fso.crudfilehandle;
 
 import ir.micser.login.business.service.fso.FsoModuleEnum;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:کلاس مدل شرح فایلها در کراد ماژولها
+ */
+public class CrudFileHandleDetailModel {
 
-public class FsoUploadedFileHandleDetailModel {
-
+    /**
+     * مقدار ثابت فایل که شامل آدرس محل قرارگیری فایل میباشد
+     */
     private FsoModuleEnum fsoModuleEnum;
+    /**
+     * آیا فایل تکی است؟
+     */
     private Boolean isSingle;
+    /**
+     * اگر فایل تصویر است، عرض تصویر بندانگشتی
+     */
     private Integer width;
+    /**
+     * اگر فایل تصویر است، طول تصویر بندانگشتی
+     */
     private Integer height;
 
     //getter-setter:
@@ -43,10 +60,10 @@ public class FsoUploadedFileHandleDetailModel {
         this.height = height;
     }
 
-    public FsoUploadedFileHandleDetailModel() {
+    public CrudFileHandleDetailModel() {
     }
 
-    public FsoUploadedFileHandleDetailModel(FsoModuleEnum fsoModuleEnum, Boolean isSingle, Integer width, Integer height) {
+    public CrudFileHandleDetailModel(FsoModuleEnum fsoModuleEnum, Boolean isSingle, Integer width, Integer height) {
         this.fsoModuleEnum = fsoModuleEnum;
         this.isSingle = isSingle;
         this.width = width;

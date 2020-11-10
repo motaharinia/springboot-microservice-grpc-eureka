@@ -21,7 +21,7 @@ import java.util.Locale;
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class FsoServiceTests {
+public class FsoServiceImplTests {
     @LocalServerPort
     private int port;
 
