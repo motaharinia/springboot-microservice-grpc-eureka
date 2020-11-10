@@ -126,7 +126,7 @@ public class FsoServiceImpl implements FsoService {
         for (String pathFile : pathList) {
             FsoPathCheckModel fsoPathCheckModel = null;
             try {
-                fsoPathCheckModel = pathExistCheck(FSO_PATH_MODULE + pathFile);
+                fsoPathCheckModel = FsoTools.pathExistCheck(FSO_PATH_MODULE + pathFile);
             } catch (Exception exception) {
 
             }
