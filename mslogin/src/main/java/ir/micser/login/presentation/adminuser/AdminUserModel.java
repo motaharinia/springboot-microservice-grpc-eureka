@@ -4,6 +4,7 @@ import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.customvalidation.required.Required;
 import com.motaharinia.msutility.fso.view.FileViewModel;
 import io.leangen.graphql.annotations.GraphQLQuery;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
 
 import java.io.Serializable;
@@ -84,6 +85,17 @@ public class AdminUserModel implements Serializable {
     @GraphQLQuery(name = "imageFileList", description = "تصاویر پروفایل")
     private List<FileViewModel> imageFileList = new ArrayList<>();
 
+    public AdminUserModel() {
+    }
+
+    public AdminUserModel(AdminUserSearchViewTypeBrief adminUserSearchViewTypeBrief) {
+        this.id = adminUserSearchViewTypeBrief.getId();
+        this.firstName = adminUserSearchViewTypeBrief.getFirstName();
+        this.lastName = adminUserSearchViewTypeBrief.getLastName();
+        this.dateOfBirth = new CustomDate(adminUserSearchViewTypeBrief.getDateOfBirth()) ;
+        this.gender_id =adminUserSearchViewTypeBrief.getGender().getId() ;
+        this.defaultAdminUserContact_address =adminUserSearchViewTypeBrief.getDefaultAdminUserContact().getAddress() ;
+    }
     @Override
     public String toString() {
         return "AdminUserModel{" +
@@ -93,6 +105,7 @@ public class AdminUserModel implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", gender_id='" + gender_id + '\'' +
                 ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
                 ", skillList=[" + skillList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
                 '}';

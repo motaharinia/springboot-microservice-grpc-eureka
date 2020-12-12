@@ -38,6 +38,14 @@ public interface AdminUserService {
     AdminUserModel readById(@NotNull Integer id) throws Exception;
 
     /**
+     * متد جستجوی با کلمه کاربری برای تست مبدل اطلاعات بانک
+     *
+     * @param username کلمه کاربری
+     * @return خروجی: مدل حاوی جنسیت تغییر داده شده مطابق با شرایط بانک
+     */
+    AdminUserModel readBriefByUsername(@NotNull String username);
+
+    /**
      * متد جستجو با مدل فیلتر جستجو
      *
      * @param searchFilterModel        مدل فیلتر جستجو

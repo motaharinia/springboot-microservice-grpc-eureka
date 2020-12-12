@@ -56,9 +56,9 @@ public class AdminUserController {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @GraphQLMutation(name = "create")
-    //@PostMapping("/v1/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws  Exception {
-        adminUserModel=  adminUserService.create(adminUserModel);
+    @PostMapping("/v1/adminUser")
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
+        adminUserModel = adminUserService.create(adminUserModel);
 
         //ثبت فایلها بعد از اطمینان از ثبت انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_CREATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
@@ -76,13 +76,24 @@ public class AdminUserController {
      * @throws Exception خطا
      */
     @GraphQLQuery(name = "common_adminUser_readById")
-    //@GetMapping("/v1/adminUser/{id}")
+    @GetMapping("/v1/adminUser/{id}")
     public AdminUserModel readById(@PathVariable Integer id) throws Exception {
         if (id.equals(0)) {
             throw new GraphQLCustomException(BusinessExceptionEnum.ID_NOT_FOUND, "sample description");
         }
-        AdminUserModel adminUserModel=adminUserService.readById(id);
+        AdminUserModel adminUserModel = adminUserService.readById(id);
         return adminUserModel;
+    }
+
+    /**
+     * متد جستجوی با کلمه کاربری برای تست مبدل اطلاعات بانک
+     *
+     * @param username کلمه کاربری
+     * @return خروجی: مدل حاوی جنسیت تغییر داده شده مطابق با شرایط بانک
+     */
+    @GetMapping("/v1/adminUser/readBriefByUsername/{username}")
+    public AdminUserModel readBriefByUsername(@PathVariable String username) {
+        return adminUserService.readBriefByUsername(username);
     }
 
     /**
@@ -95,7 +106,7 @@ public class AdminUserController {
      * @throws Exception خطا
      */
     @GraphQLQuery(name = "readGrid")
-    //@GetMapping("/v1/adminUser")
+    @GetMapping("/v1/adminUser")
     public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws Exception {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
@@ -148,9 +159,9 @@ public class AdminUserController {
      * @throws Exception خطا
      */
     @GraphQLMutation(name = "update")
-    //@PutMapping("/v1/adminUser")
+    @PutMapping("/v1/adminUser")
     public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
-        adminUserModel= adminUserService.update(adminUserModel);
+        adminUserModel = adminUserService.update(adminUserModel);
 
         //ویرایش فایلها بعد از اطمینان از ویرایش انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_UPDATE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
@@ -167,9 +178,9 @@ public class AdminUserController {
      * @throws Exception خطا
      */
     @GraphQLMutation(name = "delete")
-    //@DeleteMapping("/v1/adminUser/{id}")
+    @DeleteMapping("/v1/adminUser/{id}")
     public AdminUserModel delete(@PathVariable Integer id) throws Exception {
-        AdminUserModel adminUserModel=  adminUserService.delete(id);
+        AdminUserModel adminUserModel = adminUserService.delete(id);
 
         //حذف فایلها بعد از اطمینان از حذف انتیتی در دیتابیس
         CrudFileHandleModel crudFileHandleModel = new CrudFileHandleModel(adminUserModel.getId(), CrudFileHandleActionEnum.ENTITY_DELETE, adminUserModel.getImageFileList(), Arrays.asList(new CrudFileHandleDetailModel(FsoModuleEnum.ADMIN_USER_PROFILE_IMAGE, false, null, null)));
@@ -186,7 +197,7 @@ public class AdminUserController {
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
     @GraphQLQuery(name = "hchFindByName")
-    //@GetMapping("/v1/adminUser/hchFindByName/{name}")
+    @GetMapping("/v1/adminUser/hchFindByName/{name}")
     public List<Integer> hchFindByName(@PathVariable String name) throws Exception {
         return adminUserService.hchFindByName(name);
     }
@@ -199,7 +210,7 @@ public class AdminUserController {
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
     @GraphQLQuery(name = "hchFindByGender")
-    //@GetMapping("/v1/adminUser/hchFindByGender/{genderId}")
+    @GetMapping("/v1/adminUser/hchFindByGender/{genderId}")
     public List<Integer> hchFindByGender(@PathVariable Integer genderId) throws Exception {
         return adminUserService.hchFindByGender(genderId);
     }
@@ -212,11 +223,10 @@ public class AdminUserController {
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
     @GraphQLQuery(name = "hchFindBySkill")
-    //@GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
+    @GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
     public List<Integer> hchFindBySkill(@PathVariable String skillTitle) throws Exception {
         return adminUserService.hchFindBySkill(skillTitle);
     }
-
 
 
 }

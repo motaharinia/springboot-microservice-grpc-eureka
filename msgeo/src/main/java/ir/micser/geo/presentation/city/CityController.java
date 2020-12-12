@@ -7,6 +7,8 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msjpautility.search.data.SearchDataModel;
 import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
+import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import ir.micser.geo.business.service.city.CityService;
 import ir.micser.geo.business.service.city.CitySearchViewTypeEnum;
 import ir.micser.geo.business.service.city.CitySearchViewTypeBrief;
@@ -28,6 +30,7 @@ import java.util.Optional;
  *  کلاس کنترلر شهر
  */
 @RestController
+@GraphQLApi
 public class CityController {
 
     private final CityService cityService;
@@ -55,6 +58,7 @@ public class CityController {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
+    @GraphQLQuery(name = "common_city_readById")
     @GetMapping("/v1/city/{id}")
     public CityModel readById(@PathVariable Integer id) throws UtilityException {
         return cityService.readById(id);

@@ -53,6 +53,7 @@ public class AdminUserControllerTest {
      * شیی crud
      */
     private static Integer crudId = 8;
+    private static String crudUsername = "eng.motahari@gmail.com";
     private static String random;
 
     private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
@@ -102,7 +103,7 @@ public class AdminUserControllerTest {
             adminUserModel = response.getBody();
             assertThat(adminUserModel.getGender_id()).isEqualTo(1);
             crudId = adminUserModel.getId();
-
+            crudUsername = adminUserModel.getUsername();
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -132,6 +133,28 @@ public class AdminUserControllerTest {
 
     @Test
     @Order(3)
+    public void readBriefByUsername() {
+        try {
+            String uri = "http://localhost:" + port + "/v1/adminUser/readBriefByUsername/" + crudUsername;
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, AdminUserModel.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            AdminUserModel adminUserModel = response.getBody();
+            assertThat(adminUserModel.getGender_id()).isEqualTo(11);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Test
+    @Order(4)
     public void readGrid() {
         System.out.println("LocaleContextHolder.getLocale()" + LocaleContextHolder.getLocale());
         try {
@@ -195,7 +218,7 @@ public class AdminUserControllerTest {
 
 
     @Test
-    @Order(4)
+    @Order(5)
     public void update() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUser";
@@ -245,7 +268,7 @@ public class AdminUserControllerTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void delete() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUser/" + crudId;
@@ -267,7 +290,7 @@ public class AdminUserControllerTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void hchFindTest() {
 //        try {
         String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByName/" + "Mostafa";
@@ -287,7 +310,7 @@ public class AdminUserControllerTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     public void hchFindByGenderTest() {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByGender/" + crudId;
@@ -314,7 +337,7 @@ public class AdminUserControllerTest {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
             ResponseEntity<Integer[]> resultModel = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Integer[].class);
-            System.out.println("result is : "+resultModel.getBody().length);
+            System.out.println("result is : " + resultModel.getBody().length);
             assertThat(resultModel.getBody().length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());

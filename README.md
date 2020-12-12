@@ -39,8 +39,12 @@ steps:
     - download oracle 18 express from : https://drive.google.com/file/d/1sdMKUH9eXfYFyRRYMcYG2-rDc2Nav5Yz/view
     - install oracle and in the setup wizard set password:"123456" for "sys" and "system" users
     - in windows environment add these variables:
-     - ORACLE_HOME = C:\app\MyUser\product\18.0.0\dbhomeXE
+        - ORACLE_HOME = C:\app\MyUser\product\18.0.0\dbhomeXE
         - ORACLE_SID = XE
+    - make default profile and "system" user expiration date to unlimited (default is 180 days). open cmd as administrator and run: sqlplus /nolog
+        - connect / as SYSDBA;
+        - ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;
+        - ALTER USER system IDENTIFIED BY 123456 ACCOUNT UNLOCK;
     - execute "C:\app\MyUser\product\18.0.0\dbhomeXE\bin\sqlplus.exe" and enter with "system" and "123456" and run these commands to create msgeo and mslogin schema with 123456 password:
         - ALTER SESSION SET CONTAINER = XEPDB1;
         - CREATE BIGFILE TABLESPACE tbsmot_perm_01 DATAFILE 'tbsmot_perm_01.dat' SIZE 20M AUTOEXTEND ON;

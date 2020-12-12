@@ -47,5 +47,6 @@ public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, 
 
     List<AdminUser> findAllByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 
+    AdminUserSearchViewTypeBrief findByUsernameLike(String username);
 
 }

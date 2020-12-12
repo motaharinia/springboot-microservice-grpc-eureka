@@ -51,6 +51,13 @@
             <version>1.4</version>
         </dependency>
 
+        <!--==========Web[GraphQL]==========-->
+        <dependency>
+            <groupId>io.leangen.graphql</groupId>
+            <artifactId>graphql-spqr-spring-boot-starter</artifactId>
+            <version>0.0.4</version>
+        </dependency>
+
         <!--==========Data JPA & Indexing==========-->
         <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Release-Notes-->
         <!-- The default database pooling technology in Spring Boot 2.0 has been switched from Tomcat Pool to HikariCP. We’ve found that Hakari offers superior performance, and many of our users prefer it over Tomcat Pool.-->
