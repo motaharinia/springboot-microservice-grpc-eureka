@@ -1,7 +1,7 @@
-package ir.micser.config.scheduling.business.discount;
+package ir.micser.login.business.service.scheduling;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,8 +14,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Description:<br>
  * کلاس زمان بندی تخفیفها
  */
-@Component
-public class DiscountSchedule {
+@Service
+public class DiscountService {
 
     /**
      * شمارنده متد زمانبندی ثابت هر 5  ثانیه یک بار
@@ -59,7 +59,7 @@ public class DiscountSchedule {
     }
 
     /**
-     * متد زمان بندی که هر روز از ساعت 9 تا 9:59 فراخوانی میشود.
+     * متد زمان بندی که هر روز از ساعت 9 تا 9:59 هر دقیقه فراخوانی میشود.
      */
     @Scheduled(cron = "0 * 9 * * ?")
     public void cronJobSch() {

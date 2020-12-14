@@ -1,4 +1,4 @@
-package ir.micser.async.presentation.employee;
+package ir.micser.login.presentation.async;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -7,7 +7,7 @@ package ir.micser.async.presentation.employee;
  * Description:<br>
  *     کلاس مدل حساب بانکی کارمند
  */
-public class EmployeeAccountModel {
+public class Async3Model {
     /**
      * نام بانک
      */

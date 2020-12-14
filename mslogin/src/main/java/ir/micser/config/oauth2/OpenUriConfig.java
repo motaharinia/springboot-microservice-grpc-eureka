@@ -37,10 +37,10 @@ package ir.micser.config.oauth2;//package com.motaharinia.oauthsecurityconfig;
 //        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/fp2", OpenUriConfig.class.getSimpleName()));
 //        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/w", OpenUriConfig.class.getSimpleName()));
 //
-//        //other: test:
-//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("common", "/test/**", OpenUriConfig.class.getSimpleName()));
-//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/test/**", OpenUriConfig.class.getSimpleName()));
-//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/frontPanel2/test/**", OpenUriConfig.class.getSimpleName()));
+//        //other: async:
+//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("common", "/async/**", OpenUriConfig.class.getSimpleName()));
+//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/async/**", OpenUriConfig.class.getSimpleName()));
+//        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("www", "/frontPanel2/async/**", OpenUriConfig.class.getSimpleName()));
 //        //other: /fso:
 //        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("common", "/fso/**", OpenUriConfig.class.getSimpleName()));
 //        openUriAuthenticationList.add(new RunConfigurationOpenUriModel("ehelp", "/fso/**", OpenUriConfig.class.getSimpleName()));

@@ -1,8 +1,7 @@
-package ir.micser.login.authentication;
+package ir.micser.login.business.service.authentication;
 
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
-import com.motaharinia.msutility.json.CustomObjectMapper;
 import ir.micser.login.persistence.orm.captchacode.CaptchaCode;
 import ir.micser.login.persistence.orm.captchacode.CaptchaCodeRepository;
 import org.apache.catalina.connector.Request;
@@ -42,7 +41,6 @@ public class AuthenticationTest {
     @Autowired
     CaptchaCodeRepository captchaCodeRepository;
 
-    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     private String clientId = "web-client";
     private String clientSecret = "pin";

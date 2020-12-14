@@ -21,7 +21,7 @@ public enum AuthorizationBusinessExceptionKeyEnum implements CustomExceptionKey 
 ;
 
     private final String value;
-    private final String moduleName = "test";
+    private final String moduleName = "async";
 
     AuthorizationBusinessExceptionKeyEnum(String value) {
         this.value = value;

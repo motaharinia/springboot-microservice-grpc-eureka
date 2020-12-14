@@ -38,7 +38,7 @@ public enum CaptchaCodeBusinessExceptionKeyEnum implements CustomExceptionKey {
     ;
 
     private final String value;
-    private final String moduleName = "test";
+    private final String moduleName = "async";
 
     CaptchaCodeBusinessExceptionKeyEnum(String value) {
         this.value = value;

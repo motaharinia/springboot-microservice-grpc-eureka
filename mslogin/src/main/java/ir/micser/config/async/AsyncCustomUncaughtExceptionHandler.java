@@ -1,4 +1,4 @@
-package ir.micser.async.config;
+package ir.micser.config.async;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 

@@ -1,4 +1,4 @@
-package ir.micser.async.presentation.employee;
+package ir.micser.login.presentation.async;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Description:<br>
  * کلاس مدل کارمند
  */
-public class EmployeeModel implements Serializable {
+public class Async1Model implements Serializable {
 
 	private static final long serialVersionUID = -1773599508061743940L;
 	/**

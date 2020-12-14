@@ -313,7 +313,7 @@ public class AdminUserControllerTest {
     @Order(8)
     public void hchFindByGenderTest() {
         try {
-            String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByGender/" + crudId;
+            String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByGender/1" ;
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

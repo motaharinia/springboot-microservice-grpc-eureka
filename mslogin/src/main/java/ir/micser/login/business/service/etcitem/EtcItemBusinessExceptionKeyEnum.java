@@ -25,7 +25,7 @@ public enum EtcItemBusinessExceptionKeyEnum implements CustomExceptionKey {
 ;
 
     private final String value;
-    private final String moduleName = "test";
+    private final String moduleName = "async";
 
     EtcItemBusinessExceptionKeyEnum(String value) {
         this.value = value;

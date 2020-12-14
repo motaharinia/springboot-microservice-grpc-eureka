@@ -1,23 +1,24 @@
 package ir.micser.login.presentation.adminuser;
 
 
-import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msjpautility.search.data.SearchDataModel;
 import com.motaharinia.msjpautility.search.filter.SearchFilterModel;
+import com.motaharinia.msutility.json.CustomObjectMapper;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import ir.micser.config.graphql.GraphQLCustomException;
 import ir.micser.login.business.service.BusinessExceptionEnum;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
-import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import ir.micser.login.business.service.fso.CrudFileHandleActionEnum;
-import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.business.service.fso.FsoModuleEnum;
+import ir.micser.login.business.service.fso.FsoService;
 import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleDetailModel;
 import ir.micser.login.presentation.fso.crudfilehandle.CrudFileHandleModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,17 +33,18 @@ import java.util.Optional;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- * کلاس کنترلر ادمین
+ * کلاس کنترلر ادمین برای گراف کیو ال
  */
-@RestController
-public class AdminUserController {
+@Component
+@GraphQLApi
+public class AdminUserGraphQlController {
 
     private final AdminUserService adminUserService;
 
     private final FsoService fsoService;
 
     @Autowired
-    public AdminUserController(AdminUserService adminUserService, FsoService fsoService) {
+    public AdminUserGraphQlController(AdminUserService adminUserService, FsoService fsoService) {
         this.adminUserService = adminUserService;
         this.fsoService = fsoService;
     }
@@ -53,7 +55,7 @@ public class AdminUserController {
      * @param adminUserModel مدل ثبت
      * @return خروجی: مدل ثبت حاوی شناسه
      */
-    @PostMapping("/v1/adminUser")
+    @GraphQLMutation(name = "create")
     public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
         adminUserModel = adminUserService.create(adminUserModel);
 
@@ -72,7 +74,7 @@ public class AdminUserController {
      * @return خروجی: مدل جستجو شده
      * @throws Exception خطا
      */
-    @GetMapping("/v1/adminUser/{id}")
+    @GraphQLQuery(name = "common_adminUser_readById")
     public AdminUserModel readById(@PathVariable Integer id) throws Exception {
         if (id.equals(0)) {
             throw new GraphQLCustomException(BusinessExceptionEnum.ID_NOT_FOUND, "sample description");
@@ -81,16 +83,6 @@ public class AdminUserController {
         return adminUserModel;
     }
 
-    /**
-     * متد جستجوی با کلمه کاربری برای تست مبدل اطلاعات بانک
-     *
-     * @param username کلمه کاربری
-     * @return خروجی: مدل حاوی جنسیت تغییر داده شده مطابق با شرایط بانک
-     */
-    @GetMapping("/v1/adminUser/readBriefByUsername/{username}")
-    public AdminUserModel readBriefByUsername(@PathVariable String username) {
-        return adminUserService.readBriefByUsername(username);
-    }
 
     /**
      * متد جستجو با رشته مدل فیلتر جستجو
@@ -101,7 +93,7 @@ public class AdminUserController {
      * @return خروجی: مدل داده جستجو
      * @throws Exception خطا
      */
-    @GetMapping("/v1/adminUser")
+    @GraphQLQuery(name = "readGrid")
     public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws Exception {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
@@ -119,7 +111,32 @@ public class AdminUserController {
         return searchDataModel;
     }
 
+    /**
+     * متد جستجو با مدل فیلتر جستجو
+     *
+     * @param searchFilterModel  مدل فیلتر جستجو
+     * @param searchViewTypeEnum نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList    لیست مقادیر مورد نیاز جهت جستجو
+     * @return خروجی: مدل داده جستجو
+     * @throws Exception خطا
+     */
+    @GraphQLQuery(name = "readGridByModel")
+    public SearchDataModel readGridByModel(@Validated @RequestParam(name = "searchFilterModel") SearchFilterModel searchFilterModel,
+                                           @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum,
+                                           @RequestParam(name = "searchValueList", defaultValue = "", required = false) List<Object> searchValueList) throws Exception {
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
+        }
+        //در صورت نال بودن باید new شود
+        if (ObjectUtils.isEmpty(searchValueList)) {
+            searchValueList = new ArrayList<>();
+        }
 
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
+        return searchDataModel;
+    }
 
     /**
      * متد ویرایش
@@ -128,7 +145,7 @@ public class AdminUserController {
      * @return خروجی: مدل ویرایش شده
      * @throws Exception خطا
      */
-    @PutMapping("/v1/adminUser")
+    @GraphQLMutation(name = "update")
     public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
         adminUserModel = adminUserService.update(adminUserModel);
 
@@ -146,7 +163,7 @@ public class AdminUserController {
      * @return خروجی: مدل حذف شده
      * @throws Exception خطا
      */
-    @DeleteMapping("/v1/adminUser/{id}")
+    @GraphQLMutation(name = "delete")
     public AdminUserModel delete(@PathVariable Integer id) throws Exception {
         AdminUserModel adminUserModel = adminUserService.delete(id);
 
@@ -164,7 +181,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
-    @GetMapping("/v1/adminUser/hchFindByName/{name}")
+    @GraphQLQuery(name = "hchFindByName")
     public List<Integer> hchFindByName(@PathVariable String name) throws Exception {
         return adminUserService.hchFindByName(name);
     }
@@ -176,7 +193,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
-    @GetMapping("/v1/adminUser/hchFindByGender/{genderId}")
+    @GraphQLQuery(name = "hchFindByGender")
     public List<Integer> hchFindByGender(@PathVariable Integer genderId) throws Exception {
         return adminUserService.hchFindByGender(genderId);
     }
@@ -188,7 +205,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
-    @GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
+    @GraphQLQuery(name = "hchFindBySkill")
     public List<Integer> hchFindBySkill(@PathVariable String skillTitle) throws Exception {
         return adminUserService.hchFindBySkill(skillTitle);
     }

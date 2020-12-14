@@ -71,20 +71,21 @@ steps:
         - alter user mslogin default role all;
 3. msutility build:
     - if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility" folder, remove it.
-    - open msutility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - open msutility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 11 is selected.
     - in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsUtility"
 4. msjpautility build:
     - if your windows account is for example "myuser" and you have "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility" folder, remove it.
-    - open msjpautility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - open msjpautility project by IntellliJ IDEA(enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 11 is selected.
     - in IntellliJ IDEA open right side maven panel and select lifecycle/install and run maven to build it in "C:\Users\MyUser\.m2\repository\com\motaharinia\MsJpaUtility"    
 5. msdiscoveryserver start:
-    - open msdiscoveryserver project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - open msdiscoveryserver project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 11 is selected.
     - run msdiscoveryserver project and open "http://localhost:8761" to monitor eureka clients that register themselves later on eureka server.
 6. msgeo and mslogin start:
     - follow msgeo and mslogin steps like "springboot-caching" and "springboot-indexinghibernatesearch" steps in their repository readme project description, that you can run these two projects.
-    - open msgeo project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
-    - run msgeo project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
-    - open mslogin project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 13 is selected.
+    - open msgeo project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 11 is selected.
+    - in IntelijIDEA for build stub files from proto file: view menu>tool windows>maven>start
+	- run msgeo project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
+    - open mslogin project by IntellliJ IDEA (enable auto import , Windows defender automatic fix) and check in "project structure" that jdk 11 is selected.
     - if table "OAUTH_CLIENT_DETAILS" is empty or in table "ADMIN_USER" there is not any user with username "eng.motahari@gmail.com" and bcrypted password in mslogin database, before go to next step, only one time rename file from "resources/data-oracle222.sql" to "resources/data-oracle.sql", and after next step(running mslogin project), one row will be inserted to "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database.
     - run mslogin project with "dev" active profile (IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev)
     - do not forget to rename sql file again to "resources/data-oracle222.sql". this file only used for the first time that "OAUTH_CLIENT_DETAILS" and "ADMIN_USER" tables in mslogin database are empty.

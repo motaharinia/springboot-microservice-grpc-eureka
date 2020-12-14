@@ -16,8 +16,6 @@ import th.co.geniustree.springdata.jpa.repository.support.JpaSpecificationExecut
 @EnableJpaRepositories(repositoryBaseClass = JpaSpecificationExecutorWithProjectionImpl.class)
 @EnableTransactionManagement
 @EnableEurekaClient
-@EnableScheduling
-@EnableAsync
 public class MsLoginApplication {
 
 //    @Value("${custom.default.timezone}")

@@ -1,4 +1,4 @@
-package ir.micser.login.async.presentation.employee;
+package ir.micser.login.presentation.async;
 
 
 import com.motaharinia.msutility.json.PrimitiveResponse;
@@ -30,13 +30,13 @@ import static org.assertj.core.api.Assertions.fail;
  * Date: 2020-07-22<br>
  * Time: 13:41:19<br>
  * Description:<br>
- * کلاس تست کنترلر کارمند
+ * کلاس تست کنترلر ناهمزمانی
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EmployeeControllerTest {
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+public class AsyncControllerTest {
 
     @LocalServerPort
     private int port;
@@ -48,16 +48,13 @@ public class EmployeeControllerTest {
     @Qualifier("asyncExecutor1")
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-    @Autowired
-    private CountDownLatch countDownLatch;
-
 
     @Test()
-    public void testAsyncBlock() throws ParseException {
-//        try {
+    public void testAsyncBlock() {
+        try {
 
             //درخواست وب
-            String uri = "http://localhost:" + port + "/v1/employee/async/block";
+            String uri = "http://localhost:" + port + "/v1/async/block";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -67,6 +64,10 @@ public class EmployeeControllerTest {
             //زمان شروع
             Date firstDate = sdf.parse(sdf.format(new Date()));
             ResponseEntity<PrimitiveResponse> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, PrimitiveResponse.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+
             //زمان پایان
             Date secondDate = sdf.parse(sdf.format(new Date()));
 
@@ -75,13 +76,13 @@ public class EmployeeControllerTest {
             System.out.println("diffInMillies:::" + diffInMillies);
 
             //در این تست اختلاف زمان شروع و زمان پایان متدهای آسینک را محاسبه میکند
-            //چون در متدهای آسینک برای همه شان 2000میلی ثانیه sleep را ست کرده ایم بنابراین انتظار داریم که زیر 3000میلی ثانیه جواب را دریافت نماییم
-            assertThat(diffInMillies).isLessThan(3000L);
+            //چون در متدهای آسینک برای همه شان 2000میلی ثانیه sleep را ست کرده ایم بنابراین انتظار داریم که زیر 5000میلی ثانیه جواب را دریافت نماییم
+            assertThat(diffInMillies).isLessThan(5000L);
 
 
-//        } catch (Exception ex) {
-//            fail(ex.toString());
-//        }
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
     }
 
 
@@ -90,29 +91,20 @@ public class EmployeeControllerTest {
         try {
 
             //درخواست وب
-            String uri = "http://localhost:" + port + "/v1/employee/async/thenApply";
+            String uri = "http://localhost:" + port + "/v1/async/thenApply";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
             ResponseEntity<PrimitiveResponse> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, PrimitiveResponse.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
 
-            //به دلیل اینکه ما با دستور join , get ترد جاری را بلوکه نکرده ایم ، متد کنترلر زودتر از متدهای Async تمام میشود و ترو ریترن میشود
-            //برای اینکه تست کنیم که متدهای Async بصورت موازی اجرا میشوند باید در متد تست یک انتظار ایجاد کنیم
-            // که این کار را توسط countDownLatch.await انجام میدهیم
-
-            //متد await تا وقتیکه count==0 شود ترد جاری را بلوک میکند
-            //countDownLatch.await();
-            //متد await به مدت 3000میلی ثانیه ترد جاری را بلوک میکند
-            //چون در متدهای آسینک برای همه شان 2000میلی ثانیه sleep را ست کرده ایم بنابراین انتظار داریم که زیر 3000میلی ثانیه اجرای تردها تمام شوند
-            countDownLatch.await(3000, TimeUnit.MILLISECONDS);
-            System.out.println("countDownLatch : " + countDownLatch.getCount());
-
-            // Main thread has started
             //چک میکند که تعداد تردها صفر است یا نه
-            assertThat(countDownLatch.getCount()).isEqualTo(0);
+            assertThat((int) response.getBody().getResponse()).isEqualTo(0);
             //چک میکند تعداد تردهای فعال صفر است یا نه
-            assertThat(threadPoolTaskExecutor.getActiveCount()).isEqualTo(0);
+//            assertThat(threadPoolTaskExecutor.getActiveCount()).isEqualTo(0);
 
             //نمایش نام نخ فعلی
             System.out.println("testAsyncThenApply Thread.currentThread().getName():" + Thread.currentThread().getName());

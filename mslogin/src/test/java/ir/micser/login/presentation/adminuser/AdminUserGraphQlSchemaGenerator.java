@@ -1,4 +1,4 @@
-package ir.micser.login.graphql;
+package ir.micser.login.presentation.adminuser;
 
 import io.leangen.graphql.GraphQLSchemaGenerator;
 import io.leangen.graphql.metadata.strategy.query.DefaultOperationBuilder;
@@ -7,11 +7,11 @@ import io.leangen.graphql.metadata.strategy.query.DefaultOperationBuilder;
  * <b>For testing use only!</b>
  * A schema generator with default configuration useful for testing.
  */
-public class TestSchemaGenerator extends GraphQLSchemaGenerator {
+public class AdminUserGraphQlSchemaGenerator extends GraphQLSchemaGenerator {
 
-    private static final String[] basePackages = new String[] {"com.motaharinia"};
+    private static final String[] basePackages = new String[] {"ir.micser"};
 
-    public TestSchemaGenerator() {
+    public AdminUserGraphQlSchemaGenerator() {
         withBasePackages(basePackages);
         withOperationBuilder(new DefaultOperationBuilder(DefaultOperationBuilder.TypeInference.LIMITED));
     }

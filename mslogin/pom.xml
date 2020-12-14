@@ -186,7 +186,7 @@
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
-                <!--                برای کم کردن خطهای کنسول غیرضروری وجود دو jar مربوط به json در Spring-boot-starter-test تگ زیر را وارد کردم که برای استفاده از خدمات json از وابستگی jackson استفاده کند و در کنسول پیام ندهد-->
+                <!--                برای کم کردن خطهای کنسول غیرضروری وجود دو jar مربوط به json در Spring-boot-starter-async تگ زیر را وارد کردم که برای استفاده از خدمات json از وابستگی jackson استفاده کند و در کنسول پیام ندهد-->
                 <exclusion>
                     <groupId>com.vaadin.external.google</groupId>
                     <artifactId>android-json</artifactId>
@@ -307,7 +307,7 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- attached to Maven test phase -->
+                    <!-- attached to Maven async phase -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>

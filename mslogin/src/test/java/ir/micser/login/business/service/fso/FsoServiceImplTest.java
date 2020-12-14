@@ -1,4 +1,4 @@
-package ir.micser.login.business.service;
+package ir.micser.login.business.service.fso;
 
 import com.motaharinia.msutility.fso.FsoConfigModel;
 import ir.micser.login.business.service.fso.FsoService;
@@ -21,7 +21,7 @@ import java.util.Locale;
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class FsoServiceImplTests {
+public class FsoServiceImplTest {
     @LocalServerPort
     private int port;
 
@@ -40,8 +40,8 @@ public class FsoServiceImplTests {
     String dir2File1Path = dir2Path + "/dir2file1.txt";
     String dir2File2Path = dir2Path + "/dir2file2.jpg";
 
-    String content1 = "this is first test";
-    String content2 = "this is second test";
+    String content1 = "this is first async";
+    String content2 = "this is second async";
 
     FsoConfigModel fsoConfigModel = new FsoConfigModel(new Integer[]{60, 120}, "thumb", 100);
 

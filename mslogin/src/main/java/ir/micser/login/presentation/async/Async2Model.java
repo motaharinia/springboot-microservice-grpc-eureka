@@ -1,4 +1,4 @@
-package ir.micser.async.presentation.employee;
+package ir.micser.login.presentation.async;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -7,7 +7,7 @@ package ir.micser.async.presentation.employee;
  * Description:<br>
  *     کلاس مدل اطلاعات تماس کارمند
  */
-public class EmployeeContactModel {
+public class Async2Model {
     /**
      * نشانی
      */
